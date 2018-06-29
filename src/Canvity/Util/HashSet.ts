@@ -38,10 +38,6 @@ namespace Canvity.Util {
             return this.container.length;
         }
 
-        public Select(): T {
-            return this.container[0];
-        }
-
         /**
          * Searches for a given item in the collection
          * @param item The item to search for
@@ -57,6 +53,10 @@ namespace Canvity.Util {
         }
         public map<U>(f: (value: T, index: number, array: T[]) => U, thisArg?: any): HashSet<U> {
             return HashSet.FromArray(this.container.map(f, thisArg));;
+        }
+
+        public ToArray(): Array<T> {
+            return this.container;
         }
 
         public static FromArray<T>(array: Array<T>): HashSet<T> {
