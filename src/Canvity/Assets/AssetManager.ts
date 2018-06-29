@@ -9,5 +9,17 @@ namespace Canvity.Assets {
             loader.src = resPath;
             document.body.appendChild(loader);
         }
+
+        public static LoadTextFile(resPath: string, callback: (asset: Text) => void): void {
+            let ajax = new XMLHttpRequest();
+            ajax.addEventListener('readystatechange', (e) => {
+                if (ajax.readyState === ajax.DONE && ajax.status === 200) {
+                    callback(new Text(ajax.responseText));
+                }
+            });
+
+            ajax.open('GET', resPath);
+            ajax.send();
+        }
     }
 }
