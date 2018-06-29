@@ -4,10 +4,10 @@ namespace Canvity.Assets {
             let loader = document.createElement('img');
             loader.setAttribute('style', 'display:hidden');
             loader.addEventListener('load', (e) => {
-                
+                callback(new Sprite(<HTMLImageElement>(e.target)));
             });
             loader.src = resPath;
-
+            document.body.appendChild(loader);
         }
     }
 }
