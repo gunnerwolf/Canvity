@@ -19,5 +19,14 @@ namespace Canvity.Component {
 
             this.localPosition = new Util.Vector2();
         }
+
+        public Rotate(amt: number): Transform {
+            this.LocalRotation += amt;
+            return this;
+        }
+        public Translate(vec: Util.Vector2): Transform {
+            this.LocalPosition.Add(vec);
+            return this;
+        }
     }
 }
