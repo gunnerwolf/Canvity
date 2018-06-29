@@ -1,14 +1,21 @@
+import CanvasComponent = Canvity.Component.CanvasComponent;
+
 namespace Canvity {
     export class CanvasObject extends CanvityObject {
         private parentObj: CanvasObject;
-        private components: Util.HashSet<Component.CanvasComponent>;
+        public get ParentObj(): CanvasObject { return this.parentObj; }
         private scene: CanvasScene;
+        public get Scene(): CanvasScene { return (this.parentObj === null) ? this.scene : this.parentObj.scene; }
 
-        public constructor(name: String, ...components: Array<Component.CanvasComponent>) {
+        public get Transform(): Component.Transform { return this.GetComponent(Component.Transform); }
+
+        private components: Util.HashSet<CanvasComponent>;
+
+        public constructor(name: String, ...components: Array<CanvasComponent>) {
             super();
             this.name = name;
 
-            this.components = new Util.HashSet<Component.CanvasComponent>();
+            this.components = new Util.HashSet<CanvasComponent>();
 
             this.AddComponentOfType(Component.Transform);
             components.forEach(element => {
@@ -27,30 +34,19 @@ namespace Canvity {
             });
         }
 
-        public GetParentObj(): CanvasObject {
-            return this.parentObj;
-        }
-        public GetScene(): CanvasScene {
-            if (this.parentObj !== null) {
-                return this.parentObj.GetScene();
-            } else {
-                return this.scene;
-            }
-        }
-
-        public AddComponent(component: Component.CanvasComponent): Component.CanvasComponent {
+        public AddComponent(component: CanvasComponent): CanvasComponent {
             this.components.Add(component);
-            component.SetParent(this);
+            component.CanvasObject = this;
             return component;
         }
-        public AddComponentOfType<T extends Component.CanvasComponent>(type: { new(): T ;} ): Component.CanvasComponent {
+        public AddComponentOfType<T extends CanvasComponent>(type: { new(): T ;} ): T {
             let component = new type();
-            component.SetParent(this);
-            return this.AddComponent(component);
+            component.CanvasObject = this;
+            return <T>this.AddComponent(component);
         }
 
-        public GetComponent<T extends Component.CanvasComponent>(type: { new(): T ;} ) {
-            return this.components.filter(element => { return element instanceof type; });
+        public GetComponent<T extends CanvasComponent>(type: { new(): T ;}): T {
+            return <T>this.components.filter(element => { return element instanceof type; }).ToArray()[0];
         }
     }
 }

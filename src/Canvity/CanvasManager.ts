@@ -1,7 +1,11 @@
 namespace Canvity {
     export class CanvasManager {
         private static canvas: HTMLCanvasElement;
+        public static get Canvas(): HTMLCanvasElement { return this.canvas; }
+        
         private static ctx: CanvasRenderingContext2D;
+        public static get Context(): CanvasRenderingContext2D { return this.ctx; }
+
         private static scenes: Util.HashSet<CanvasScene>;
         private static currentScene: CanvasScene;
 
@@ -22,16 +26,6 @@ namespace Canvity {
         public static SwitchScene(scene: CanvasScene): void {
             if (!this.scenes.Contains(scene)) throw Error('Attempted to switch to Scene that does not exist!');
             this.currentScene = scene;
-        }
-
-        public static GetCanvas(): HTMLCanvasElement {
-            return this.canvas;
-        }
-        public static GetContext(): CanvasRenderingContext2D {
-            return this.ctx;
-        }
-        public static GetCurrentScene(): CanvasScene {
-            return this.currentScene;
         }
 
         public static Draw(time: Util.Time) {
