@@ -1,5 +1,5 @@
 namespace Canvity.Component {
-    export abstract class CanvasComponent {
+    export abstract class CanvasComponent extends CanvityObject {
         protected canvasObject: CanvasObject;
         public get CanvasObject(): CanvasObject { return this.canvasObject; }
         public set CanvasObject(obj: CanvasObject) { if (!this.canvasObject) this.canvasObject = obj; }
