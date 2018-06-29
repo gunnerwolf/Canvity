@@ -11,7 +11,7 @@ namespace Canvity {
 
         private components: Util.HashSet<CanvasComponent>;
 
-        public constructor(name: String, ...components: Array<CanvasComponent>) {
+        public constructor(name: string, ...components: Array<CanvasComponent>) {
             super();
             this.name = name;
 
