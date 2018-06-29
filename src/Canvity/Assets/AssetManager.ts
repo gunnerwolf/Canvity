@@ -1,7 +1,13 @@
 namespace Canvity.Assets {
     export class AssetManager {
-        public static Load<T extends Asset>(resPath: String, callback: (asset: T) => void) {
-            // TODO: Load asset
+        public static LoadSprite(resPath: string, callback: (asset: Sprite) => void): void {
+            let loader = document.createElement('img');
+            loader.setAttribute('style', 'display:hidden');
+            loader.addEventListener('load', (e) => {
+                
+            });
+            loader.src = resPath;
+
         }
     }
 }
