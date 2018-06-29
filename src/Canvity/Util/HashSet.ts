@@ -38,6 +38,10 @@ namespace Canvity.Util {
             return this.container.length;
         }
 
+        public Select(): T {
+            return this.container[0];
+        }
+
         /**
          * Searches for a given item in the collection
          * @param item The item to search for
