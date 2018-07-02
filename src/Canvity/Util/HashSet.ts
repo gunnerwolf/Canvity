@@ -47,7 +47,9 @@ namespace Canvity.Util {
             return this.container.indexOf(item) >= 0;
         }
 
-        public forEach = this.container.forEach;
+        public forEach(f: (value: T, index: number, array: T[]) => void, thisArg?: any): void { 
+            this.container.forEach(f, thisArg);
+        }
         public filter(f: (value: T, index: number, array: T[]) => any, thisArg?: any): HashSet<T> {
             return HashSet.FromArray(this.container.filter(f, thisArg));
         }
