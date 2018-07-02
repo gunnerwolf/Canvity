@@ -1,6 +1,9 @@
 #!/bin/bash
 if [ -z ${1+'myApp'} ]; then 
     APP_NAME='myApp'
+    echo "No app name given, defaulting to 'myApp'"
+    echo "To fix this, please specify an app name with the following syntax:"
+    echo -e "\t./init <appName>"
 else
     APP_NAME=$1
 fi
