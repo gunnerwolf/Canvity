@@ -12,8 +12,8 @@ chmod +rw $CLASS_FILE
 read -r -d '' TEMPLATE << EOF
 namespace $APP_NAME {
     export class $APP_NAME extends Canvity.App {
-        public constructor() {
-            super();
+        public constructor(canvas: HTMLCanvasElement) {
+            super(canvas);
         }
 
         public PreInit(opts: any): void {
@@ -35,7 +35,18 @@ echo "$TEMPLATE" > $CLASS_FILE
 RUN_FILE="src/$APP_NAME/Run$APP_NAME.ts"
 read -r -d '' TEMPLATE << EOF
 window.addEventListener('load', function(ev: Event) {
-    let app: App = new $APP_NAME();
+    let canvas: HTMLElement | null = document.getElementById('canvity-canvas');
+    if (canvas === null) {
+        console.error("Could not find canvas element with id 'canvity-canvas'!");
+        return;
+    }
+    if (!(canvas instanceof HTMLCanvasElement)) {
+        console.error("Element with id 'canvity-canvas' is not a HTML Canvas!");
+        return;
+    }
+    
+    let app: Canvity.App = new $APP_NAME.$APP_NAME(canvas);
     Canvity.StartApp(app);
 });
 EOF
+echo "$TEMPLATE" > $RUN_FILE
