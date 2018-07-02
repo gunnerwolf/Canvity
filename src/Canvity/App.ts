@@ -18,8 +18,8 @@ namespace Canvity {
             this.lastUpdate = this.startTime;
         }
 
-        public abstract PreInit(): void;
-        public abstract Init(): void;
+        public abstract PreInit(opts: any): void;
+        public abstract Init(drawDeltaTime: number, updateDeltaTime: number): void;
         public abstract PostInit(): void;
 
         public Draw(): void {
