@@ -1,2 +1,6 @@
-bin/
-testApp/
+bin/*
+src/testApp/*
+node_modules/*
+package-lock.json
+.vscode/*
+!.vscode/tasks.json
