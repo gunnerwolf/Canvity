@@ -6,8 +6,9 @@ namespace Canvity.Util {
         private time: number;
         public get Time(): number { return this.time; }
 
-        public constructor() {
-
+        public constructor(time: number, deltaTime: number) {
+            this.time = time;
+            this.deltaTime = deltaTime;
         }
     }
 }
