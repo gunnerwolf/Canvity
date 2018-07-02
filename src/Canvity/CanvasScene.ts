@@ -3,7 +3,9 @@ namespace Canvity {
         private objects: Array<CanvasObject>;
 
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void {
-            this.objects.forEach(element => {
+            this.objects.sort((a: CanvasObject, b: CanvasObject) => {
+                return a.Transform.ZIndex - b.Transform.ZIndex;
+            }).forEach((element: CanvasObject) => {
                 element.Draw(time, ctx);
             });
         }
