@@ -1,5 +1,10 @@
 namespace Canvity {
     export abstract class App {
+        protected drawInterval: number;
+        protected updateInterval: number;
+        public set DrawInterval(val: number) { this.drawInterval = val; }
+        public set UpdateInterval(val: number) { this.updateInterval = val; }
+
         protected startTime: number;
 
         public get Runtime(): number { return Math.round((new Date()).getTime() / 1000) - this.startTime; }
