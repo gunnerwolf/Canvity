@@ -1,0 +1,41 @@
+#!/bin/bash
+if [ -z ${1+'myApp'} ]; then 
+    APP_NAME='myApp'
+else
+    APP_NAME=$1
+fi
+
+mkdir src/$APP_NAME
+CLASS_FILE="src/$APP_NAME/$APP_NAME.ts"
+touch $CLASS_FILE
+chmod +rw $CLASS_FILE
+read -r -d '' TEMPLATE << EOF
+namespace $APP_NAME {
+    export class $APP_NAME extends Canvity.App {
+        public constructor() {
+            super();
+        }
+
+        public PreInit(opts: any): void {
+            // TODO: Add PreInit logic
+        }
+
+        public Init(drawDeltaTime: number, updateDeltaTime: number): void {
+            // TODO: Add Init logic
+        }
+
+        public PostInit(): void {
+            // TODO: Add PostInit logic
+        }
+    }
+}
+EOF
+echo "$TEMPLATE" > $CLASS_FILE
+
+RUN_FILE="src/$APP_NAME/Run$APP_NAME.ts"
+read -r -d '' TEMPLATE << EOF
+window.addEventListener('load', function(ev: Event) {
+    let app: App = new $APP_NAME();
+    Canvity.StartApp(app);
+});
+EOF
