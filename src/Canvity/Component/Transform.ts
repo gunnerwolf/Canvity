@@ -14,6 +14,13 @@ namespace Canvity.Component {
         public get Position(): Util.Vector2 { return this.canvasObject.ParentObj.Transform.Position.Add(this.localPosition); }
         public set Position(val: Util.Vector2) { this.localPosition = val.Sub(this.canvasObject.ParentObj.Transform.Position); }
 
+        private localZIndex: number;
+        public get LocalZIndex(): number { return this.localZIndex; }
+        public set LocalZIndex(val: number) { this.localZIndex = val; }
+
+        public get ZIndex(): number { return this.canvasObject.ParentObj.Transform.ZIndex + this.localZIndex; }
+        public set ZIndex(val: number) { this.localZIndex = val - this.canvasObject.ParentObj.Transform.ZIndex; }
+
         public constructor() {
             super();
 
