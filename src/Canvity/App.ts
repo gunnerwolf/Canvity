@@ -12,10 +12,12 @@ namespace Canvity {
         private lastDraw: number;
         private lastUpdate: number;
 
-        public constructor() {
+        public constructor(canvas: HTMLCanvasElement) {
             this.startTime = Math.round((new Date()).getTime() / 1000);
             this.lastDraw = this.startTime;
             this.lastUpdate = this.startTime;
+
+            CanvasManager.Init(canvas);
         }
 
         public abstract PreInit(opts: any): void;
