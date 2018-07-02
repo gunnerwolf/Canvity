@@ -29,9 +29,11 @@ namespace Canvity {
         }
 
         public static Draw(time: Util.Time) {
+            if (this.currentScene === null || this.currentScene === undefined) return;
             this.currentScene.Draw(time, this.ctx);
         }
         public static Update(time: Util.Time) {
+            if (this.currentScene === null || this.currentScene === undefined) return;
             this.currentScene.Update(time);
         }
     }
