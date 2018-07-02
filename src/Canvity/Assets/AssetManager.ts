@@ -4,7 +4,7 @@ namespace Canvity.Assets {
             let loader = document.createElement('img');
             loader.setAttribute('style', 'display:hidden');
             loader.addEventListener('load', (e) => {
-                callback(new Sprite(<HTMLImageElement>(e.target)));
+                callback(new Sprite(resPath, <HTMLImageElement>(e.target)));
             });
             loader.src = resPath;
             document.body.appendChild(loader);
@@ -14,7 +14,7 @@ namespace Canvity.Assets {
             let ajax = new XMLHttpRequest();
             ajax.addEventListener('readystatechange', (e) => {
                 if (ajax.readyState === ajax.DONE && ajax.status === 200) {
-                    callback(new Text(ajax.responseText));
+                    callback(new Text(resPath, ajax.responseText));
                 }
             });
 

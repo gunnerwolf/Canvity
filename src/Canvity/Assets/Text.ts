@@ -3,8 +3,8 @@ namespace Canvity.Assets {
         private content: string;
         public get Content(): string { return this.content; }
 
-        public constructor(content: string) {
-            super();
+        public constructor(path: string, content: string) {
+            super(path);
             this.content = content;
         }
     }

@@ -3,8 +3,8 @@ namespace Canvity.Assets {
         private image: HTMLImageElement;
         public get Image(): HTMLImageElement { return this.image; }
 
-        public constructor(image: HTMLImageElement) {
-            super();
+        public constructor(path: string, image: HTMLImageElement) {
+            super(path);
             this.image = image;
         }
     }
