@@ -1,8 +1,20 @@
 namespace Canvity {
     export class CanvasScene {
         private objects: Array<CanvasObject>;
+        private background: Util.Color;
+
+        public get Background(): Util.Color { return this.background; }
+        public set Background(val: Util.Color) { this.background = val; }
+
+        public constructor() {
+            this.objects = new Array<CanvasObject>();
+            this.Background = Util.Color.Transparent;
+        }
 
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void {
+            ctx.fillStyle = this.Background.CssString;
+            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
             this.objects.sort((a: CanvasObject, b: CanvasObject) => {
                 return a.Transform.ZIndex - b.Transform.ZIndex;
             }).forEach((element: CanvasObject) => {
