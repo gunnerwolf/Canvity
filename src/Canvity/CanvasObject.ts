@@ -45,7 +45,7 @@ namespace Canvity {
             return <T>this.AddComponent(component);
         }
 
-        public GetComponent<T extends CanvasComponent>(type: { new(): T ;}): T {
+        public GetComponent<T extends CanvasComponent>(type: { new(...args: any[]): T ;}): T {
             return <T>this.components.filter(element => { return element instanceof type; }).ToArray()[0];
         }
     }
