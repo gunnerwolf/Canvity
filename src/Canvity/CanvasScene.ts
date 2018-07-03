@@ -14,5 +14,9 @@ namespace Canvity {
                 element.Update(time);
             });
         }
+
+        public AddObject(obj: CanvasObject): void {
+            this.objects.push(obj);
+        }
     }
 }
