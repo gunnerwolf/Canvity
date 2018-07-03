@@ -24,7 +24,7 @@ namespace Canvity.Component {
         public constructor() {
             super();
 
-            this.localPosition = new Util.Vector2();
+            this.LocalPosition = new Util.Vector2();
         }
 
         public Rotate(amt: number): Transform {
