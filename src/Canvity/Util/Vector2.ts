@@ -16,19 +16,13 @@ namespace Canvity.Util {
         }
 
         public Add(vec: Vector2): Vector2 {
-            this.X += vec.X;
-            this.Y += vec.Y;
-            return this;
+            return new Vector2(this.X + vec.X, this.Y + vec.Y);
         }
         public Sub(vec: Vector2): Vector2 {
-            this.X -= vec.X;
-            this.Y -= vec.Y;
-            return this;
+            return new Vector2(this.X - vec.X, this.Y - vec.Y);
         }
         public Multiply(mul: number): Vector2 {
-            this.X *= mul;
-            this.Y *= mul;
-            return this;
+            return new Vector2(this.X * mul, this.Y * mul);
         }
 
         public Normalize(): Vector2 {
