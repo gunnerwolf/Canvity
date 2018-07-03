@@ -1,22 +1,22 @@
 namespace Canvity.Events {
-    export class CanvityEvent1<T1> {
-        private listeners: Array<(value: T1) => void>;
+    export class CanvityEvent<T> {
+        private listeners: Array<(value: T) => void>;
 
         public constructor() {
-            this.listeners = new Array<(value: T1) => void>();
+            this.listeners = new Array<(value: T) => void>();
         }
 
-        public AddEventListener(f: (value: T1) => void): void {
+        public AddEventListener(f: (value: T) => void): void {
             this.listeners.push(f);
         }
 
-        public RemoveEventListener(f: (value: T1) => void): void {
+        public RemoveEventListener(f: (value: T) => void): void {
             if (this.listeners.indexOf(f) >= 0) {
                 this.listeners.splice(this.listeners.indexOf(f), 1);
             }
         }
 
-        public Invoke(value: T1): void {
+        public Invoke(value: T): void {
             this.listeners.forEach(callback => { callback(value); });
         }
     }
