@@ -11,5 +11,10 @@ namespace Canvity.Util {
             this.W = w;
             this.H = h;
         }
+
+        public ContainsPoint(point: Vector2): boolean {
+            return (point.X > this.X && point.X <= this.X + this.W
+                && point.Y > this.Y && point.Y <= this.Y + this.H);
+        }
     }
 }
