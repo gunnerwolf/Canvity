@@ -5,23 +5,14 @@ module.exports = function(grunt) {
                 tsconfig: './tsconfig.json'
             }
         },
-        uglify: {
-            options: {
-                mangle: false
-            },
-            canvity: {
-                files: {
-                    'bin/canvity.min.js': ['bin/Canvity/**/*.js']
-                }
-            },
-            testApp: {
-                files: {
-                    'bin/testApp.min.js': ['bin/testApp/**/*.js']
-                }
+        exec: {
+            watch: {
+                cmd: 'tsc --project ./ -w'
             }
         }
     });
     grunt.loadNpmTasks("grunt-ts");
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.registerTask("default", ["ts", "uglify"]);
+    grunt.loadNpmTasks("grunt-exec");
+    grunt.registerTask("default", ["ts"]);
+    grunt.registerTask("watch", ["exec"]);
 };
