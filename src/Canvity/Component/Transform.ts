@@ -29,7 +29,7 @@ namespace Canvity.Component {
         }
         public set Position(val: Util.Vector2) {
             this.LocalPosition = val;
-            if (this.canvasObject.ParentObj) this.LocalPosition.Sub(this.canvasObject.ParentObj.Transform.Position);
+            if (this.canvasObject.ParentObj) this.LocalPosition = this.LocalPosition.Sub(this.canvasObject.ParentObj.Transform.Position);
         }
 
         private localZIndex: number;
