@@ -59,7 +59,7 @@ namespace Canvity.Component {
             return this;
         }
         public Translate(vec: Util.Vector2): Transform {
-            this.LocalPosition.Add(vec);
+            this.LocalPosition = this.LocalPosition.Add(vec);
             return this;
         }
     }
