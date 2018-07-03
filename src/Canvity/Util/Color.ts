@@ -35,10 +35,10 @@ namespace Canvity.Util {
         }
         public get CssString(): string {
             let ret = 'rgba(';
-            ret += (Math.round((this.r / 255) * 100) / 100) + ', ';
-            ret += (Math.round((this.g / 255) * 100) / 100) + ', ';
-            ret += (Math.round((this.b / 255) * 100) / 100) + ', ';
-            ret += (Math.round((this.a / 255) * 100) / 100) + ')';
+            ret += this.r + ', ';
+            ret += this.g + ', ';
+            ret += this.b + ', ';
+            ret += this.a + ')';
             return ret;            
         }
 
