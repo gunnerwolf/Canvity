@@ -8,7 +8,8 @@ namespace Canvity.Component {
         private rect: Util.Rect;
         public get Rect(): Util.Rect {
             if (!(this.Transform instanceof RectTransform)) {
-                return this.rect;
+                let pos = this.Transform.Position;
+                return new Util.Rect(pos.X + this.rect.X, pos.Y + this.rect.Y, this.rect.W, this.rect.H);
             } else {
                 return (<RectTransform>this.Transform).Rect;
             }
@@ -28,7 +29,7 @@ namespace Canvity.Component {
         }
 
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void {
-            ctx.fillStyle = this.Color.HexString;
+            ctx.fillStyle = this.Color.CssString;
 
             ctx.fillRect(this.Rect.X, this.Rect.Y, this.Rect.W, this.Rect.H);
         }
