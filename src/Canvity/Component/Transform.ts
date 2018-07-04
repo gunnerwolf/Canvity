@@ -1,4 +1,5 @@
 namespace Canvity.Component {
+    @Canvity.Component.Unique
     export class Transform extends CanvasComponent {
         private localRotation: number;
         public get LocalRotation(): number { return this.localRotation; }
