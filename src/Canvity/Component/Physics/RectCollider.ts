@@ -20,6 +20,10 @@ namespace Canvity.Component.Physics {
             }
         }
 
+        public constructor() {
+            super();
+        }
+
         public CheckIsCollision(point: Util.Vector2): boolean {
             return this.rect.ContainsPoint(point);
         }
