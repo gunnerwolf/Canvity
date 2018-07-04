@@ -7,7 +7,8 @@ namespace Canvity {
         private scene: CanvasScene;
         public get Scene(): CanvasScene { return (this.parentObj === null) ? this.scene : this.parentObj.scene; }
 
-        public get Transform(): Component.Transform { return this.GetComponent(Component.Transform); }
+        private transform: Component.Transform;
+        public get Transform(): Component.Transform { return this.transform; }
 
         private components: Util.HashSet<CanvasComponent>;
 
@@ -42,6 +43,16 @@ namespace Canvity {
         public AddComponentOfType<T extends CanvasComponent>(type: { new(): T ;} ): T {
             let component = new type();
             component.CanvasObject = this;
+            if (component instanceof Component.Transform) {
+                if (component instanceof Component.RectTransform) {
+                    if (this.transform === undefined || this.transform === null) this.transform = component;
+                    else {
+                        // TODO: Remove old transform
+                        this.transform = component;
+                    }
+                }
+                else if (this.transform === undefined || this.transform === null) this.transform = component;
+            }
             return <T>this.AddComponent(component);
         }
 
