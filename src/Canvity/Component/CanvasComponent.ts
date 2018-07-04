@@ -8,7 +8,12 @@ namespace Canvity.Component {
 
         protected canvasObject: CanvasObject;
         public get CanvasObject(): CanvasObject { return this.canvasObject; }
-        public set CanvasObject(obj: CanvasObject) { if (!this.canvasObject) this.canvasObject = obj; }
+        public set CanvasObject(obj: CanvasObject) {
+            if (!this.canvasObject) {
+                this.canvasObject = obj;
+                this.onParentSet();
+            }
+        }
 
         public get Transform(): Transform | null {
             if (this.canvasObject) {
@@ -18,7 +23,9 @@ namespace Canvity.Component {
             }
         }
         
-        public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void {}
-        public Update(time: Util.Time): void {}
+        public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void { }
+        public Update(time: Util.Time): void { }
+
+        protected onParentSet(): void { }
     }
 }
