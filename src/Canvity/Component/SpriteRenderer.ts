@@ -9,7 +9,10 @@ namespace Canvity.Component {
         }
 
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void {
-            let pos: Util.Vector2 = this.Transform.Position;
+            let pos: Util.Vector2 = new Util.Vector2();
+            if (this.Transform !== null) {
+                pos = this.Transform.Position;
+            }
 
             ctx.drawSprite(this.sprite, pos.X, pos.Y);
         }
