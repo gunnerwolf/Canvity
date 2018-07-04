@@ -15,6 +15,8 @@ namespace Canvity.Component.Physics {
         public get OnMouseEnter(): Canvity.Events.CanvityEvent { return this.onMouseEnter; }
         private onMouseExit: Canvity.Events.CanvityEvent;
         public get OnMouseExit(): Canvity.Events.CanvityEvent { return this.onMouseExit; }
+        private onMouseMove: Canvity.Events.CanvityEvent;
+        public get OnMouseMove(): Canvity.Events.CanvityEvent { return this.onMouseMove; }
 
         private onMouseClick: Canvity.Events.CanvityEvent;
         public get OnMouseClick(): Canvity.Events.CanvityEvent { return this.onMouseClick; }
@@ -32,22 +34,24 @@ namespace Canvity.Component.Physics {
 
             this.onMouseEnter = new Canvity.Events.CanvityEvent();
             this.onMouseExit = new Canvity.Events.CanvityEvent();
+            this.onMouseMove = new Canvity.Events.CanvityEvent();
 
             this.onMouseClick = new Canvity.Events.CanvityEvent();
             this.onMouseDown = new Canvity.Events.CanvityEvent();
             this.onMouseUp = new Canvity.Events.CanvityEvent();
         }
 
-        public HandleCollision(other: BaseCollider, collisionPoint: Util.Vector2): void { }
-        public HandleCollisionEnter(other: BaseCollider, collisionPoint: Util.Vector2): void { }
-        public HandleCollisionExit(other: BaseCollider, collisionPoint: Util.Vector2): void { }
+        public HandleCollision(other: BaseCollider, collisionPoint: Util.Vector2): void { this.onCollision.Invoke(other, collisionPoint); }
+        public HandleCollisionEnter(other: BaseCollider, collisionPoint: Util.Vector2): void { this.onCollisionEnter.Invoke(other, collisionPoint); }
+        public HandleCollisionExit(other: BaseCollider, collisionPoint: Util.Vector2): void { this.onCollisionExit.Invoke(other, collisionPoint); }
 
-        public HandleMouseEnter(collisionPoint: Util.Vector2): void { }
-        public HandleMouseExit(collisionPoint: Util.Vector2): void { }
+        public HandleMouseEnter(): void { this.onMouseEnter.Invoke(); }
+        public HandleMouseExit(): void { this.onMouseExit.Invoke(); }
+        public HandleMouseMove(): void { this.onMouseMove.Invoke(); }
 
-        public HandleMouseClick(collisionPoint: Util.Vector2, mouseButton: number): void { }
-        public HandleMouseDown(collisionPoint: Util.Vector2, mouseButton: number): void { }
-        public HandleMouseUp(collisionPoint: Util.Vector2): void { }
+        public HandleMouseClick(): void { this.onMouseClick.Invoke(); }
+        public HandleMouseDown(): void { this.onMouseDown.Invoke(); }
+        public HandleMouseUp(): void { this.onMouseUp.Invoke(); }
 
         public abstract CheckIsCollision(point: Util.Vector2): boolean;
     }
