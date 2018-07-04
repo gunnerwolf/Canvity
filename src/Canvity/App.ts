@@ -18,6 +18,7 @@ namespace Canvity {
             this.lastUpdate = this.startTime;
 
             CanvasManager.Init(canvas);
+            InputManager.Init();
         }
 
         public abstract PreInit(opts: any): void;
