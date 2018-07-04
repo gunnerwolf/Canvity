@@ -36,8 +36,30 @@ namespace Canvity {
         }
 
         public AddComponent(component: CanvasComponent): CanvasComponent {
+            let ctor: any = component.constructor;
+            if (component.Unique && this.HasComponent(ctor)) {
+                throw new Error("Attempted to add unique component " + ctor.name + " to object that already contains an instance!");
+            }
+            if (component.Requires.length > 0) {
+                component.Requires.forEach(element => {
+                    let subCtor: any = element
+                    if (!this.HasComponent(element)) {
+                        throw new Error("Attempted to add component " + ctor.name + " to an object that does not contain an instance of " + subCtor.name);
+                    }
+                }, this);
+            }
             this.components.Add(component);
             component.CanvasObject = this;
+            if (component instanceof Component.Transform) {
+                if (component instanceof Component.RectTransform) {
+                    if (this.transform === undefined || this.transform === null) this.transform = component;
+                    else {
+                        // TODO: Remove old transform
+                        this.transform = component;
+                    }
+                }
+                else if (this.transform === undefined || this.transform === null) this.transform = component;
+            }
             return component;
         }
         public AddComponentOfType<T extends CanvasComponent>(type: { new(): T ;} ): T {
@@ -56,8 +78,14 @@ namespace Canvity {
             return <T>this.AddComponent(component);
         }
 
-        public GetComponent<T extends CanvasComponent>(type: { new(...args: any[]): T ;}): T {
-            return <T>this.components.filter(element => { return element instanceof type; }).ToArray()[0];
+        public GetComponent<T extends CanvasComponent>(type: { new(...args: any[]): T ;}): T | null {
+            let items = this.components.filter(element => { return element instanceof type; }).ToArray();
+            if (items.length === 0) return null;
+            return <T>items[0];
+        }
+
+        public HasComponent<T extends CanvasComponent>(type: { new(...args: any[]): T ;}): boolean {
+            return this.GetComponent(type) !== null;
         }
     }
 }
