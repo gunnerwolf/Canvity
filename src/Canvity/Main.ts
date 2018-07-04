@@ -5,7 +5,7 @@ namespace Canvity {
         let drawDeltaTime = 1 / opts.frameRate;
         let updateDeltaTime = 1;
         if (!opts.fpsLocked) {
-            let updateDeltaTime = 1 / opts.updateRate;
+            updateDeltaTime = 1 / opts.updateRate;
         }
 
         app.Init(drawDeltaTime, updateDeltaTime);
