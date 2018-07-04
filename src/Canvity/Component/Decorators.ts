@@ -1,6 +1,6 @@
 namespace Canvity.Component {
-    function Requires(...types: Array<{ new (...args: any[]): CanvasComponent; }>) {
-        return function (target: CanvasComponent) {
+    export function Requires(...types: Array<{ new (...args: any[]): CanvasComponent; }>) {
+        return function (target: any) {
             let requires = new Array<{ new (...args: any[]): CanvasComponent; }>();
             types.forEach(type => { requires.push(type); });
 
