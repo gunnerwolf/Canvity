@@ -40,7 +40,8 @@ namespace Canvity.Component.UI {
         }
 
         protected onParentSet(): void {
-            let collider: Physics.RectCollider = this.CanvasObject.GetComponent(Physics.RectCollider);
+            let collider: Physics.RectCollider | null = this.CanvasObject.GetComponent(Physics.RectCollider);
+            if (collider === null) return;
 
             collider.OnMouseDown.AddEventListener(this.onMouseDown);
             collider.OnMouseUp.AddEventListener(this.onMouseUp);
