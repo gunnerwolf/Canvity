@@ -2,10 +2,10 @@
 	"compilerOptions": {
 		"outDir": "./bin",
 		"rootDir": "./src",
-		"allowJs": true,
+		"alwaysStrict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "strictFunctionTypes": true,
+		"strictFunctionTypes": true,
 		"target": "es5",
 		"experimentalDecorators": true
 	},
