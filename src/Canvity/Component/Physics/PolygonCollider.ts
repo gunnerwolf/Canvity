@@ -1,6 +1,7 @@
 namespace Canvity.Component.Physics {
     export class PolygonCollider extends RectCollider {
         private vertices: Array<Util.Vector2>;
+        protected get Vertices(): Array<Util.Vector2> { return this.vertices; }
 
         public get Rect(): Util.Rect { return this.rect; }
         public set Rect(val: Util.Rect) { this.rect = val;}
@@ -24,9 +25,9 @@ namespace Canvity.Component.Physics {
             let lineIntersections: number = 0;
             // Raycast to the point from <0, 0>, count number of side collisions with raycast
             let raycastOrigin: Util.Vector2 = new Util.Vector2();
-            for(let i: number = 0; i < this.vertices.length; i++) {
-                let a = this.vertices[i];
-                let b = (i + 1 >= this.vertices.length) ? this.vertices[(i + 1) % this.vertices.length] : this.vertices[i + 1];
+            for(let i: number = 0; i < this.Vertices.length; i++) {
+                let a = this.Vertices[i];
+                let b = (i + 1 >= this.Vertices.length) ? this.Vertices[(i + 1) % this.Vertices.length] : this.Vertices[i + 1];
 
                 if (this.lineIsIntersecting(a, b, raycastOrigin, point)) {
                     lineIntersections++;

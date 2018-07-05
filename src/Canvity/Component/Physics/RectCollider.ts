@@ -20,6 +20,8 @@ namespace Canvity.Component.Physics {
             }
         }
 
+        protected get Vertices(): Array<Util.Vector2> { return this.Rect.Vertices; }
+
         public constructor() {
             super();
         }

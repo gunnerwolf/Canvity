@@ -25,6 +25,8 @@ namespace Canvity.Component.Physics {
         private onMouseUp: Canvity.Events.CanvityEvent;
         public get OnMouseUp(): Canvity.Events.CanvityEvent { return this.onMouseUp; }
 
+        protected abstract get Vertices(): Array<Util.Vector2>;
+
         protected constructor() {
             super();
 
