@@ -1,24 +1,8 @@
 namespace Canvity.Component.Physics {
-    export class RectCollider extends BaseCollider {
+    export class RectCollider extends PolygonCollider {
         protected rect: Util.Rect;
-        public get Rect(): Util.Rect {
-            if (!(this.Transform instanceof RectTransform)) {
-                let pos: Util.Vector2 = new Util.Vector2();
-                if (this.Transform !== null) {
-                    pos = this.Transform.Position;
-                }
-                return new Util.Rect(pos.X + this.rect.X, pos.Y + this.rect.Y, this.rect.W, this.rect.H);
-            } else {
-                return (<RectTransform>this.Transform).Rect;
-            }
-        }
-        public set Rect(val: Util.Rect) {
-            if (!(this.Transform instanceof RectTransform)) {
-                this.rect = val;
-            } else {
-                (<RectTransform>this.Transform).Rect = val;
-            }
-        }
+        public get Rect(): Util.Rect { return this.BoundingBox; }
+        public set Rect(val: Util.Rect) { this.vertices = val.Vertices; }
 
         protected get Vertices(): Array<Util.Vector2> { return this.Rect.Vertices; }
 
@@ -27,7 +11,7 @@ namespace Canvity.Component.Physics {
         }
 
         public CheckIsCollision(point: Util.Vector2): boolean {
-            return this.rect.ContainsPoint(point);
+            return this.checkBoundingBox(point);
         }
     }
 }
