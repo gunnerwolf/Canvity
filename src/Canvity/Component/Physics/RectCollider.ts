@@ -1,6 +1,6 @@
 namespace Canvity.Component.Physics {
     export class RectCollider extends BaseCollider {
-        private rect: Util.Rect;
+        protected rect: Util.Rect;
         public get Rect(): Util.Rect {
             if (!(this.Transform instanceof RectTransform)) {
                 let pos: Util.Vector2 = new Util.Vector2();
@@ -14,7 +14,7 @@ namespace Canvity.Component.Physics {
         }
         public set Rect(val: Util.Rect) {
             if (!(this.Transform instanceof RectTransform)) {
-                this.rect = val;;
+                this.rect = val;
             } else {
                 (<RectTransform>this.Transform).Rect = val;
             }
