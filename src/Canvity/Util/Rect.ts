@@ -5,6 +5,15 @@ namespace Canvity.Util {
         public W: number;
         public H: number;
 
+        public get Vertices(): Array<Vector2> {
+            return new Array<Vector2>(
+                new Vector2(this.X, this.Y),
+                new Vector2(this.X, this.Y + this.H),
+                new Vector2(this.X + this.W, this.Y),
+                new Vector2(this.X + this.W, this.Y + this.H)
+            );
+        }
+
         public constructor(x: number = 0, y: number = 0, w: number = 0, h: number = 0) {
             this.X = x;
             this.Y = y;
