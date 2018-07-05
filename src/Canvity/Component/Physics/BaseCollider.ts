@@ -27,6 +27,15 @@ namespace Canvity.Component.Physics {
 
         protected abstract get Vertices(): Array<Util.Vector2>;
 
+        protected get BoundingBox(): Util.Rect {
+            let minX = this.Vertices.map(x => x.X).reduce((a, b) => Math.min(a, b));
+            let maxX = this.Vertices.map(x => x.X).reduce((a, b) => Math.max(a, b));
+            let minY = this.Vertices.map(x => x.Y).reduce((a, b) => Math.min(a, b));
+            let maxY = this.Vertices.map(x => x.Y).reduce((a, b) => Math.max(a, b));
+
+            return new Util.Rect(minX, minY, maxX, maxY);
+        }
+
         protected constructor() {
             super();
 
