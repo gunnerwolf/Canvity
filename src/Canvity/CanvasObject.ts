@@ -35,7 +35,7 @@ namespace Canvity {
             });
         }
 
-        public AddComponent(component: CanvasComponent): CanvasComponent {
+        public AddComponent(component: CanvasComponent, addDependencies: boolean = false): CanvasComponent {
             let ctor: any = component.constructor;
             if (component.Unique && this.HasComponent(ctor)) {
                 throw new Error("Attempted to add unique component " + ctor.name + " to object that already contains an instance!");
@@ -44,7 +44,11 @@ namespace Canvity {
                 component.Requires.forEach(element => {
                     let subCtor: any = element
                     if (!this.HasComponent(element)) {
-                        throw new Error("Attempted to add component " + ctor.name + " to an object that does not contain an instance of " + subCtor.name);
+                        if (!addDependencies) {
+                            throw new Error("Attempted to add component " + ctor.name + " to an object that does not contain an instance of " + subCtor.name);
+                        } else {
+                            this.AddComponentOfType(element, addDependencies);
+                        }
                     }
                 }, this);
             }
@@ -62,7 +66,7 @@ namespace Canvity {
             }
             return component;
         }
-        public AddComponentOfType<T extends CanvasComponent>(type: { new(): T ;} ): T {
+        public AddComponentOfType<T extends CanvasComponent>(type: { new(): T ;}, addDependencies: boolean = false): T {
             let component = new type();
             component.CanvasObject = this;
             if (component instanceof Component.Transform) {
@@ -75,7 +79,7 @@ namespace Canvity {
                 }
                 else if (this.transform === undefined || this.transform === null) this.transform = component;
             }
-            return <T>this.AddComponent(component);
+            return <T>this.AddComponent(component, addDependencies);
         }
 
         public GetComponent<T extends CanvasComponent>(type: { new(...args: any[]): T ;}): T | null {
