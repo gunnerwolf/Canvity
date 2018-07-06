@@ -38,7 +38,7 @@ namespace Canvity.Util {
             ret += this.r + ', ';
             ret += this.g + ', ';
             ret += this.b + ', ';
-            ret += this.a + ')';
+            ret += (Math.round(this.a / 255 * 100) / 100) + ')';
             return ret;            
         }
 
