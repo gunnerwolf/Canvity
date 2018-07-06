@@ -41,16 +41,22 @@ namespace Canvity {
                 throw new Error("Attempted to add unique component " + ctor.name + " to object that already contains an instance!");
             }
             if (component.Requires.length > 0) {
-                component.Requires.forEach(element => {
-                    let subCtor: any = element
-                    if (!this.HasComponent(element)) {
-                        if (!addDependencies) {
-                            throw new Error("Attempted to add component " + ctor.name + " to an object that does not contain an instance of " + subCtor.name);
-                        } else {
-                            this.AddComponentOfType(element, addDependencies);
+                if (addDependencies) {
+                    let required = component.GetRequiredComponents();
+                    required.forEach(element => {
+                        let ctor: any = element.constructor;
+                        if (!element.Unique || !this.HasComponent(ctor)) {
+                            this.AddComponent(element);
                         }
-                    }
-                }, this);
+                    }, this);
+                } else {
+                    component.Requires.forEach(element => {
+                        let subCtor: any = element
+                        if (!this.HasComponent(element)) {
+                                throw new Error("Attempted to add component " + ctor.name + " to an object that does not contain an instance of " + subCtor.name);
+                        }
+                    }, this);
+                }
             }
             this.components.Add(component);
             component.CanvasObject = this;
@@ -68,17 +74,6 @@ namespace Canvity {
         }
         public AddComponentOfType<T extends CanvasComponent>(type: { new(): T; }, addDependencies: boolean = false): T {
             let component = new type();
-            component.CanvasObject = this;
-            if (component instanceof Component.Transform) {
-                if (component instanceof Component.RectTransform) {
-                    if (this.transform === undefined || this.transform === null) this.transform = component;
-                    else {
-                        this.RemoveComponentOfType(Component.Transform);
-                        this.transform = component;
-                    }
-                }
-                else if (this.transform === undefined || this.transform === null) this.transform = component;
-            }
             return <T>this.AddComponent(component, addDependencies);
         }
 
