@@ -8,7 +8,7 @@ namespace Canvity.Component.UI {
         private window : Window;
         private collider: Physics.TriangleCollider;
 
-        public constructor(color: Util.Color = new Util.Color(255, 255, 255, 100)) {
+        public constructor(color: Util.Color = new Util.Color(255, 255, 255, 150)) {
             super();
 
             this.Color = color;
@@ -28,6 +28,7 @@ namespace Canvity.Component.UI {
             ctx.fill();
 
             ctx.strokeStyle = this.Color.CssString;
+            ctx.lineWidth = 1;
 
             let rect: Util.Rect = (<RectTransform>this.Transform).Rect;
 
@@ -51,8 +52,8 @@ namespace Canvity.Component.UI {
             if (!obj.HasComponent(Window)) this.window = <Window>obj.AddComponent(new Window(Util.Color.Black), true);
             let rect: Util.Rect = (<RectTransform>obj.Transform).Rect;
             let v1: Util.Vector2 = new Util.Vector2(rect.X + rect.W, rect.Y + rect.H);
-            let v2: Util.Vector2 = v1.Sub(new Util.Vector2(10, 0));
-            let v3: Util.Vector2 = v1.Sub(new Util.Vector2(0, 10));
+            let v2: Util.Vector2 = v1.Sub(new Util.Vector2(12, 0));
+            let v3: Util.Vector2 = v1.Sub(new Util.Vector2(0, 12));
             let tri = new Physics.TriangleCollider(v1, v2, v3);
             this.collider = tri;
             return new Array<CanvasComponent>(tri);
