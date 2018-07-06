@@ -26,15 +26,41 @@ namespace Canvity.Component.Physics {
         public get Mass(): number { return this.mass; }
         public set Mass(val: number) { this.mass = val; }
 
+        private force: Util.Vector2;
+        private accel: Util.Vector2;
+        private angularForce: number;
+        private angularAccel: number;
+
         public constructor() {
             super();
         }
 
-        public Update(deltaTime: Util.Time) {
+        public Update(deltaTime: Util.Time): void {
             if (this.Transform === null) return;
+
+            this.processForces();
+
+            this.Velocity = this.Velocity.Add(this.accel.Multiply(deltaTime.DeltaTime));
+            this.AngularVelocity = this.AngularVelocity + (this.angularAccel * deltaTime.DeltaTime);
 
             this.Transform.Translate(this.Velocity.Multiply(deltaTime.DeltaTime));
             this.Transform.Rotate(this.AngularVelocity * deltaTime.DeltaTime);
+        }
+
+        public ApplyForce(vector: Util.Vector2): void {
+            this.force = this.force.Add(vector);
+        }
+        public ApplyAngularForce(force: number): void {
+            this.angularForce += force;
+        }
+
+        private processForces(): void {
+            // TODO: Factor drag into acceleration formula
+            this.accel = this.force.Multiply(1 / this.Mass);
+            this.angularAccel = this.angularForce / this.Mass;
+
+            this.force = new Util.Vector2();
+            this.angularForce = 0;
         }
     }
 }
