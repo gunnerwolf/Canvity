@@ -2,11 +2,9 @@ namespace Canvity.Util {
     /**
      * Represents an unordered collection of unique items of type T
      */
-    export class HashSet<T> {
-        private container: Array<T>;
-
+    export class HashSet<T> extends Array<T> {
         public constructor(...items: Array<T>) {
-            this.container = items;
+            super(...items);
         }
 
         /**
@@ -16,7 +14,7 @@ namespace Canvity.Util {
          */
         public Add(item: T): boolean {
             if (this.Contains(item)) return false;
-            this.container.push(item);
+            super.push(item);
             return true;
         }
         /**
@@ -26,16 +24,9 @@ namespace Canvity.Util {
          */
         public Remove(item: T): boolean {
             if (!this.Contains(item)) return false;
-            let index: number = this.container.indexOf(item);
-            this.container.splice(index, 1);
+            let index: number = super.indexOf(item);
+            super.splice(index, 1);
             return true;
-        }
-
-        /**
-         * @return number The number of items in the collection
-         */
-        public Count(): number {
-            return this.container.length;
         }
 
         /**
@@ -44,26 +35,34 @@ namespace Canvity.Util {
          * @return boolean Whether the item exists in the collection
          */
         public Contains(item: T): boolean {
-            return this.container.indexOf(item) >= 0;
+            return super.indexOf(item) >= 0;
         }
 
-        public forEach(f: (value: T, index: number, array: T[]) => void, thisArg?: any): void { 
-            this.container.forEach(f, thisArg);
-        }
-        public filter(f: (value: T, index: number, array: T[]) => any, thisArg?: any): HashSet<T> {
-            return HashSet.FromArray(this.container.filter(f, thisArg));
-        }
-        public map<U>(f: (value: T, index: number, array: T[]) => U, thisArg?: any): HashSet<U> {
-            return HashSet.FromArray(this.container.map(f, thisArg));;
+        /**
+         * Returns the elements of a HashSet that meet the condition specified in a callback function
+         * @param callbackfn A function that accepts up to three arguments. The filter method calls the callbackfn function once for each element in the HashSet
+         * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value
+         * @return A HashSet containing the results of the filter function
+         */
+        public filter(callbackfn: (value: T, index: number, array: T[]) => any, thisArg?: any): HashSet<T> {
+            return HashSet.FromArray(super.filter(callbackfn, thisArg));
         }
 
+        /**
+         * Returns the contents of the HashSet in an ordered Array
+         * @return The contents of the HashSet in an ordered Array
+         */
         public ToArray(): Array<T> {
-            return this.container;
+            return <Array<T>>this;
         }
 
+        /**
+         * Creates a HashSet from an array of unique items
+         * @param array An array to convert to a HashSet
+         * @return The contents of the Array in a HashSet
+         */
         public static FromArray<T>(array: Array<T>): HashSet<T> {
-            let set = new HashSet<T>();
-            set.container = array;
+            let set = new HashSet<T>(...array);
             return set;
         }
     }
