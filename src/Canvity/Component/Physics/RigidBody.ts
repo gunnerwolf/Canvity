@@ -2,14 +2,6 @@ namespace Canvity.Component.Physics {
     export class RigidBody extends CanvasComponent {
         private collider: BaseCollider;
 
-        private angularDrag: number;
-        public get AngularDrag(): number { return this.angularDrag; }
-        public set AngularDrag(val: number) { this.angularDrag = val; }
-        
-        private drag: number;
-        public get Drag(): number { return this.drag; }
-        public set Drag(val: number) { this.drag = val; }
-
         private velocity: Util.Vector2;
         public get Velocity(): Util.Vector2 { return this.velocity; }
         public set Velocity(val: Util.Vector2) { this.velocity = val; }
@@ -17,6 +9,14 @@ namespace Canvity.Component.Physics {
         private angularVelocity: number;
         public get AngularVelocity(): number { return this.angularVelocity; }
         public set AngularVelocity(val: number) { this.angularVelocity = val; }
+        
+        private drag: number;
+        public get Drag(): number { return this.drag; }
+        public set Drag(val: number) { this.drag = val; }
+
+        private angularDrag: number;
+        public get AngularDrag(): number { return this.angularDrag; }
+        public set AngularDrag(val: number) { this.angularDrag = val; }
 
         private gravity: number;
         public get Gravity(): number { return this.gravity; }
@@ -31,8 +31,21 @@ namespace Canvity.Component.Physics {
         private angularForce: number;
         private angularAccel: number;
 
-        public constructor() {
+        public constructor(mass: number = 1) {
             super();
+
+            this.velocity = new Util.Vector2();
+            this.angularVelocity = 0;
+            this.drag = 0;
+            this.angularDrag = 0;
+
+            this.gravity = 0;
+            this.mass = mass;
+
+            this.force = new Util.Vector2();
+            this.accel = new Util.Vector2();
+            this.angularForce = 0;
+            this.angularAccel = 0;
         }
 
         public Update(deltaTime: Util.Time): void {
