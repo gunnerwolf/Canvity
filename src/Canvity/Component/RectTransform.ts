@@ -10,12 +10,8 @@ namespace Canvity.Component {
             this.Size = new Util.Vector2(val.W, val.H);
         }
 
-        public get ComponentName(): string { return 'RectTransform'; }
-
         public constructor() {
             super();
-
-            console.log('RectTransform');
 
             this.Size = new Util.Vector2();
         }

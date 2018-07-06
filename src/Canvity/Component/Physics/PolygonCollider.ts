@@ -12,8 +12,6 @@ namespace Canvity.Component.Physics {
             return new Util.Rect(minX, minY, maxX, maxY);
         }
 
-        public get ComponentName(): string { return 'PolygonCollider'; }
-
         public constructor(...vertices: Array<Util.Vector2>) {
             super();
 

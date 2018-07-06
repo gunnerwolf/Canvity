@@ -37,17 +37,6 @@ namespace Canvity {
 
         public AddComponent(component: CanvasComponent, addDependencies: boolean = false): CanvasComponent {
             let ctor: any = component.constructor;
-            if (component instanceof Component.Transform) {
-                if (component instanceof Component.RectTransform) {
-                    if (this.transform === undefined || this.transform === null) this.transform = component;
-                    else {
-                        console.log(this.components);
-                        this.RemoveComponentOfType(Component.Transform);
-                        this.transform = component;
-                    }
-                }
-                else if (this.transform === undefined || this.transform === null) this.transform = component;
-            }
             if (component.Unique && this.HasComponent(ctor)) {
                 throw new Error("Attempted to add unique component " + ctor.name + " to object that already contains an instance!");
             }
@@ -65,6 +54,16 @@ namespace Canvity {
             }
             this.components.Add(component);
             component.CanvasObject = this;
+            if (component instanceof Component.Transform) {
+                if (component instanceof Component.RectTransform) {
+                    if (this.transform === undefined || this.transform === null) this.transform = component;
+                    else {
+                        this.RemoveComponentOfType(Component.Transform);
+                        this.transform = component;
+                    }
+                }
+                else if (this.transform === undefined || this.transform === null) this.transform = component;
+            }
             return component;
         }
         public AddComponentOfType<T extends CanvasComponent>(type: { new(): T; }, addDependencies: boolean = false): T {
