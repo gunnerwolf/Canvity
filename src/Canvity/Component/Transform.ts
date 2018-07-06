@@ -49,6 +49,8 @@ namespace Canvity.Component {
             if (this.canvasObject.ParentObj) this.LocalZIndex -= this.canvasObject.ParentObj.Transform.ZIndex;
         }
 
+        public get ComponentName(): string { return 'Transform'; }
+
         public constructor() {
             super();
 

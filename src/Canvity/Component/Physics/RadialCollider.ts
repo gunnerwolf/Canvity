@@ -4,6 +4,8 @@ namespace Canvity.Component.Physics {
         public get Radius(): number { return this.radius; }
         public set Radius(val: number) { this.radius = val; }
 
+        public get ComponentName(): string { return 'RaidalCollider'; }
+
         public constructor(radius: number) {
             super();
 

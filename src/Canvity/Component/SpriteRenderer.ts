@@ -2,6 +2,8 @@ namespace Canvity.Component {
     export class SpriteRenderer extends CanvasComponent {
         private sprite: Assets.Sprite;
 
+        public get ComponentName(): string { return 'SpriteRenderer'; }
+
         public constructor(sprite: Assets.Sprite) {
             super();
 

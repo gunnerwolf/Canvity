@@ -25,6 +25,8 @@ namespace Canvity.Component {
             }
         }
 
+        public get ComponentName(): string { return 'RectRenderer'; }
+
         public constructor(color: Util.Color) {
             super();
 

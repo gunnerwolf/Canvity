@@ -5,6 +5,8 @@ namespace Canvity.Component.UI {
         public get Color(): Util.Color { return this.color; }
         public set Color(val: Util.Color) { this.color = val; }
 
+        public get ComponentName(): string { return 'ResizeTab'; }
+
         public constructor(color: Util.Color = new Util.Color(255, 255, 255, 100)) {
             super();
 

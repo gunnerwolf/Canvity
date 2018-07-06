@@ -22,6 +22,8 @@ namespace Canvity.Component {
                 return null;
             }
         }
+
+        public abstract get ComponentName(): string;
         
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void { }
         public Update(time: Util.Time): void { }

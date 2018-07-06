@@ -31,6 +31,8 @@ namespace Canvity.Component.Physics {
         private angularForce: number;
         private angularAccel: number;
 
+        public get ComponentName(): string { return 'RigidBody'; }
+
         public constructor(mass: number = 1) {
             super();
 

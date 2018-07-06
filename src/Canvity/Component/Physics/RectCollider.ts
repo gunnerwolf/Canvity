@@ -6,6 +6,8 @@ namespace Canvity.Component.Physics {
 
         protected get Vertices(): Array<Util.Vector2> { return this.Rect.Vertices; }
 
+        public get ComponentName(): string { return 'RectCollider'; }
+
         public constructor() {
             super();
         }
