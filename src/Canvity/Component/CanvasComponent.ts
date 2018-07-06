@@ -26,7 +26,7 @@ namespace Canvity.Component {
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void { }
         public Update(time: Util.Time): void { }
 
-        public GetRequiredComponents(): Array<CanvasComponent> {
+        public GetRequiredComponents(obj: CanvasObject): Array<CanvasComponent> {
             let required = new Array<CanvasComponent>();
             this.requires.forEach(component => required.push(new component()))
             return required;

@@ -42,7 +42,7 @@ namespace Canvity {
             }
             if (component.Requires.length > 0) {
                 if (addDependencies) {
-                    let required = component.GetRequiredComponents();
+                    let required = component.GetRequiredComponents(this);
                     required.forEach(element => {
                         let ctor: any = element.constructor;
                         if (!element.Unique || !this.HasComponent(ctor)) {
