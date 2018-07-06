@@ -58,7 +58,7 @@ namespace Canvity {
                 if (component instanceof Component.RectTransform) {
                     if (this.transform === undefined || this.transform === null) this.transform = component;
                     else {
-                        // TODO: Remove old transform
+                        this.RemoveComponentOfType(Component.Transform);
                         this.transform = component;
                     }
                 }
@@ -66,14 +66,14 @@ namespace Canvity {
             }
             return component;
         }
-        public AddComponentOfType<T extends CanvasComponent>(type: { new(): T ;}, addDependencies: boolean = false): T {
+        public AddComponentOfType<T extends CanvasComponent>(type: { new(): T; }, addDependencies: boolean = false): T {
             let component = new type();
             component.CanvasObject = this;
             if (component instanceof Component.Transform) {
                 if (component instanceof Component.RectTransform) {
                     if (this.transform === undefined || this.transform === null) this.transform = component;
                     else {
-                        // TODO: Remove old transform
+                        this.RemoveComponentOfType(Component.Transform);
                         this.transform = component;
                     }
                 }
@@ -82,14 +82,25 @@ namespace Canvity {
             return <T>this.AddComponent(component, addDependencies);
         }
 
-        public GetComponent<T extends CanvasComponent>(type: { new(...args: any[]): T ;}): T | null {
+        public GetComponent<T extends CanvasComponent>(type: { new(...args: any[]): T; }): T | null {
             let items = this.components.filter(element => { return element instanceof type; }).ToArray();
             if (items.length === 0) return null;
             return <T>items[0];
         }
 
-        public HasComponent<T extends CanvasComponent>(type: { new(...args: any[]): T ;}): boolean {
+        public HasComponent<T extends CanvasComponent>(type: { new(...args: any[]): T; }): boolean {
             return this.GetComponent(type) !== null;
+        }
+
+        public RemoveComponent(comp: CanvasComponent): void {
+            let items = this.components.filter(element => { return element === comp; }).ToArray();
+            if (items.length > 0) {
+                this.components.Remove(items[0]);
+            }
+        }
+        public RemoveComponentOfType<T extends CanvasComponent>(type: { new(...args: any[]): T; }): void {
+            let component = this.GetComponent(type);
+            if (component != null) this.RemoveComponent(component);
         }
     }
 }
