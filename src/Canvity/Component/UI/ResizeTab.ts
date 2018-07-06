@@ -5,6 +5,9 @@ namespace Canvity.Component.UI {
         public get Color(): Util.Color { return this.color; }
         public set Color(val: Util.Color) { this.color = val; }
 
+        private isDragging: boolean;
+        private dragStart: Util.Vector2;
+
         private window : Window;
         private collider: Physics.TriangleCollider;
 
@@ -12,6 +15,7 @@ namespace Canvity.Component.UI {
             super();
 
             this.Color = color;
+            this.isDragging = false;
         }
 
         public Draw(deltaTime: Util.Time, ctx: CanvasRenderingContext2D): void {
@@ -46,6 +50,16 @@ namespace Canvity.Component.UI {
             ctx.stroke();
         }
 
+        public Update(deltaTime: Util.Time): void {
+            if (this.isDragging) {
+                let transform = this.Transform;
+                if (transform === null) return;
+                let rectTransform = <RectTransform>transform;
+
+                rectTransform.Size = rectTransform.Size.Add(InputManager.MouseDelta);
+            }
+        }
+
         public GetRequiredComponents(obj: CanvasObject): Array<CanvasComponent> {
             // Add the window straight away rather than returning it,
             // because this guarantees that we will have a RectTransform rather than a Transform
@@ -57,6 +71,18 @@ namespace Canvity.Component.UI {
             let tri = new Physics.TriangleCollider(v1, v2, v3);
             this.collider = tri;
             return new Array<CanvasComponent>(tri);
+        }
+
+        protected onMouseDown() {
+            if (InputManager.IsLeftButtonDown) {
+                this.isDragging = true;
+                this.dragStart = InputManager.MousePos;
+            }
+        }
+        protected onMouseUp() {
+            if (!InputManager.IsLeftButtonDown) {
+                this.isDragging = false;
+            }
         }
 
         protected onParentSet(): void {
@@ -73,6 +99,9 @@ namespace Canvity.Component.UI {
                     this.collider = tri;
                 }
             }
+
+            this.collider.OnMouseDown.AddEventListener(this.onMouseDown);
+            this.collider.OnMouseUp.AddEventListener(this.onMouseUp);
         }
     }
 }
