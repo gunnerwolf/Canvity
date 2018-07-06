@@ -4,7 +4,7 @@ namespace Canvity.Component.Physics {
         public get Rect(): Util.Rect { return this.BoundingBox; }
         public set Rect(val: Util.Rect) { this.vertices = val.Vertices; }
 
-        protected get Vertices(): Array<Util.Vector2> { return this.Rect.Vertices; }
+        public get Vertices(): Array<Util.Vector2> { return this.Rect.Vertices; }
 
         public constructor() {
             super();
