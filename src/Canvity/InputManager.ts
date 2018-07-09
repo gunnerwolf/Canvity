@@ -21,6 +21,11 @@ namespace Canvity {
         public static Init(): void {
             InputManager.downButtons = 0;
 
+            this.mousePos = new Util.Vector2();
+            this.mouseDelta = new Util.Vector2();
+
+            this.downButtons = 0;
+
             InputManager.onMouseMove = new Events.CanvityEvent();
             InputManager.onMouseDown = new Events.CanvityEvent();
             InputManager.onMouseUp = new Events.CanvityEvent();
