@@ -32,13 +32,33 @@ namespace Canvity {
         }
 
         public HandleMouseMove() {
-
+            this.objects.filter(obj => obj.HasComponent(Component.Physics.BaseCollider)).forEach(obj => {
+                obj.GetComponents(Component.Physics.BaseCollider).forEach(collider => {
+                    if (collider.CheckIsCollision(InputManager.MousePos)) {
+                        collider.HandleMouseMove();
+                    }
+                })
+            });
         }
         public HandleMouseDown() {
+            this.objects.filter(obj => obj.HasComponent(Component.Physics.BaseCollider)).forEach(obj => {
+                obj.GetComponents(Component.Physics.BaseCollider).forEach(collider => {
+                    if (collider.CheckIsCollision(InputManager.MousePos)) {
+                        collider.HandleMouseDown();
+                    }
+                })
+            });
 
         }
         public HandleMouseUp() {
-            
+            this.objects.filter(obj => obj.HasComponent(Component.Physics.BaseCollider)).forEach(obj => {
+                obj.GetComponents(Component.Physics.BaseCollider).forEach(collider => {
+                    if (collider.CheckIsCollision(InputManager.MousePos)) {
+                        collider.HandleMouseUp();
+                    }
+                })
+            });
+
         }
     }
 }
