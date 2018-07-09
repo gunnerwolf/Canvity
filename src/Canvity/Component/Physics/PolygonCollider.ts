@@ -55,5 +55,14 @@ namespace Canvity.Component.Physics {
 
             return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
         }
+
+        protected handleObjectMessage(message: Messaging.Message): void {
+            let messageParts: Array<string> = message.Message.split('.');
+            if (messageParts[0] === 'transform') {
+                if (messageParts[1] === 'move') {
+                    
+                }
+            }
+        }
     }
 }
