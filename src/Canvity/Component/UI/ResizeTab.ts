@@ -6,7 +6,6 @@ namespace Canvity.Component.UI {
         public set Color(val: Util.Color) { this.color = val; }
 
         private isDragging: boolean;
-        private dragStart: Util.Vector2;
 
         private window : Window;
         private collider: Physics.TriangleCollider;
@@ -76,7 +75,6 @@ namespace Canvity.Component.UI {
         protected onMouseDown() {
             if (InputManager.IsLeftButtonDown) {
                 this.isDragging = true;
-                this.dragStart = InputManager.MousePos;
             }
         }
         protected onMouseUp() {
