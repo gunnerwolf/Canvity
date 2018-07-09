@@ -19,7 +19,14 @@ namespace Canvity.Component {
 
         private localPosition: Util.Vector2;
         public get LocalPosition(): Util.Vector2 { return this.localPosition; }
-        public set LocalPosition(val: Util.Vector2) { this.localPosition = val; }
+        public set LocalPosition(val: Util.Vector2) {
+            let diff: Util.Vector2 = val.Sub(this.localPosition);
+            this.localPosition = val;
+            
+            if (this.CanvasObject !== null && this.CanvasObject !== undefined) {
+                Messaging.MessageBus.PushMessage(new Messaging.Message(App.CurrentUpdateTime, 'transform.move', this.CanvasObject.InstanceID, diff), 1);
+            }
+        }
 
         public get Position(): Util.Vector2 {
             if (this.canvasObject.ParentObj) {
