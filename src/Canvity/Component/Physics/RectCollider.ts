@@ -4,17 +4,33 @@ namespace Canvity.Component.Physics {
         public get Rect(): Util.Rect { return this.BoundingBox; }
         public set Rect(val: Util.Rect) { this.vertices = val.Vertices; }
 
-        public constructor(rect: Util.Rect) {
+        private fetchRect: boolean;
+
+        public constructor(rect: Util.Rect | null) {
             super();
 
-            this.Vertices.push(new Util.Vector2(rect.X, rect.Y));
-            this.Vertices.push(new Util.Vector2(rect.X + rect.W, rect.Y));
-            this.Vertices.push(new Util.Vector2(rect.X + rect.W, rect.Y + rect.H));
-            this.Vertices.push(new Util.Vector2(rect.X, rect.Y + rect.H));
+            if (rect === null) {
+                this.fetchRect = true;
+            } else {
+                this.Vertices.push(new Util.Vector2(rect.X, rect.Y));
+                this.Vertices.push(new Util.Vector2(rect.X + rect.W, rect.Y));
+                this.Vertices.push(new Util.Vector2(rect.X + rect.W, rect.Y + rect.H));
+                this.Vertices.push(new Util.Vector2(rect.X, rect.Y + rect.H));
+            }
         }
 
         public CheckIsCollision(point: Util.Vector2): boolean {
             return this.checkBoundingBox(point);
+        }
+
+        protected onParentSet(): void {
+            if (this.fetchRect) {
+                let transform = this.Transform;
+                if (transform !== null && transform instanceof RectTransform) {
+                    this.fetchRect = false;
+                    this.Rect = (<RectTransform>transform).Rect;
+                }
+            }
         }
     }
 }
