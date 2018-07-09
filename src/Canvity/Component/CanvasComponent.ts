@@ -28,6 +28,9 @@ namespace Canvity.Component {
             Messages.MessageBus.GetMessages(this.InstanceID).forEach(message => {
                 this.handleMessage(message);
             })
+            Messages.MessageBus.GetMessages(this.CanvasObject.InstanceID).forEach(message => {
+                this.handleMessage(message);
+            })
         }
 
         public GetRequiredComponents(obj: CanvasObject): Array<CanvasComponent> {
@@ -40,5 +43,6 @@ namespace Canvity.Component {
         protected handleMessage(message: Messages.Message): void {
             console.warn("Object", this.InstanceID, "was sent a message, but has not implemented handleMessage!\n", message);
         }
+        protected handleObjectMessage(message: Messages.Message): void { }
     }
 }
