@@ -7,6 +7,12 @@ namespace Canvity.Component.UI {
 
         private isDragging: boolean;
 
+        private dragStart: Util.Vector2;
+
+        private vert1Rel: Util.Vector2;
+        private vert2Rel: Util.Vector2;
+        private vert3Rel: Util.Vector2;
+
         private window : Window;
         private collider: Physics.TriangleCollider;
 
@@ -52,13 +58,7 @@ namespace Canvity.Component.UI {
         public Update(deltaTime: Util.Time): void {
             super.Update(deltaTime);
 
-            if (this.isDragging) {
-                let transform = this.Transform;
-                if (transform === null) return;
-                let rectTransform = <RectTransform>transform;
-
-                rectTransform.Size = rectTransform.Size.Add(InputManager.MouseDelta);
-            }
+            Messaging.MessageBus.GetGlobalMessages('input').forEach(message => { this.handleInputMessage(message); }, this);
         }
 
         public GetRequiredComponents(obj: CanvasObject): Array<CanvasComponent> {
@@ -76,12 +76,35 @@ namespace Canvity.Component.UI {
 
         protected onMouseDown() {
             if (InputManager.IsLeftButtonDown) {
+                console.log("click");
                 this.isDragging = true;
+                this.dragStart = InputManager.MousePos;
+                this.vert1Rel = InputManager.MousePos.Sub(this.collider.Vertices[0]);
+                this.vert2Rel = InputManager.MousePos.Sub(this.collider.Vertices[1]);
+                this.vert3Rel = InputManager.MousePos.Sub(this.collider.Vertices[2]);
+                console.log(this.vert1Rel, this.vert2Rel, this.vert3Rel);
             }
         }
         protected onMouseUp() {
             if (!InputManager.IsLeftButtonDown) {
+                console.log("unclick");
                 this.isDragging = false;
+            }
+        }
+        protected onMouseMove() {
+            if (this.isDragging) {
+                let transform: Transform | null = this.Transform;
+                if (transform === null) return;
+                let rectTransform: RectTransform = <RectTransform>transform;
+                
+                rectTransform.Size = rectTransform.Size.Add(InputManager.MousePos.Sub(this.dragStart));
+                this.dragStart = InputManager.MousePos;
+
+                let v1: Util.Vector2 = InputManager.MousePos.Sub(this.vert1Rel);
+                let v2: Util.Vector2 = InputManager.MousePos.Sub(this.vert2Rel);
+                let v3: Util.Vector2 = InputManager.MousePos.Sub(this.vert3Rel);
+
+                this.collider.Vertices = new Array<Util.Vector2>(v1, v2, v3);
             }
         }
 
@@ -107,7 +130,14 @@ namespace Canvity.Component.UI {
                 if (message.Data[0] !== this.collider) return;
                 if (messageParts[1] !== 'mouse') return;
                 if (messageParts[2] === 'down') this.onMouseDown();
-                else if (messageParts[2] === 'up') this.onMouseUp();
+            }
+        }
+
+        protected handleInputMessage(message: Messaging.Message): void {
+            let messageParts: Array<string> = message.Message.split('.');
+            if (messageParts[0] === 'mouse') {
+                if (messageParts[1] === 'move') this.onMouseMove();
+                else if (messageParts[1] === 'up') this.onMouseUp();
             }
         }
     }
