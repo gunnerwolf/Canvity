@@ -58,8 +58,6 @@ namespace Canvity {
                     }, this);
                 }
             }
-            this.components.Add(component);
-            component.CanvasObject = this;
             if (component instanceof Component.Transform) {
                 if (component instanceof Component.RectTransform) {
                     if (this.transform === undefined || this.transform === null) this.transform = component;
