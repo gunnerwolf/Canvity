@@ -24,7 +24,11 @@ namespace Canvity.Component {
         }
         
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void { }
-        public Update(time: Util.Time): void { }
+        public Update(time: Util.Time): void {
+            Messages.MessageBus.GetMessages(this.InstanceID).forEach(message => {
+                this.handleMessage(message);
+            })
+        }
 
         public GetRequiredComponents(obj: CanvasObject): Array<CanvasComponent> {
             let required = new Array<CanvasComponent>();
@@ -33,5 +37,8 @@ namespace Canvity.Component {
         }
 
         protected onParentSet(): void { }
+        protected handleMessage(message: Messages.Message): void {
+            console.warn("Object", this.InstanceID, "was sent a message, but has not implemented handleMessage!\n", message);
+        }
     }
 }
