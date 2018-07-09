@@ -13,6 +13,7 @@ namespace Canvity {
             CanvasManager.canvas = canvas;
             let ctx = canvas.getContext('2d');
             if (ctx !== null) CanvasManager.ctx = ctx;
+            else throw Error("Could not get canvas context!");
 
             InputManager.OnMouseMove.AddEventListener(this.handleMouseMove);
             InputManager.OnMouseDown.AddEventListener(this.handleMouseDown);
