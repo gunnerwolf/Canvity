@@ -1,7 +1,16 @@
 namespace Canvity {
     export class ObjectManager {
+        private static objects: { [id: string]: CanvityObject } = {};
+        public static get RegisteredObjects(): { [id: string]: CanvityObject } { return ObjectManager.objects; }
+
         public static GenerateID(): string {
             return ObjectManager.generateUUID();
+        }
+
+        public static RegisterObject(obj: CanvityObject): boolean {
+            if (ObjectManager.objects[obj.InstanceID]) return false;
+            ObjectManager.objects[obj.InstanceID] = obj;
+            return true;
         }
 
         private static generateUUID() {

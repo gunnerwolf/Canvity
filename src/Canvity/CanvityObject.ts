@@ -8,6 +8,7 @@ namespace Canvity {
 
         protected constructor() {
             this.id = ObjectManager.GenerateID();
+            if (!ObjectManager.RegisterObject(this)) throw Error("Could not register object with id " + this.InstanceID + ". An object with that ID has already been registered!");
         }
 
         public ToString() {
