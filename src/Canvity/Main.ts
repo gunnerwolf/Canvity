@@ -2,10 +2,10 @@ namespace Canvity {
     export function StartApp(app: App, opts: any = { frameRate: 60, fpsLocked: true, updateRate: 60 }): void {
         app.PreInit(opts);
 
-        let drawDeltaTime = 1 / opts.frameRate;
-        let updateDeltaTime = 1;
+        let drawDeltaTime = 1000 / opts.frameRate;
+        let updateDeltaTime = 1000;
         if (!opts.fpsLocked) {
-            updateDeltaTime = 1 / opts.updateRate;
+            updateDeltaTime = 1000 / opts.updateRate;
         }
 
         app.Init(drawDeltaTime, updateDeltaTime);
