@@ -49,6 +49,8 @@ namespace Canvity.Component.Physics {
         }
 
         public Update(deltaTime: Util.Time): void {
+            super.Update(deltaTime);
+
             if (this.Transform === null) return;
 
             this.ApplyForce(new Util.Vector2(0, this.Gravity));

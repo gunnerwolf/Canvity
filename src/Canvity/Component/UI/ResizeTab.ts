@@ -50,6 +50,8 @@ namespace Canvity.Component.UI {
         }
 
         public Update(deltaTime: Util.Time): void {
+            super.Update(deltaTime);
+
             if (this.isDragging) {
                 let transform = this.Transform;
                 if (transform === null) return;
@@ -97,11 +99,6 @@ namespace Canvity.Component.UI {
                     this.collider = tri;
                 }
             }
-
-// TODO: Strip out events and replace with messages
-            this.collider.OnMouseDown.AddEventListener(this.onMouseDown);
-// TODO: Strip out events and replace with messages
-            this.collider.OnMouseUp.AddEventListener(this.onMouseUp);
         }
     }
 }
