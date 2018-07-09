@@ -2,6 +2,7 @@ namespace Canvity.Component.Physics {
     export class PolygonCollider extends BaseCollider {
         protected vertices: Array<Util.Vector2>;
         public get Vertices(): Array<Util.Vector2> { return this.vertices; }
+        public set Vertices(verts: Array<Util.Vector2>) { this.vertices = verts; }
 
         protected get BoundingBox(): Util.Rect {
             let minX = this.Vertices.map(x => x.X).reduce((a, b) => Math.min(a, b));
@@ -9,7 +10,7 @@ namespace Canvity.Component.Physics {
             let minY = this.Vertices.map(x => x.Y).reduce((a, b) => Math.min(a, b));
             let maxY = this.Vertices.map(x => x.Y).reduce((a, b) => Math.max(a, b));
 
-            return new Util.Rect(minX, minY, maxX, maxY);
+            return new Util.Rect(minX, minY, maxX - minX, maxY - minY);
         }
 
         public constructor(...vertices: Array<Util.Vector2>) {
