@@ -59,6 +59,8 @@ namespace Canvity {
 
             this.lastUpdate = timestamp;
             CanvasManager.Update(time);
+
+            Messaging.MessageBus.ClearMessages();
         }
 
         public Pause(): void {
