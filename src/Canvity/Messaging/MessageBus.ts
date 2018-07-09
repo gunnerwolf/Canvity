@@ -55,6 +55,7 @@ namespace Canvity.Messaging {
             MessageBus.globalMessages = {};
 
             MessageBus.delayedMessages.forEach((delayed, delay) => {
+                if (Object.keys(delayed).length <= 0) return;
                 if (delay <= 1) {
                     MessageBus.messages = delayed;
                 } else {
@@ -63,6 +64,7 @@ namespace Canvity.Messaging {
                 MessageBus.delayedMessages[delay] = {};
             });
             MessageBus.delayedGlobalMessages.forEach((delayed, delay) => {
+                if (Object.keys(delayed).length <= 0) return;
                 if (delay <= 1) {
                     MessageBus.globalMessages = delayed;
                 } else {
