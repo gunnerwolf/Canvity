@@ -83,6 +83,10 @@ namespace Canvity {
             return <T>items[0];
         }
 
+        public GetComponents<T extends CanvasComponent>(type: Function & { prototype: T }): Array<T> {
+            return <Array<T>>this.components.filter(element => { return element instanceof type; }).ToArray();
+        }
+
         public HasComponent<T extends CanvasComponent>(type: Function & { prototype: T }): boolean {
             return this.GetComponent(type) !== null;
         }
