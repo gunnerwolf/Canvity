@@ -26,8 +26,11 @@ namespace Canvity {
 
             this.downButtons = 0;
 
+// TODO: Strip out events and replace with messages
             InputManager.onMouseMove = new Events.CanvityEvent();
+// TODO: Strip out events and replace with messages
             InputManager.onMouseDown = new Events.CanvityEvent();
+// TODO: Strip out events and replace with messages
             InputManager.onMouseUp = new Events.CanvityEvent();
 
             document.addEventListener('mousemove', InputManager.HandleMouseMove);
@@ -41,6 +44,7 @@ namespace Canvity {
             InputManager.mousePos = new Util.Vector2(mouse.pageX, mouse.pageY);
             InputManager.mouseDelta = new Util.Vector2(mouse.movementX, mouse.movementY);
 
+// TODO: Strip out events and replace with messages
             InputManager.OnMouseMove.Invoke();
         }
 
@@ -51,6 +55,7 @@ namespace Canvity {
 
             InputManager.downButtons = mouse.buttons;
 
+// TODO: Strip out events and replace with messages
             InputManager.OnMouseDown.Invoke(pressed);
         }
 
@@ -61,6 +66,7 @@ namespace Canvity {
 
             InputManager.downButtons = mouse.buttons;
 
+// TODO: Strip out events and replace with messages
             InputManager.OnMouseUp.Invoke(released);
         }
     }

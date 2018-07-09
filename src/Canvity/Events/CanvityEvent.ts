@@ -6,6 +6,7 @@ namespace Canvity.Events {
             this.listeners = new Array<(values: Array<any>) => void>();
         }
 
+// TODO: Strip out events and replace with messages
         public AddEventListener(listener: (values: Array<any>) => void): void {
             this.listeners.push(listener);
         }

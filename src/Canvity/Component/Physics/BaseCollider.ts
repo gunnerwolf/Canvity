@@ -28,30 +28,48 @@ namespace Canvity.Component.Physics {
         protected constructor() {
             super();
 
+// TODO: Strip out events and replace with messages
             this.onCollision = new Canvity.Events.CanvityEvent();
+// TODO: Strip out events and replace with messages
             this.onCollisionEnter = new Canvity.Events.CanvityEvent();
+// TODO: Strip out events and replace with messages
             this.onCollisionExit = new Canvity.Events.CanvityEvent();
 
+// TODO: Strip out events and replace with messages
             this.onMouseEnter = new Canvity.Events.CanvityEvent();
+// TODO: Strip out events and replace with messages
             this.onMouseExit = new Canvity.Events.CanvityEvent();
+// TODO: Strip out events and replace with messages
             this.onMouseMove = new Canvity.Events.CanvityEvent();
 
+// TODO: Strip out events and replace with messages
             this.onMouseClick = new Canvity.Events.CanvityEvent();
+// TODO: Strip out events and replace with messages
             this.onMouseDown = new Canvity.Events.CanvityEvent();
+// TODO: Strip out events and replace with messages
             this.onMouseUp = new Canvity.Events.CanvityEvent();
         }
 
+// TODO: Strip out events and replace with messages
         public HandleCollision(other: BaseCollider, collisionPoint: Util.Vector2): void { this.onCollision.Invoke(other, collisionPoint); }
+// TODO: Strip out events and replace with messages
         public HandleCollisionEnter(other: BaseCollider, collisionPoint: Util.Vector2): void { this.onCollisionEnter.Invoke(other, collisionPoint); }
+// TODO: Strip out events and replace with messages
         public HandleCollisionExit(other: BaseCollider, collisionPoint: Util.Vector2): void { this.onCollisionExit.Invoke(other, collisionPoint); }
 
-        public HandleMouseEnter(): void { this.onMouseEnter.Invoke(); }
-        public HandleMouseExit(): void { this.onMouseExit.Invoke(); }
-        public HandleMouseMove(): void { this.onMouseMove.Invoke(); }
+// TODO: Strip out events and replace with messages
+        public HandleMouseEnter(): void { this.onMouseEnter.Invoke(this); }
+// TODO: Strip out events and replace with messages
+        public HandleMouseExit(): void { this.onMouseExit.Invoke(this); }
+// TODO: Strip out events and replace with messages
+        public HandleMouseMove(): void { this.onMouseMove.Invoke(this); }
 
-        public HandleMouseClick(): void { this.onMouseClick.Invoke(); }
-        public HandleMouseDown(): void { this.onMouseDown.Invoke(); }
-        public HandleMouseUp(): void { this.onMouseUp.Invoke(); }
+// TODO: Strip out events and replace with messages
+        public HandleMouseClick(): void { this.onMouseClick.Invoke(this); }
+// TODO: Strip out events and replace with messages
+        public HandleMouseDown(): void { this.onMouseDown.Invoke(this); }
+// TODO: Strip out events and replace with messages
+        public HandleMouseUp(): void { this.onMouseUp.Invoke(this); }
 
         public abstract CheckIsCollision(point: Util.Vector2): boolean;
     }

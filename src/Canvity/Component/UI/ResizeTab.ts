@@ -98,7 +98,9 @@ namespace Canvity.Component.UI {
                 }
             }
 
+// TODO: Strip out events and replace with messages
             this.collider.OnMouseDown.AddEventListener(this.onMouseDown);
+// TODO: Strip out events and replace with messages
             this.collider.OnMouseUp.AddEventListener(this.onMouseUp);
         }
     }
