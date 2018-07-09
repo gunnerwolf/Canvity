@@ -17,37 +17,23 @@ namespace Canvity.Messages {
             MessageBus.globalMessages[message.Target].push(message);
         }
 
-        public static GetMessage(id: string, filo: boolean = false): Message | boolean {
-            if (!MessageBus.messages[id] || MessageBus.messages[id].length === 0) return false;
-            if (filo) return <Message>MessageBus.messages[id].pop();
-            else return <Message>MessageBus.messages[id].shift();
-        }
-        public static GetGlobalMessage(type: string, filo: boolean = false): Message | boolean {
-            if (!MessageBus.globalMessages[type] || MessageBus.globalMessages[type].length === 0) return false;
-            if (filo) return <Message>MessageBus.globalMessages[type].pop();
-            else return <Message>MessageBus.globalMessages[type].shift();
-        }
-
         public static GetMessages(id: string): Array<Message> {
             if (!MessageBus.messages[id]) {
                 MessageBus.messages[id] = new Array<Message>();
                 return MessageBus.messages[id];
             }
-            let messages: Array<Message> = MessageBus.messages[id];
-            MessageBus.messages[id] = new Array<Message>();
-            return messages;
+            return MessageBus.messages[id];
         }
         public static GetGlobalMessages(type: string): Array<Message> {
             if (!MessageBus.globalMessages[type]) {
                 MessageBus.globalMessages[type] = new Array<Message>();
                 return MessageBus.globalMessages[type];
             }
-            let messages: Array<Message> = MessageBus.globalMessages[type];
-            MessageBus.globalMessages[type] = new Array<Message>();
-            return messages;
+            return MessageBus.globalMessages[type];
         }
 
-        public static ClearGlobalMessages(): void {
+        public static ClearMessages(): void {
+            MessageBus.messages = {};
             MessageBus.globalMessages = {};
         }
     }
