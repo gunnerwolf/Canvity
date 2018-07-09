@@ -15,13 +15,6 @@ namespace Canvity {
             if (ctx !== null) CanvasManager.ctx = ctx;
             else throw Error("Could not get canvas context!");
 
-// TODO: Strip out events and replace with messages
-            InputManager.OnMouseMove.AddEventListener(this.handleMouseMove);
-// TODO: Strip out events and replace with messages
-            InputManager.OnMouseDown.AddEventListener(this.handleMouseDown);
-// TODO: Strip out events and replace with messages
-            InputManager.OnMouseUp.AddEventListener(this.handleMouseUp);
-
             CanvasManager.scenes = new Util.HashSet<CanvasScene>();
         }
 
@@ -43,16 +36,6 @@ namespace Canvity {
         public static Update(time: Util.Time) {
             if (CanvasManager.currentScene === null || CanvasManager.currentScene === undefined) return;
             CanvasManager.currentScene.Update(time);
-        }
-
-        private static handleMouseMove() {
-            CanvasManager.currentScene.HandleMouseMove();
-        }
-        private static handleMouseDown() {
-            CanvasManager.currentScene.HandleMouseDown();
-        }
-        private static handleMouseUp() {
-            CanvasManager.currentScene.HandleMouseUp();
         }
     }
 }

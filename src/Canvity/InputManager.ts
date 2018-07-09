@@ -6,13 +6,6 @@ namespace Canvity {
         private static mouseDelta: Util.Vector2;
         public static get MouseDelta(): Util.Vector2 { return InputManager.mouseDelta; }
 
-        private static onMouseMove: Events.CanvityEvent;
-        public static get OnMouseMove(): Events.CanvityEvent { return InputManager.onMouseMove; }
-        private static onMouseDown: Events.CanvityEvent;
-        public static get OnMouseDown(): Events.CanvityEvent { return InputManager.onMouseDown; }
-        private static onMouseUp: Events.CanvityEvent;
-        public static get OnMouseUp(): Events.CanvityEvent { return InputManager.onMouseUp; }
-
         private static downButtons: number;
         public static get IsLeftButtonDown(): boolean { return (InputManager.downButtons & 1) !== 0; }
         public static get IsRightButtonDown(): boolean { return (InputManager.downButtons & 2) !== 0; }
@@ -26,13 +19,6 @@ namespace Canvity {
 
             this.downButtons = 0;
 
-// TODO: Strip out events and replace with messages
-            InputManager.onMouseMove = new Events.CanvityEvent();
-// TODO: Strip out events and replace with messages
-            InputManager.onMouseDown = new Events.CanvityEvent();
-// TODO: Strip out events and replace with messages
-            InputManager.onMouseUp = new Events.CanvityEvent();
-
             document.addEventListener('mousemove', InputManager.HandleMouseMove);
             document.addEventListener('mousedown', InputManager.HandleMouseDown);
             document.addEventListener('mouseup', InputManager.HandleMouseUp);
@@ -44,8 +30,7 @@ namespace Canvity {
             InputManager.mousePos = new Util.Vector2(mouse.pageX, mouse.pageY);
             InputManager.mouseDelta = new Util.Vector2(mouse.movementX, mouse.movementY);
 
-// TODO: Strip out events and replace with messages
-            InputManager.OnMouseMove.Invoke();
+            Messages.MessageBus.PushGlobalMessage(new Messages.Message(App.CurrentUpdateTime, "mousemove", "input"));
         }
 
         public static HandleMouseDown(mouse: MouseEvent): void {
@@ -55,8 +40,7 @@ namespace Canvity {
 
             InputManager.downButtons = mouse.buttons;
 
-// TODO: Strip out events and replace with messages
-            InputManager.OnMouseDown.Invoke(pressed);
+            Messages.MessageBus.PushGlobalMessage(new Messages.Message(App.CurrentUpdateTime, "mousedown", "input", pressed));
         }
 
         public static HandleMouseUp(mouse: MouseEvent): void {
@@ -66,8 +50,7 @@ namespace Canvity {
 
             InputManager.downButtons = mouse.buttons;
 
-// TODO: Strip out events and replace with messages
-            InputManager.OnMouseUp.Invoke(released);
+            Messages.MessageBus.PushGlobalMessage(new Messages.Message(App.CurrentUpdateTime, "mouseup", "input", released));
         }
     }
 }
