@@ -37,16 +37,13 @@ namespace Canvity.Component.UI {
         protected handleObjectMessage(message: Messaging.Message): void {
             let messageParts: Array<string> = message.Message.split('.');
             if (messageParts[0] === 'transform') {
-                console.log(messageParts);
                 if (messageParts[1] === 'resize') {
                     let transform: Transform | null = this.Transform;
                     if (transform !== null) {
-                        console.log("new width", (<RectTransform>transform).Rect.W);
                         this.Rect = new Util.Rect(0, 0, (<RectTransform>transform).Rect.W, this.Height);
-                        console.log(this.Rect);
                     }
                 }
-            } else if (messageParts[0] !== 'collider') console.log(message);
+            }
         }
     }
 }
