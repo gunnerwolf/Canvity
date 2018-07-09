@@ -77,13 +77,13 @@ namespace Canvity {
             return <T>this.AddComponent(component, addDependencies);
         }
 
-        public GetComponent<T extends CanvasComponent>(type: { new(...args: any[]): T; }): T | null {
+        public GetComponent<T extends CanvasComponent>(type: Function & { prototype: T }): T | null {
             let items = this.components.filter(element => { return element instanceof type; }).ToArray();
             if (items.length === 0) return null;
             return <T>items[0];
         }
 
-        public HasComponent<T extends CanvasComponent>(type: { new(...args: any[]): T; }): boolean {
+        public HasComponent<T extends CanvasComponent>(type: Function & { prototype: T }): boolean {
             return this.GetComponent(type) !== null;
         }
 
@@ -93,7 +93,7 @@ namespace Canvity {
                 this.components.Remove(items[0]);
             }
         }
-        public RemoveComponentOfType<T extends CanvasComponent>(type: { new(...args: any[]): T; }): void {
+        public RemoveComponentOfType<T extends CanvasComponent>(type: Function & { prototype: T }): void {
             let component = this.GetComponent(type);
             if (component != null) this.RemoveComponent(component);
         }
