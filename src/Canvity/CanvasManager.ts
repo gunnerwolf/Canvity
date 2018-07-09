@@ -43,13 +43,13 @@ namespace Canvity {
         }
 
         private static handleMouseMove() {
-
+            CanvasManager.currentScene.HandleMouseMove();
         }
         private static handleMouseDown() {
-
+            CanvasManager.currentScene.HandleMouseDown();
         }
         private static handleMouseUp() {
-
+            CanvasManager.currentScene.HandleMouseUp();
         }
     }
 }

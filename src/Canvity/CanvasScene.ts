@@ -30,5 +30,15 @@ namespace Canvity {
         public AddObject(obj: CanvasObject): void {
             this.objects.push(obj);
         }
+
+        public HandleMouseMove() {
+
+        }
+        public HandleMouseDown() {
+
+        }
+        public HandleMouseUp() {
+            
+        }
     }
 }
