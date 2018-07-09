@@ -14,6 +14,10 @@ namespace Canvity {
             let ctx = canvas.getContext('2d');
             if (ctx !== null) CanvasManager.ctx = ctx;
 
+            InputManager.OnMouseMove.AddEventListener(this.handleMouseMove);
+            InputManager.OnMouseDown.AddEventListener(this.handleMouseDown);
+            InputManager.OnMouseUp.AddEventListener(this.handleMouseUp);
+
             CanvasManager.scenes = new Util.HashSet<CanvasScene>();
         }
 
@@ -35,6 +39,16 @@ namespace Canvity {
         public static Update(time: Util.Time) {
             if (CanvasManager.currentScene === null || CanvasManager.currentScene === undefined) return;
             CanvasManager.currentScene.Update(time);
+        }
+
+        private static handleMouseMove() {
+
+        }
+        private static handleMouseDown() {
+
+        }
+        private static handleMouseUp() {
+
         }
     }
 }
