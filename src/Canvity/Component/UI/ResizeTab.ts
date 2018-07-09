@@ -76,18 +76,15 @@ namespace Canvity.Component.UI {
 
         protected onMouseDown() {
             if (InputManager.IsLeftButtonDown) {
-                console.log("click");
                 this.isDragging = true;
                 this.dragStart = InputManager.MousePos;
                 this.vert1Rel = InputManager.MousePos.Sub(this.collider.Vertices[0]);
                 this.vert2Rel = InputManager.MousePos.Sub(this.collider.Vertices[1]);
                 this.vert3Rel = InputManager.MousePos.Sub(this.collider.Vertices[2]);
-                console.log(this.vert1Rel, this.vert2Rel, this.vert3Rel);
             }
         }
         protected onMouseUp() {
             if (!InputManager.IsLeftButtonDown) {
-                console.log("unclick");
                 this.isDragging = false;
             }
         }
