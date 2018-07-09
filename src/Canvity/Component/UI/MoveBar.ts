@@ -29,7 +29,6 @@ namespace Canvity.Component.UI {
             if (window !== null) {
                 let windowRect: Util.Rect = window.Rect;
                 this.Rect = new Util.Rect(0, 0, windowRect.W, this.height);
-                console.log(this.Rect);
                 this.baseColor = window.Color;
             }
         }
