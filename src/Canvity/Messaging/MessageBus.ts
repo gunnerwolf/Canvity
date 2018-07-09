@@ -1,4 +1,4 @@
-namespace Canvity.Messages {
+namespace Canvity.Messaging {
     export class MessageBus {
         private static messages: { [id: string]: Array<Message> };
         private static globalMessages: { [type: string]: Array<Message> };

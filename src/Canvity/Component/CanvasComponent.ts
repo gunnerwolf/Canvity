@@ -25,8 +25,8 @@ namespace Canvity.Component {
         
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void { }
         public Update(time: Util.Time): void {
-            Messages.MessageBus.GetMessages(this.InstanceID).forEach(message => { this.handleMessage(message); }, this);
-            Messages.MessageBus.GetMessages(this.CanvasObject.InstanceID).forEach(message => { this.handleMessage(message); }, this);
+            Messaging.MessageBus.GetMessages(this.InstanceID).forEach(message => { this.handleMessage(message); }, this);
+            Messaging.MessageBus.GetMessages(this.CanvasObject.InstanceID).forEach(message => { this.handleMessage(message); }, this);
         }
 
         public GetRequiredComponents(obj: CanvasObject): Array<CanvasComponent> {
@@ -36,9 +36,9 @@ namespace Canvity.Component {
         }
 
         protected onParentSet(): void { }
-        protected handleMessage(message: Messages.Message): void {
+        protected handleMessage(message: Messaging.Message): void {
             console.warn("Object", this.InstanceID, "was sent a message, but has not implemented handleMessage!\n", message);
         }
-        protected handleObjectMessage(message: Messages.Message): void { }
+        protected handleObjectMessage(message: Messaging.Message): void { }
     }
 }

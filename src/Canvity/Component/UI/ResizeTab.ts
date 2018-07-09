@@ -101,7 +101,7 @@ namespace Canvity.Component.UI {
             }
         }
 
-        protected handleObjectMessage(message: Messages.Message): void {
+        protected handleObjectMessage(message: Messaging.Message): void {
             let messageParts: Array<string> = message.Message.split('.');
             if (messageParts[0] === 'collider') {
                 if (message.Data[0] !== this.collider) return;

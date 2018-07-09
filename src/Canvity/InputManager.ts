@@ -30,7 +30,7 @@ namespace Canvity {
             InputManager.mousePos = new Util.Vector2(mouse.pageX, mouse.pageY);
             InputManager.mouseDelta = new Util.Vector2(mouse.movementX, mouse.movementY);
 
-            Messages.MessageBus.PushGlobalMessage(new Messages.Message(App.CurrentUpdateTime, "mouse.move", "input"));
+            Messaging.MessageBus.PushGlobalMessage(new Messaging.Message(App.CurrentUpdateTime, "mouse.move", "input"));
         }
 
         public static HandleMouseDown(mouse: MouseEvent): void {
@@ -40,7 +40,7 @@ namespace Canvity {
 
             InputManager.downButtons = mouse.buttons;
 
-            Messages.MessageBus.PushGlobalMessage(new Messages.Message(App.CurrentUpdateTime, "mouse.down", "input", pressed));
+            Messaging.MessageBus.PushGlobalMessage(new Messaging.Message(App.CurrentUpdateTime, "mouse.down", "input", pressed));
         }
 
         public static HandleMouseUp(mouse: MouseEvent): void {
@@ -50,7 +50,7 @@ namespace Canvity {
 
             InputManager.downButtons = mouse.buttons;
 
-            Messages.MessageBus.PushGlobalMessage(new Messages.Message(App.CurrentUpdateTime, "mouse.up", "input", released));
+            Messaging.MessageBus.PushGlobalMessage(new Messaging.Message(App.CurrentUpdateTime, "mouse.up", "input", released));
         }
     }
 }

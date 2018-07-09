@@ -1,4 +1,4 @@
-namespace Canvity.Messages {
+namespace Canvity.Messaging {
     export class Message {
         public Time: Util.Time;
         public Message: string;
