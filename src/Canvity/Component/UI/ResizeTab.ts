@@ -100,5 +100,15 @@ namespace Canvity.Component.UI {
                 }
             }
         }
+
+        protected handleObjectMessage(message: Messages.Message): void {
+            let messageParts: Array<string> = message.Message.split('.');
+            if (messageParts[0] === 'collider') {
+                if (message.Data[0] !== this.collider) return;
+                if (messageParts[1] !== 'mouse') return;
+                if (messageParts[2] === 'down') this.onMouseDown();
+                else if (messageParts[2] === 'up') this.onMouseUp();
+            }
+        }
     }
 }
