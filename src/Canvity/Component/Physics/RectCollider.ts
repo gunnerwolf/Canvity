@@ -6,10 +6,10 @@ namespace Canvity.Component.Physics {
 
         private fetchRect: boolean;
 
-        public constructor(rect: Util.Rect | null) {
+        public constructor(rect: Util.Rect) {
             super();
 
-            if (rect === null) {
+            if (rect === null || rect === undefined) {
                 this.fetchRect = true;
             } else {
                 this.Vertices.push(new Util.Vector2(rect.X, rect.Y));
