@@ -68,6 +68,8 @@ namespace Canvity {
                 }
                 else if (this.transform === undefined || this.transform === null) this.transform = component;
             }
+            this.components.Add(component);
+            component.CanvasObject = this;
             return component;
         }
         public AddComponentOfType<T extends CanvasComponent>(type: { new(): T; }, addDependencies: boolean = false): T {
