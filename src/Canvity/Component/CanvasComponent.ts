@@ -26,7 +26,7 @@ namespace Canvity.Component {
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void { }
         public Update(time: Util.Time): void {
             Messaging.MessageBus.GetMessages(this.InstanceID).forEach(message => { this.handleMessage(message); }, this);
-            Messaging.MessageBus.GetMessages(this.CanvasObject.InstanceID).forEach(message => { this.handleMessage(message); }, this);
+            Messaging.MessageBus.GetMessages(this.CanvasObject.InstanceID).forEach(message => { this.handleObjectMessage(message); }, this);
         }
 
         public GetRequiredComponents(obj: CanvasObject): Array<CanvasComponent> {
