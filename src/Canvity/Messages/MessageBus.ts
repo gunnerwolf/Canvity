@@ -46,5 +46,9 @@ namespace Canvity.Messages {
             MessageBus.globalMessages[type] = new Array<Message>();
             return messages;
         }
+
+        public static ClearGlobalMessages(): void {
+            MessageBus.globalMessages = {};
+        }
     }
 }
