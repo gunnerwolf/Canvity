@@ -1,5 +1,8 @@
 namespace Canvity {
     export abstract class App {
+        public static CurrentUpdateTime: Util.Time;
+        public static CurrentDrawTime: Util.Time;
+
         protected timeScale: number;
 
         protected drawInterval: number;
@@ -42,6 +45,7 @@ namespace Canvity {
             let timestamp = new Date().getTime() / 1000;
             let deltaTime = timestamp - this.lastDraw;
             let time = new Util.Time(this.Runtime, this.ActualRuntime, deltaTime, this.timeScale);
+            App.CurrentDrawTime = time;
 
             this.lastDraw = timestamp;
             CanvasManager.Draw(time);
@@ -51,6 +55,7 @@ namespace Canvity {
             let deltaTime = timestamp - this.lastUpdate;
             this.runtime += deltaTime * this.timeScale;
             let time = new Util.Time(this.Runtime, this.ActualRuntime, deltaTime, this.timeScale);
+            App.CurrentUpdateTime = time;
 
             this.lastUpdate = timestamp;
             CanvasManager.Update(time);
