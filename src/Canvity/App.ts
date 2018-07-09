@@ -29,6 +29,7 @@ namespace Canvity {
             this.lastDraw = this.startTime;
             this.lastUpdate = this.startTime;
 
+            Messages.MessageBus.Init();
             InputManager.Init();
             CanvasManager.Init(canvas);
         }
