@@ -1,8 +1,27 @@
 namespace Canvity.Component.Physics {
     export class PolygonCollider extends BaseCollider {
         protected vertices: Array<Util.Vector2>;
-        public get Vertices(): Array<Util.Vector2> { return this.vertices; }
-        public set Vertices(verts: Array<Util.Vector2>) { this.vertices = verts; }
+        public get Vertices(): Array<Util.Vector2> {
+            return this.vertices.map(vert => {
+                if (this.Transform !== null) {
+                    return vert.Add(this.Transform.Position);
+                } else {
+                    return vert;
+                }
+            });
+        }
+        public set Vertices(verts: Array<Util.Vector2>) {
+            this.vertices = verts.map(vert => {
+                if (this.Transform !== null) {
+                    return vert.Sub(this.Transform.Position);
+                } else {
+                    return vert;
+                }
+            });
+        }
+
+        public get LocalVertices(): Array<Util.Vector2> { return this.vertices; }
+        public set LocalVertices(verts: Array<Util.Vector2>) { this.vertices = verts; }
 
         protected get BoundingBox(): Util.Rect {
             let minX = this.Vertices.map(x => x.X).reduce((a, b) => Math.min(a, b));
@@ -60,7 +79,7 @@ namespace Canvity.Component.Physics {
             let messageParts: Array<string> = message.Message.split('.');
             if (messageParts[0] === 'transform') {
                 if (messageParts[1] === 'move') {
-                    
+
                 }
             }
         }
