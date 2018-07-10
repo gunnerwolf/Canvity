@@ -20,7 +20,8 @@ namespace Canvity.Component {
         private localPosition: Util.Vector2;
         public get LocalPosition(): Util.Vector2 { return this.localPosition; }
         public set LocalPosition(val: Util.Vector2) {
-            let diff: Util.Vector2 = val.Sub(this.localPosition);
+            let diff: Util.Vector2 = val;
+            if (this.localPosition) diff = val.Sub(this.localPosition);
             this.localPosition = val;
             
             if (this.CanvasObject !== null && this.CanvasObject !== undefined) {
@@ -59,7 +60,7 @@ namespace Canvity.Component {
         public constructor() {
             super();
 
-            this.LocalPosition = new Util.Vector2();
+            this.localPosition = new Util.Vector2();
         }
 
         public Rotate(amt: number): Transform {
