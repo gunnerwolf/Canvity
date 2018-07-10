@@ -66,7 +66,7 @@ namespace Canvity.Component.UI {
             // because this guarantees that we will have a RectTransform rather than a Transform
             if (!obj.HasComponent(Window)) this.window = <Window>obj.AddComponent(new Window(Util.Color.Black), true);
             let rect: Util.Rect = (<RectTransform>obj.Transform).Rect;
-            let v1: Util.Vector2 = new Util.Vector2(rect.X + rect.W, rect.Y + rect.H);
+            let v1: Util.Vector2 = new Util.Vector2(rect.W, rect.H);
             let v2: Util.Vector2 = v1.Sub(new Util.Vector2(12, 0));
             let v3: Util.Vector2 = v1.Sub(new Util.Vector2(0, 12));
             let tri = new Physics.TriangleCollider(v1, v2, v3);
