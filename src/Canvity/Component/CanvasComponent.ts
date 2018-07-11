@@ -22,6 +22,23 @@ namespace Canvity.Component {
                 return null;
             }
         }
+
+        public get LocalPosition(): Util.Vector2 {
+            let transform = this.Transform;
+            if (transform !== null) {
+                return transform.LocalPosition;
+            } else {
+                return new Util.Vector2();
+            }
+        }
+        public get Position(): Util.Vector2 {
+            let transform = this.Transform;
+            if (transform !== null) {
+                return transform.Position;
+            } else {
+                return new Util.Vector2();
+            }
+        }
         
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void { }
         public Update(time: Util.Time): void {
