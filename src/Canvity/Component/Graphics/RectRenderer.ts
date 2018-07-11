@@ -1,4 +1,4 @@
-namespace Canvity.Component {
+namespace Canvity.Component.Graphics {
     export class RectRenderer extends CanvasComponent {
         private color: Util.Color;
 

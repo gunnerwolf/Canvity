@@ -1,6 +1,6 @@
 namespace Canvity.Component.UI {
     @Canvity.Component.Requires(UI.Window, Physics.RectCollider)
-    export class MoveBar extends RectRenderer {
+    export class MoveBar extends Graphics.RectRenderer {
         private height: number;
         public get Height(): number { return this.height; }
         public set Height(val: number) { this.height = val; }

@@ -1,6 +1,6 @@
 namespace Canvity.Component.UI {
     @Canvity.Component.Requires(RectTransform, Physics.RectCollider)
-    export class Window extends RectRenderer {
+    export class Window extends Graphics.RectRenderer {
         public constructor(color: Util.Color) {
             super(color);
         }

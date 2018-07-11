@@ -1,4 +1,4 @@
-namespace Canvity.Component {
+namespace Canvity.Component.Graphics {
     export class SpriteRenderer extends CanvasComponent {
         private sprite: Assets.Sprite;
 
