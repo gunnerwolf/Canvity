@@ -51,7 +51,7 @@ namespace Canvity {
                     }, this);
                 } else {
                     component.Requires.forEach(element => {
-                        let subCtor: any = element
+                        let subCtor: any = element;
                         if (!this.HasComponent(element)) {
                                 throw new Error("Attempted to add component " + ctor.name + " to an object that does not contain an instance of " + subCtor.name);
                         }

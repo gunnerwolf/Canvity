@@ -32,7 +32,7 @@ namespace Canvity.Component {
 
         public GetRequiredComponents(obj: CanvasObject): Array<CanvasComponent> {
             let required = new Array<CanvasComponent>();
-            this.requires.forEach(component => required.push(new component()))
+            this.requires.forEach(component => required.push(new component()));
             return required;
         }
 

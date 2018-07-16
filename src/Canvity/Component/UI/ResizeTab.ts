@@ -106,7 +106,7 @@ namespace Canvity.Component.UI {
 
         protected onParentSet(): void {
             if (this.window === null || this.window === undefined) {
-                let window = this.CanvasObject.GetComponent(Window)
+                let window = this.CanvasObject.GetComponent(Window);
                 if (window !== null) {
                     this.window = window;
                 }

@@ -46,7 +46,7 @@ namespace Canvity {
         public static HandleMouseUp(mouse: MouseEvent): void {
             mouse.preventDefault();
             
-            let released: number = InputManager.downButtons & ~mouse.buttons
+            let released: number = InputManager.downButtons & ~mouse.buttons;
 
             InputManager.downButtons = mouse.buttons;
 

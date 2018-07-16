@@ -6,7 +6,7 @@ namespace Canvity.Component.UI {
 
         private dragStart: Util.Vector2;
 
-        private collider: Physics.RectCollider
+        private collider: Physics.RectCollider;
 
         public constructor() {
             super();
