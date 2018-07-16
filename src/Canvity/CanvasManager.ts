@@ -8,6 +8,7 @@ namespace Canvity {
 
         private static scenes: Util.HashSet<CanvasScene>;
         private static currentScene: CanvasScene;
+        public static get CurrentScene(): CanvasScene { return this.currentScene; }
 
         public static Init(canvas: HTMLCanvasElement): void {
             CanvasManager.canvas = canvas;
