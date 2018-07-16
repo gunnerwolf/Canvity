@@ -1,4 +1,5 @@
 namespace Canvity.Component.UI {
+    // TODO: Refactor into smaller, more generic components
     @Canvity.Component.Requires(RectTransform, Physics.RectCollider)
     export class Window extends Graphics.RectRenderer {
         public constructor(color: Util.Color) {

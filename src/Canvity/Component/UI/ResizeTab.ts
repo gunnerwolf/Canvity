@@ -1,4 +1,5 @@
 namespace Canvity.Component.UI {
+    // TODO: Refactor into smaller, more generic components
     @Canvity.Component.Requires(UI.Window, Physics.TriangleCollider)
     export class ResizeTab extends CanvasComponent {
         private color: Util.Color;
@@ -90,9 +91,7 @@ namespace Canvity.Component.UI {
         }
         protected onMouseMove() {
             if (this.isDragging) {
-                let transform: Transform | null = this.Transform;
-                if (transform === null) return;
-                let rectTransform: RectTransform = <RectTransform>transform;
+                let rectTransform: RectTransform = this.RectTransform;
                 
                 rectTransform.Size = rectTransform.Size.Add(InputManager.MousePos.Sub(this.dragStart));
                 this.dragStart = InputManager.MousePos;
