@@ -101,5 +101,11 @@ namespace Canvity {
             let component = this.GetComponent(type);
             if (component != null) this.RemoveComponent(component);
         }
+
+        public Start(scene: Canvity.CanvasScene): void {
+            this.started = true;
+            if (this.parentObj === null) this.scene = scene;
+            this.components.map(x => x.Start());
+        }
     }
 }

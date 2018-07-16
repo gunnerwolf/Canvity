@@ -1,5 +1,7 @@
 namespace Canvity.Component {
     export abstract class CanvasComponent extends CanvityObject {
+        protected handledGlobalMessageTypes: Array<string> = new Array<string>();
+
         private requires: Array<{ new (...args: any[]): CanvasComponent; }> = new Array<{ new (...args: any[]): CanvasComponent; }>();
         public get Requires(): Array<{ new (...args: any[]): CanvasComponent; }> { return this.requires; }
 
@@ -15,30 +17,12 @@ namespace Canvity.Component {
             }
         }
 
-        public get Transform(): Transform | null {
-            if (this.canvasObject) {
-                return this.canvasObject.Transform;
-            } else {
-                return null;
-            }
-        }
+        public get Transform(): Transform { return this.CanvasObject.Transform; }
+        public get HasRectTransform(): boolean { return this.CanvasObject.HasComponent(RectTransform); }
+        public get RectTransform(): RectTransform { return <RectTransform>this.Transform; }
 
-        public get LocalPosition(): Util.Vector2 {
-            let transform = this.Transform;
-            if (transform !== null) {
-                return transform.LocalPosition;
-            } else {
-                return new Util.Vector2();
-            }
-        }
-        public get Position(): Util.Vector2 {
-            let transform = this.Transform;
-            if (transform !== null) {
-                return transform.Position;
-            } else {
-                return new Util.Vector2();
-            }
-        }
+        public get LocalPosition(): Util.Vector2 { return this.Transform.LocalPosition; }
+        public get Position(): Util.Vector2 { return this.Transform.Position; }
         
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void { }
         public Update(time: Util.Time): void {
@@ -52,10 +36,15 @@ namespace Canvity.Component {
             return required;
         }
 
+        public Start(): void {
+            this.started = true;
+        }
+
         protected onParentSet(): void { }
         protected handleMessage(message: Messaging.Message): void {
             console.warn("Object", this.InstanceID, "was sent a message, but has not implemented handleMessage!\n", message);
         }
         protected handleObjectMessage(message: Messaging.Message): void { }
+        protected handleGlobalMessage(message: Messaging.Message): void { }
     }
 }

@@ -1,5 +1,7 @@
 namespace Canvity {
     export abstract class CanvityObject {
+        protected started: boolean;
+
         private id: string;
         public get InstanceID(): string { return this.id; }
 
