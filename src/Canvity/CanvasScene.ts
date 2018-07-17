@@ -1,5 +1,7 @@
 namespace Canvity {
     export class CanvasScene {
+        private started: boolean;
+
         private objects: Array<CanvasObject>;
         private background: Util.Color;
 
@@ -9,9 +11,11 @@ namespace Canvity {
         public constructor() {
             this.objects = new Array<CanvasObject>();
             this.Background = Util.Color.Transparent;
+            this.started = false;
         }
 
         public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void {
+            if (!this.started) return;
             ctx.fillStyle = this.Background.CssString;
             ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
@@ -22,6 +26,7 @@ namespace Canvity {
             });
         }
         public Update(time: Util.Time): void {
+            if (!this.started) return;
             this.objects.forEach(element => {
                 element.Update(time);
             });
@@ -29,6 +34,15 @@ namespace Canvity {
 
         public AddObject(obj: CanvasObject): void {
             this.objects.push(obj);
+        }
+
+        public Start() {
+            this.started = true;
+            this.objects.sort((a: CanvasObject, b: CanvasObject) => {
+                return a.Transform.ZIndex - b.Transform.ZIndex;
+            }).forEach((element: CanvasObject) => {
+                element.Start(this);
+            })
         }
     }
 }
