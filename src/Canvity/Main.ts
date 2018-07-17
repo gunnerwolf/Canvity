@@ -20,6 +20,8 @@ namespace Canvity {
             app.Draw();
         }, drawDeltaTime);
 
+        CanvasManager.Start();
+
         app.PostInit();
     }
 }
