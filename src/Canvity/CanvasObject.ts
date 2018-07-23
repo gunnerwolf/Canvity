@@ -11,12 +11,14 @@ namespace Canvity {
         public get Transform(): Component.Transform { return this.transform; }
 
         private components: Util.HashSet<CanvasComponent>;
+        private children: Util.HashSet<CanvasObject>;
 
         public constructor(name: string, ...components: Array<CanvasComponent>) {
             super();
             this.name = name;
 
             this.components = new Util.HashSet<CanvasComponent>();
+            this.children = new Util.HashSet<CanvasObject>();
 
             this.AddComponentOfType(Component.Transform);
             components.forEach(element => {
@@ -28,9 +30,15 @@ namespace Canvity {
             this.components.forEach(element => {
                 element.Draw(time, ctx);
             });
+            this.children.forEach(element => {
+                element.Draw(time, ctx);
+            });
         }
         public Update(time: Util.Time): void {
             this.components.forEach(element => {
+                element.Update(time);
+            });
+            this.children.forEach(element => {
                 element.Update(time);
             });
         }
@@ -87,6 +95,14 @@ namespace Canvity {
             return <Array<T>>this.components.filter(element => { return element instanceof type; }).ToArray();
         }
 
+        public GetComponentsInChildren<T extends CanvasComponent>(type: Function & { prototype: T }): Array<T> {
+            let thisComponents = this.GetComponents(type);
+            this.children.forEach(child => {
+                thisComponents.concat(child.GetComponents(type));
+            });
+            return thisComponents;
+        }
+
         public HasComponent<T extends CanvasComponent>(type: Function & { prototype: T }): boolean {
             return this.GetComponent(type) !== null;
         }
@@ -102,10 +118,20 @@ namespace Canvity {
             if (component != null) this.RemoveComponent(component);
         }
 
+        public AddChild(child: CanvasObject): CanvasObject {
+            this.children.Add(child);
+            return child;
+        }
+        public RemoveChild(child: CanvasObject): boolean {
+            return this.children.Remove(child);
+        }
+
         public Start(scene: Canvity.CanvasScene): void {
             this.started = true;
             if (this.parentObj === null) this.scene = scene;
             this.components.map(x => x.Start());
+            this.children.map(x => x.Start(scene));
         }
     }
 }
+
