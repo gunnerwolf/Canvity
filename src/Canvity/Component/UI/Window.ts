@@ -6,12 +6,9 @@ namespace Canvity.Component.UI {
             super(color);
         }
 
-        public Draw(deltaTime: Util.Time, ctx: CanvasRenderingContext2D): void {
-            ctx.strokeStyle = this.Color.CssString;
+        public Draw(deltaTime: Util.Time, ctx: Render.IRenderingContext): void {
             // TODO: Add configurable border width
-            ctx.lineWidth = 2;
-
-            ctx.strokeRect(this.Rect.X, this.Rect.Y, this.Rect.W, this.Rect.H);
+            ctx.strokeRect(this.Rect, this.Color, 2);
         }
     }
 }
