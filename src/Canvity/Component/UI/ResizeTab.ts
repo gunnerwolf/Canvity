@@ -24,36 +24,17 @@ namespace Canvity.Component.UI {
             this.isDragging = false;
         }
 
-        public Draw(deltaTime: Util.Time, ctx: CanvasRenderingContext2D): void {
-            ctx.fillStyle = this.window.Color.CssString;
-
-            let vertices = this.collider.Vertices;
-
-            ctx.beginPath();
-
-            ctx.moveTo(vertices[0].X, vertices[0].Y);
-            ctx.lineTo(vertices[1].X, vertices[1].Y);
-            ctx.lineTo(vertices[2].X, vertices[2].Y);
-
-            ctx.fill();
-
-            ctx.strokeStyle = this.Color.CssString;
-            ctx.lineWidth = 1;
+        public Draw(deltaTime: Util.Time, ctx: Render.IRenderingContext): void {
+            ctx.drawPoly(this.collider.Vertices, this.window.Color);
 
             let rect: Util.Rect = (<RectTransform>this.Transform).Rect;
 
-            ctx.beginPath();
-
-            ctx.moveTo(rect.X + rect.W - 4, rect.Y + rect.H - 2);
-            ctx.lineTo(rect.X + rect.W - 2, rect.Y + rect.H - 4);
-
-            ctx.moveTo(rect.X + rect.W - 6, rect.Y + rect.H - 2);
-            ctx.lineTo(rect.X + rect.W - 2, rect.Y + rect.H - 6);
-
-            ctx.moveTo(rect.X + rect.W - 8, rect.Y + rect.H - 2);
-            ctx.lineTo(rect.X + rect.W - 2, rect.Y + rect.H - 8);
-
-            ctx.stroke();
+            ctx.drawLineFromCoords(rect.X + rect.W - 4, rect.Y + rect.H - 2,
+                rect.X + rect.W - 2, rect.Y + rect.H - 4, this.Color, 1);
+            ctx.drawLineFromCoords(rect.X + rect.W - 6, rect.Y + rect.H - 2,
+                rect.X + rect.W - 2, rect.Y + rect.H - 6, this.Color, 1);
+            ctx.drawLineFromCoords(rect.X + rect.W - 8, rect.Y + rect.H - 2,
+                rect.X + rect.W - 2, rect.Y + rect.H - 8, this.Color, 1);
         }
 
         public Update(deltaTime: Util.Time): void {
