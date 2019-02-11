@@ -2,7 +2,6 @@ bin/*
 src/testApp/*
 node_modules/*
 .tscache/*
-package-lock.json
 .vscode/*
 !.vscode/tasks.json
 *.swp
