@@ -60,6 +60,22 @@ namespace Canvity.Render {
             this.endCanvasWorkspace();
         }
 
+        public drawLine(start: Util.Vector2, end: Util.Vector2, color: Util.Color, lineWidth: number): void {
+            this.drawLineFromCoords(start.X, start.Y, end.X, end.Y, color, lineWidth);
+        }
+        public drawLineFromCoords(startX: number, startY: number, endX: number, endY: number, color: Util.Color, lineWidth: number): void {
+            this.startCanvasWorkspace({ strokeStyle: color.CssString, lineWidth: lineWidth});
+
+            this.ctx.beginPath();
+
+            this.ctx.moveTo(startX, startY);
+            this.ctx.lineTo(endX, endY);
+
+            this.ctx.stroke();
+
+            this.endCanvasWorkspace();
+        }
+
         private createBufferCanvas(width: number, height: number): any {
             if (this.buffer == null) {
                 var buffer = document.createElement('canvas');

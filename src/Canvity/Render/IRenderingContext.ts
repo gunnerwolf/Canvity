@@ -14,5 +14,8 @@ namespace Canvity.Render {
 
         drawText(text: string, x: number, y: number, color: Util.Color): void
         drawTextWithFont(text: string, x: number, y: number, font: string, color: Util.Color): void
+
+        drawLine(start: Util.Vector2, end: Util.Vector2, color: Util.Color, lineWidth: number): void
+        drawLineFromCoords(startX: number, startY: number, endX: number, endY: number, color: Util.Color, lineWidth: number): void
     }
 }
