@@ -24,7 +24,7 @@ namespace Canvity.Component {
         public get LocalPosition(): Util.Vector2 { return this.Transform.LocalPosition; }
         public get Position(): Util.Vector2 { return this.Transform.Position; }
         
-        public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void { }
+        public Draw(time: Util.Time, ctx: Render.IRenderingContext): void { }
         public Update(time: Util.Time): void {
             Messaging.MessageBus.GetMessages(this.InstanceID).forEach(message => { this.handleMessage(message); }, this);
             Messaging.MessageBus.GetMessages(this.CanvasObject.InstanceID).forEach(message => { this.handleObjectMessage(message); }, this);

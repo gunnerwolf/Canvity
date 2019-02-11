@@ -25,10 +25,8 @@ namespace Canvity.Component.Graphics {
             this.Color = color;
         }
 
-        public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void {
-            ctx.fillStyle = this.Color.CssString;
-
-            ctx.fillRect(this.Rect.X, this.Rect.Y, this.Rect.W, this.Rect.H);
+        public Draw(time: Util.Time, ctx: Render.IRenderingContext): void {
+            ctx.drawRect(this.Rect.X, this.Rect.Y, this.Rect.W, this.Rect.H, this.Color);
         }
     }
 }

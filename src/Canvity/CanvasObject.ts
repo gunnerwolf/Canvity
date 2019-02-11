@@ -26,7 +26,7 @@ namespace Canvity {
             });
         }
 
-        public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void {
+        public Draw(time: Util.Time, ctx: Render.IRenderingContext): void {
             this.components.forEach(element => {
                 element.Draw(time, ctx);
             });

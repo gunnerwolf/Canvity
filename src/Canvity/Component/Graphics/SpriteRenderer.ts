@@ -8,7 +8,7 @@ namespace Canvity.Component.Graphics {
             this.sprite = sprite;
         }
 
-        public Draw(time: Util.Time, ctx: CanvasRenderingContext2D): void {
+        public Draw(time: Util.Time, ctx: Render.IRenderingContext): void {
             let pos: Util.Vector2 = new Util.Vector2();
             if (this.Transform !== null) {
                 pos = this.Transform.Position;

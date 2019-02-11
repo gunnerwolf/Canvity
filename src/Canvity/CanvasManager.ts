@@ -3,19 +3,16 @@ namespace Canvity {
         private static canvas: HTMLCanvasElement;
         public static get Canvas(): HTMLCanvasElement { return CanvasManager.canvas; }
         
-        private static ctx: CanvasRenderingContext2D;
-        public static get Context(): CanvasRenderingContext2D { return CanvasManager.ctx; }
+        private static ctx: Render.IRenderingContext;
+        public static get Context(): Render.IRenderingContext { return CanvasManager.ctx; }
 
         private static scenes: Util.HashSet<CanvasScene>;
         private static currentScene: CanvasScene;
         public static get CurrentScene(): CanvasScene { return this.currentScene; }
 
-        public static Init(canvas: HTMLCanvasElement): void {
+        public static Init(canvas: HTMLCanvasElement, ctx: Render.IRenderingContext): void {
             CanvasManager.canvas = canvas;
-            let ctx = canvas.getContext('2d');
-            if (ctx !== null) CanvasManager.ctx = ctx;
-            else throw Error("Could not get canvas context!");
-
+            CanvasManager.ctx = ctx;
             CanvasManager.scenes = new Util.HashSet<CanvasScene>();
         }
 

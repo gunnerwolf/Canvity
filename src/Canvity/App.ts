@@ -21,6 +21,9 @@ namespace Canvity {
 
         private pausedTimeScale: number;
 
+        private canvas: HTMLCanvasElement;
+        private ctx: Render.IRenderingContext;
+
         private paused: boolean;
         public get Paused(): boolean { return this.paused; }
 
@@ -32,14 +35,29 @@ namespace Canvity {
             this.lastDraw = this.startTime;
             this.lastUpdate = this.startTime;
 
-            Messaging.MessageBus.Init();
-            InputManager.Init();
-            CanvasManager.Init(canvas);
+            this.canvas = canvas;
         }
 
-        public abstract PreInit(opts: any): void;
-        public abstract Init(drawDeltaTime: number, updateDeltaTime: number): void;
-        public abstract PostInit(): void;
+        public PreInit(opts: any): void {
+            if (!opts.renderTarget) opts.renderTarget = '2d';
+            switch(opts.renderTarget.toLowerCase()) {
+                case '2d':
+                    // TODO: Create 2D rendering context
+                    break;
+                case 'gl':
+                case 'webgl':
+                case 'opengl':
+                    // TODO: Create WebGL rendering context
+                    break;
+            }
+        }
+        public Init(drawDeltaTime: number, updateDeltaTime: number): void
+        {
+            Messaging.MessageBus.Init();
+            InputManager.Init();
+            CanvasManager.Init(this.canvas, this.ctx);
+        }
+        public PostInit(): void { }
 
         public Draw(): void {
             let timestamp = new Date().getTime() / 1000;
