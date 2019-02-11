@@ -26,7 +26,7 @@ namespace Canvity.Component.Graphics {
         }
 
         public Draw(time: Util.Time, ctx: Render.IRenderingContext): void {
-            ctx.drawRect(this.Rect.X, this.Rect.Y, this.Rect.W, this.Rect.H, this.Color);
+            ctx.drawRect(this.Rect, this.Color);
         }
     }
 }

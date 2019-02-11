@@ -16,7 +16,7 @@ namespace Canvity {
 
         public Draw(time: Util.Time, ctx: Render.IRenderingContext): void {
             if (!this.started) return;
-            ctx.drawRect(0, 0, ctx.contextWidth, ctx.contextHeight, this.Background);
+            ctx.drawRectFromCoords(0, 0, ctx.contextWidth, ctx.contextHeight, this.Background);
 
             this.objects.sort((a: CanvasObject, b: CanvasObject) => {
                 return a.Transform.ZIndex - b.Transform.ZIndex;
