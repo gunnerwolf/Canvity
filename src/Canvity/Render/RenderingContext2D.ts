@@ -25,6 +25,22 @@ namespace Canvity.Render {
             this.endCanvasWorkspace();
         }
 
+        public drawPoly(vertices: Array<Util.Vector2>, color: Util.Color): void {
+            this.startCanvasWorkspace({ fillStyle: color.CssString });
+
+            this.ctx.beginPath();
+
+            this.moveTo(vertices[0]);
+
+            for(var i = 1; i < vertices.length; i++) {
+                this.lineTo(vertices[i]);
+            }
+
+            this.ctx.fill();
+
+            this.endCanvasWorkspace();
+        }
+
         public strokeRect(rect: Util.Rect, color: Util.Color, lineWidth: number): void {
             this.strokeRectFromCoords(rect.X, rect.Y, rect.W, rect.H, color, lineWidth);
         }
@@ -111,6 +127,13 @@ namespace Canvity.Render {
                 if ((<any>this.ctx)[key] != undefined)
                     (<any>this.ctx)[key] = opts[key];
             }
+        }
+
+        private moveTo(pos: Util.Vector2): void {
+            this.ctx.moveTo(pos.X, pos.Y);
+        }
+        private lineTo(pos: Util.Vector2): void {
+            this.ctx.lineTo(pos.X, pos.Y);
         }
     }
 }
