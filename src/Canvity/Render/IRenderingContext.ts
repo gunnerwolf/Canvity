@@ -6,6 +6,9 @@ namespace Canvity.Render {
         drawRect(rect: Util.Rect, color: Util.Color): void
         drawRectFromCoords(x: number, y: number, w: number, h: number, color: Util.Color): void
 
+        strokeRect(rect: Util.Rect, color: Util.Color, lineWidth: number): void;
+        strokeRectFromCoords(x: number, y: number, w: number, h: number, color: Util.Color, lineWidth: number): void;
+
         drawSprite(sprite: Assets.Sprite, x: number, y: number): void
         drawTintedSprite(sprite: Assets.Sprite, x: number, y: number, color: Util.Color): void
 

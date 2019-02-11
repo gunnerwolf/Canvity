@@ -18,12 +18,26 @@ namespace Canvity.Render {
         public drawRect(rect: Util.Rect, color: Util.Color): void {
             this.drawRectFromCoords(rect.X, rect.Y, rect.W, rect.H, color);
         }
-
         public drawRectFromCoords(x: number, y: number, w: number, h: number, color: Util.Color): void {
             var oldColor = this.ctx.fillStyle;
             this.ctx.fillStyle = color.CssString;
             this.ctx.fillRect(x, y, w, h);
             this.ctx.fillStyle = oldColor;
+        }
+
+        public strokeRect(rect: Util.Rect, color: Util.Color, lineWidth: number): void {
+            this.strokeRectFromCoords(rect.X, rect.Y, rect.W, rect.H, color, lineWidth);
+        }
+        public strokeRectFromCoords(x: number, y: number, w: number, h: number, color: Util.Color, lineWidth: number): void {
+            var oldColor = this.ctx.strokeStyle;
+            var oldLineWidth = this.ctx.lineWidth;
+
+            this.ctx.strokeStyle = color.CssString;
+            this.ctx.lineWidth = lineWidth;
+            this.ctx.strokeRect(x, y, w, h);
+
+            this.ctx.strokeStyle = oldColor;
+            this.ctx.lineWidth = oldLineWidth;
         }
 
         public drawSprite(sprite: Assets.Sprite, x: number, y: number): void {
@@ -49,7 +63,7 @@ namespace Canvity.Render {
         public drawTextWithFont(text: string, x: number, y: number, font: string, color: Util.Color): void {
             var oldFont = this.ctx.font;
             var oldColor = this.ctx.fillStyle;
-            
+
             this.ctx.font = font;
             this.ctx.fillStyle = color.CssString;
             this.ctx.fillText(text, x, y);
