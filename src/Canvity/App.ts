@@ -42,7 +42,7 @@ namespace Canvity {
             if (!opts.renderTarget) opts.renderTarget = '2d';
             switch(opts.renderTarget.toLowerCase()) {
                 case '2d':
-                    // TODO: Create 2D rendering context
+                    this.ctx = new Render.RenderingContext2D(this.canvas);
                     break;
                 case 'gl':
                 case 'webgl':
