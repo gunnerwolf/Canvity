@@ -47,7 +47,7 @@ namespace Canvity {
                 case 'gl':
                 case 'webgl':
                 case 'opengl':
-                    // TODO: Create WebGL rendering context
+                    this.ctx = new Render.RenderingContextWebGL(this.canvas);
                     break;
             }
         }
