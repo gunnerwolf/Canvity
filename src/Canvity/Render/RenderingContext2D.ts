@@ -16,6 +16,8 @@ namespace Canvity.Render {
             else throw new Error("Could not get 2d rendering context");
         }
 
+        public draw(time: Util.Time): void { }
+
         public drawRect(rect: Util.Rect, color: Util.Color): void {
             this.drawRectFromCoords(rect.X, rect.Y, rect.W, rect.H, color);
         }

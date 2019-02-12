@@ -30,6 +30,7 @@ namespace Canvity {
         public static Draw(time: Util.Time) {
             if (CanvasManager.currentScene === null || CanvasManager.currentScene === undefined) return;
             CanvasManager.currentScene.Draw(time, CanvasManager.ctx);
+            CanvasManager.ctx.draw(time);
         }
         public static Update(time: Util.Time) {
             if (CanvasManager.currentScene === null || CanvasManager.currentScene === undefined) return;
