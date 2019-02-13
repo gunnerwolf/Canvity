@@ -1,5 +1,6 @@
 bin/*
-src/testApp/*
+src/*
+!src/Canvity/
 node_modules/*
 .tscache/*
 .vscode/*
