@@ -28,7 +28,7 @@ namespace Canvity {
         public get Paused(): boolean { return this.paused; }
 
         private static instance: App;
-        public static renderContext: Render.IRenderingContext;
+        public static get renderContext(): Render.IRenderingContext { return App.instance.ctx; }
         public static get renderContext2d(): Render.RenderingContext2D | null {
             if (App.renderContext instanceof Render.RenderingContext2D)
                 return <Render.RenderingContext2D> App.renderContext;
