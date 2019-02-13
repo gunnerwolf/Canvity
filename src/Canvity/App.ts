@@ -27,6 +27,19 @@ namespace Canvity {
         private paused: boolean;
         public get Paused(): boolean { return this.paused; }
 
+        private static instance: App;
+        public static renderContext: Render.IRenderingContext;
+        public static get renderContext2d(): Render.RenderingContext2D | null {
+            if (App.renderContext instanceof Render.RenderingContext2D)
+                return <Render.RenderingContext2D> App.renderContext;
+            return null;
+        }
+        public static get renderContextWebGL(): Render.RenderingContextWebGL | null {
+            if (App.renderContext instanceof Render.RenderingContextWebGL)
+                return <Render.RenderingContextWebGL> App.renderContext;
+            return null;
+        }
+
         public constructor(canvas: HTMLCanvasElement) {
             this.pausedTimeScale = 0;
             this.timeScale = 1;
@@ -36,6 +49,7 @@ namespace Canvity {
             this.lastUpdate = this.startTime;
 
             this.canvas = canvas;
+            App.instance = this;
         }
 
         public PreInit(opts: any): void {
