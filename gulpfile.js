@@ -82,7 +82,8 @@ function init(done) {
     let app: Canvity.App = new ${appName}.${appName}(canvas);
     Canvity.StartApp(app);
 });`;
-    fs.writeFileSync(`src/${appName}/Run${appName}.ts`, appCode);
+    fs.writeFileSync(`src/${appName}/Run${appName}.ts`, runCode);
+
 }
 
 function parseArgs() {
