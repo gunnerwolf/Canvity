@@ -84,6 +84,7 @@ function init(done) {
 });`;
     fs.writeFileSync(`src/${appName}/Run${appName}.ts`, runCode);
 
+    done();
 }
 
 function parseArgs() {
