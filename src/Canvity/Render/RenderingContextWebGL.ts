@@ -6,6 +6,8 @@ namespace Canvity.Render {
         public get contextWidth(): number { return this.canvas.width; }
         public get contextHeight(): number { return this.canvas.height; }
 
+        public get context(): any { return this.gl; }
+
         constructor(canvas: HTMLCanvasElement) {
             this.canvas = canvas;
             var gl = canvas.getContext('webgl2');

@@ -3,6 +3,8 @@ namespace Canvity.Render {
         contextWidth: number;
         contextHeight: number;
 
+        context: any;
+
         draw(time: Util.Time): void;
 
         drawRect(rect: Util.Rect, color: Util.Color): void
