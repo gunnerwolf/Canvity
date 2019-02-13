@@ -3,9 +3,8 @@ namespace Canvity.Assets {
         private content: string;
         public get Content(): string { return this.content; }
 
-        public constructor(path: string, content: string) {
-            super(path);
-            this.content = content;
+        public parseAsset(httpReq: XMLHttpRequest): void {
+            this.content = httpReq.response;
         }
     }
 }
