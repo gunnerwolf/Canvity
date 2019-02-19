@@ -1,6 +1,7 @@
 import { IRenderingContext } from "./Render/IRenderingContext";
 import { HashSet } from "./Util/HashSet";
 import { CanvasScene } from "./CanvasScene";
+import { Time } from "./Util/Time";
 
 export class CanvasManager {
     private static canvas: HTMLCanvasElement;
