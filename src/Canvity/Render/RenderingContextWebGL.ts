@@ -3,7 +3,7 @@ import { Time } from "../Util/Time";
 import { Rect } from "../Util/Rect";
 import { Color } from "../Util/Color";
 import { Vector2 } from "../Util/Vector2";
-import { Sprite } from "../Assets/Sprite";
+import { SpriteAsset } from "../Assets/SpriteAsset";
 
 export class RenderingContextWebGL implements IRenderingContext {
     private canvas: HTMLCanvasElement;
@@ -43,10 +43,10 @@ export class RenderingContextWebGL implements IRenderingContext {
         throw new Error("Method not implemented.");
     }
 
-    public drawSprite(sprite: Sprite, x: number, y: number): void {
+    public drawSprite(sprite: SpriteAsset, x: number, y: number): void {
         throw new Error("Method not implemented.");
     }
-    public drawTintedSprite(sprite: Sprite, x: number, y: number, color: Color): void {
+    public drawTintedSprite(sprite: SpriteAsset, x: number, y: number, color: Color): void {
         throw new Error("Method not implemented.");
     }
 

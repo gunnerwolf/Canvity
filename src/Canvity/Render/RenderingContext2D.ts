@@ -3,7 +3,7 @@ import { Time } from "../Util/Time";
 import { Rect } from "../Util/Rect";
 import { Color } from "../Util/Color";
 import { Vector2 } from "../Util/Vector2";
-import { Sprite } from "../Assets/Sprite";
+import { SpriteAsset } from "../Assets/SpriteAsset";
 
 export class RenderingContext2D implements IRenderingContext {
     private canvas: HTMLCanvasElement;
@@ -60,10 +60,10 @@ export class RenderingContext2D implements IRenderingContext {
         this.endCanvasWorkspace();
     }
 
-    public drawSprite(sprite: Sprite, x: number, y: number): void {
+    public drawSprite(sprite: SpriteAsset, x: number, y: number): void {
         this.ctx.drawImage(sprite.Image, x, y);
     }
-    public drawTintedSprite(sprite: Sprite, x: number, y: number, color: Color): void {
+    public drawTintedSprite(sprite: SpriteAsset, x: number, y: number, color: Color): void {
         var buffer = this.createBufferCanvas(sprite.Image.width, sprite.Image.height);
         buffer.ctx.fillStyle = color.CssString;
         buffer.ctx.fillRect(0, 0, buffer.canvas.width, buffer.canvas.height);
