@@ -44,7 +44,21 @@ export class CanvasScene {
         });
     }
 
-    public GetAspects(... components: IComponentManager[]): Array<Aspect> {
+    public GetAspects(... components: {new(id: number): Component}[]): Array<Aspect> {
+        let managers = new Array<IComponentManager>();
+        components.forEach(comp => {
+            let man = this.GetComponentManager(comp);
+            if (man == null) {
+                // TODO: do something
+                return;
+            }
+            managers.push(man);
+        });
+
+        return this.GetAspectsByManagers(...managers);
+    }
+
+    public GetAspectsByManagers(... components: IComponentManager[]): Array<Aspect> {
         if (components.length == 0) throw new Error("No Component Managers passed!");
         let aspects = new Array<Aspect>();
         let control = components.sort((a, b) => a.Count - b.Count)[0];
