@@ -40,9 +40,4 @@ export class CanvasManager {
         if (CanvasManager.currentScene === null || CanvasManager.currentScene === undefined) return;
         CanvasManager.currentScene.Update(time);
     }
-
-    public static Start() {
-        if (CanvasManager.currentScene === null || CanvasManager.currentScene === undefined) throw Error("Attempted to start app with no scenes added!");
-        CanvasManager.currentScene.Start();
-    }
 }
