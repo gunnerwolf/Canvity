@@ -1,56 +1,50 @@
-namespace Canvity {
-    export class InputManager {
-        private static mousePos: Util.Vector2;
-        public static get MousePos(): Util.Vector2 { return InputManager.mousePos; }
+import { Vector2 } from "./Util/Vector2";
 
-        private static mouseDelta: Util.Vector2;
-        public static get MouseDelta(): Util.Vector2 { return InputManager.mouseDelta; }
+export class InputManager {
+    private static mousePos: Vector2;
+    public static get MousePos(): Vector2 { return InputManager.mousePos; }
 
-        private static downButtons: number;
-        public static get IsLeftButtonDown(): boolean { return (InputManager.downButtons & 1) !== 0; }
-        public static get IsRightButtonDown(): boolean { return (InputManager.downButtons & 2) !== 0; }
-        public static get IsMiddleButtonDown(): boolean { return (InputManager.downButtons & 4) !== 0; }
+    private static mouseDelta: Vector2;
+    public static get MouseDelta(): Vector2 { return InputManager.mouseDelta; }
 
-        public static Init(): void {
-            InputManager.downButtons = 0;
+    private static downButtons: number;
+    public static get IsLeftButtonDown(): boolean { return (InputManager.downButtons & 1) !== 0; }
+    public static get IsRightButtonDown(): boolean { return (InputManager.downButtons & 2) !== 0; }
+    public static get IsMiddleButtonDown(): boolean { return (InputManager.downButtons & 4) !== 0; }
 
-            this.mousePos = new Util.Vector2();
-            this.mouseDelta = new Util.Vector2();
+    public static Init(): void {
+        InputManager.downButtons = 0;
 
-            this.downButtons = 0;
+        this.mousePos = new Vector2();
+        this.mouseDelta = new Vector2();
 
-            document.addEventListener('mousemove', InputManager.HandleMouseMove);
-            document.addEventListener('mousedown', InputManager.HandleMouseDown);
-            document.addEventListener('mouseup', InputManager.HandleMouseUp);
-        }
+        this.downButtons = 0;
 
-        public static HandleMouseMove(mouse: MouseEvent): void {
-            mouse.preventDefault();
+        document.addEventListener('mousemove', InputManager.HandleMouseMove);
+        document.addEventListener('mousedown', InputManager.HandleMouseDown);
+        document.addEventListener('mouseup', InputManager.HandleMouseUp);
+    }
 
-            InputManager.mousePos = new Util.Vector2(mouse.pageX, mouse.pageY);
-            InputManager.mouseDelta = new Util.Vector2(mouse.movementX, mouse.movementY);
+    public static HandleMouseMove(mouse: MouseEvent): void {
+        mouse.preventDefault();
 
-            Messaging.MessageBus.PushGlobalMessage(new Messaging.Message(App.CurrentUpdateTime, "mouse.move", "input"));
-        }
+        InputManager.mousePos = new Vector2(mouse.pageX, mouse.pageY);
+        InputManager.mouseDelta = new Vector2(mouse.movementX, mouse.movementY);
+    }
 
-        public static HandleMouseDown(mouse: MouseEvent): void {
-            mouse.preventDefault();
+    public static HandleMouseDown(mouse: MouseEvent): void {
+        mouse.preventDefault();
 
-            let pressed: number = mouse.buttons & ~InputManager.downButtons;
+        let pressed: number = mouse.buttons & ~InputManager.downButtons;
 
-            InputManager.downButtons = mouse.buttons;
+        InputManager.downButtons = mouse.buttons;
+    }
 
-            Messaging.MessageBus.PushGlobalMessage(new Messaging.Message(App.CurrentUpdateTime, "mouse.down", "input", pressed));
-        }
+    public static HandleMouseUp(mouse: MouseEvent): void {
+        mouse.preventDefault();
+        
+        let released: number = InputManager.downButtons & ~mouse.buttons;
 
-        public static HandleMouseUp(mouse: MouseEvent): void {
-            mouse.preventDefault();
-            
-            let released: number = InputManager.downButtons & ~mouse.buttons;
-
-            InputManager.downButtons = mouse.buttons;
-
-            Messaging.MessageBus.PushGlobalMessage(new Messaging.Message(App.CurrentUpdateTime, "mouse.up", "input", released));
-        }
+        InputManager.downButtons = mouse.buttons;
     }
 }
