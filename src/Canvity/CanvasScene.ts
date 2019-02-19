@@ -42,4 +42,29 @@ export class CanvasScene {
             element.Update(time, this);
         });
     }
+
+    public GetAspects(... components: IComponentManager[]): Array<HashSet<Component>> {
+        if (components.length == 0) throw new Error("No Component Managers passed!");
+        let aspects = new Array<HashSet<Component>>();
+        let control = components.sort((a, b) => a.Count - b.Count)[0];
+        components = components.filter(x => x != control);
+        control.forEach(component => {
+            let comps = new HashSet<Component>();
+            let id = component.EntityID;
+            let found = true;
+            for(let i = 0; i < components.length; i++) {
+                let comp = components[i].getComponent(id);
+                if (comp == null) {
+                    found = false;
+                    break;
+                }
+                comps.Add(comp);
+            }
+            if (found) {
+                aspects.push(comps);
+            }
+        });
+
+        return aspects;
+    }
 }

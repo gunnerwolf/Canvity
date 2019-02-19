@@ -6,6 +6,8 @@ export class ComponentManager<T extends Component> implements IComponentManager 
     protected componentType: {new(id: number): T};
     public get Type(): {new(id: number): T} { return this.componentType; }
 
+    public get Count(): number { return this.components.Count; }
+
     protected components: HashSet<T>;
 
     constructor(c: {new(id: number): T}) {
@@ -31,5 +33,9 @@ export class ComponentManager<T extends Component> implements IComponentManager 
         let component = this.getComponent(entity);
         if (component == null) return;
         this.components.Remove(component);
+    }
+
+    public forEach(f: (value: T, index: number, array: T[]) => void, thisArg?: any): void {
+        this.components.forEach(f);
     }
 }
