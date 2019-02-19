@@ -4,8 +4,6 @@ namespace Canvity {
     export class CanvasObject extends CanvityObject {
         private parentObj: CanvasObject;
         public get ParentObj(): CanvasObject { return this.parentObj; }
-        private scene: CanvasScene;
-        public get Scene(): CanvasScene { return (this.parentObj === null) ? this.scene : this.parentObj.scene; }
 
         private transform: Component.Transform;
         public get Transform(): Component.Transform { return this.transform; }
@@ -126,11 +124,10 @@ namespace Canvity {
             return this.children.Remove(child);
         }
 
-        public Start(scene: Canvity.CanvasScene): void {
+        public Start(): void {
             this.started = true;
-            if (this.parentObj === null) this.scene = scene;
             this.components.map(x => x.Start());
-            this.children.map(x => x.Start(scene));
+            this.children.map(x => x.Start());
         }
     }
 }
