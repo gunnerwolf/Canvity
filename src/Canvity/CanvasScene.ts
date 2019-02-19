@@ -1,47 +1,37 @@
-namespace Canvity {
-    export class CanvasScene {
-        private started: boolean;
+import { IComponentManager } from './Component/IComponentManager';
+import { ComponentManager } from './Component/ComponentManager';
+import { Component } from './Component/Component';
+import { ISystem } from './System/ISystem';
+import { Color } from './Util/Color';
+import { Time } from './Util/Time';
+import { HashSet } from './Util/HashSet';
 
-        private objects: Array<CanvasObject>;
-        private background: Util.Color;
+export class CanvasScene {
+    private started: boolean;
 
-        public get Background(): Util.Color { return this.background; }
-        public set Background(val: Util.Color) { this.background = val; }
+    private systems: HashSet<ISystem>;
+    private componentManagers: HashSet<IComponentManager>;
+    private background: Color;
 
-        public constructor() {
-            this.objects = new Array<CanvasObject>();
-            this.Background = Util.Color.Transparent;
-            this.started = false;
-        }
+    public get Background(): Color { return this.background; }
+    public set Background(val: Color) { this.background = val; }
 
-        public Draw(time: Util.Time, ctx: Render.IRenderingContext): void {
-            if (!this.started) return;
-            ctx.drawRectFromCoords(0, 0, ctx.contextWidth, ctx.contextHeight, this.Background);
+    public constructor() {
+        this.componentManagers = new HashSet<IComponentManager>();
+        this.Background = Color.Transparent;
+        this.started = false;
+    }
 
-            this.objects.sort((a: CanvasObject, b: CanvasObject) => {
-                return a.Transform.ZIndex - b.Transform.ZIndex;
-            }).forEach((element: CanvasObject) => {
-                element.Draw(time, ctx);
-            });
-        }
-        public Update(time: Util.Time): void {
-            if (!this.started) return;
-            this.objects.forEach(element => {
-                element.Update(time);
-            });
-        }
+    public GetComponentManager<T extends Component>(c: {new(id: number): T}): ComponentManager<T> | null {
+        let TManagers = this.componentManagers.filter(x => x.Type == c).ToArray();
+        if (TManagers.length == 0) return null;
+        return <ComponentManager<T>>TManagers[0];
+    }
 
-        public AddObject(obj: CanvasObject): void {
-            this.objects.push(obj);
-        }
-
-        public Start() {
-            this.started = true;
-            this.objects.sort((a: CanvasObject, b: CanvasObject) => {
-                return a.Transform.ZIndex - b.Transform.ZIndex;
-            }).forEach((element: CanvasObject) => {
-                element.Start();
-            })
-        }
+    public Update(time: Time): void {
+        if (!this.started) return;
+        this.systems.forEach(element => {
+            element.Update(time, this);
+        });
     }
 }
