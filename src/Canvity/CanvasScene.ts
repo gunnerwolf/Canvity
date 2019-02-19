@@ -6,6 +6,7 @@ import { Color } from './Util/Color';
 import { Time } from './Util/Time';
 import { HashSet } from './Util/HashSet';
 import { IRenderingContext } from './Render/IRenderingContext';
+import { Aspect } from './Aspect';
 
 export class CanvasScene {
     private started: boolean;
@@ -43,13 +44,13 @@ export class CanvasScene {
         });
     }
 
-    public GetAspects(... components: IComponentManager[]): Array<HashSet<Component>> {
+    public GetAspects(... components: IComponentManager[]): Array<Aspect> {
         if (components.length == 0) throw new Error("No Component Managers passed!");
-        let aspects = new Array<HashSet<Component>>();
+        let aspects = new Array<Aspect>();
         let control = components.sort((a, b) => a.Count - b.Count)[0];
         components = components.filter(x => x != control);
         control.forEach(component => {
-            let comps = new HashSet<Component>();
+            let comps = new Aspect();
             let id = component.EntityID;
             let found = true;
             for(let i = 0; i < components.length; i++) {
