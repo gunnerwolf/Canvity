@@ -25,7 +25,8 @@ function pack() {
 };
 
 function clean(done) {
-    rimraf.sync('./bin');
+    rimraf.sync('./bin/Canvity');
+    rimraf.sync('./bin/pack');
     done();
 }
 
