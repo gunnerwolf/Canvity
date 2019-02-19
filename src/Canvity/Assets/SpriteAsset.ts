@@ -1,6 +1,6 @@
 import { Asset } from "./Asset";
 
-export class Sprite extends Asset {
+export class SpriteAsset extends Asset {
     private image: HTMLImageElement;
     public get Image(): HTMLImageElement { return this.image; }
 
