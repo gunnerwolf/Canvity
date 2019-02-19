@@ -2,7 +2,7 @@ export abstract class Component {
     protected entityID: number;
     public get EntityID(): number { return this.entityID; }
 
-    protected constructor(id: number) {
+    public constructor(id: number) {
         this.entityID = id;
     }
 
