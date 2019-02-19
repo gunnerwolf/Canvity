@@ -2,6 +2,7 @@
 	"compilerOptions": {
 		"outDir": "./bin",
 		"rootDir": "./src",
+		"module": "commonjs",
 		"alwaysStrict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,

@@ -1,16 +1,7 @@
 module.exports = {
-    entry: './src/Canvity/Main.ts',
+    entry: './bin/js/MyApp/RunMyApp.js',
     devtool: 'inline-source-map',
-    mode: 'development',
-    module: {
-        rules: [
-            {
-            test: /\.tsx?$/,
-            use: 'ts-loader',
-            exclude: /node_modules/
-            }
-        ]
-    },
+    mode: 'production',
     resolve: {
       extensions: [ '.tsx', '.ts', '.js' ]
     },
