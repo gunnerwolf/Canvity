@@ -40,7 +40,7 @@ namespace Canvity {
             this.objects.sort((a: CanvasObject, b: CanvasObject) => {
                 return a.Transform.ZIndex - b.Transform.ZIndex;
             }).forEach((element: CanvasObject) => {
-                element.Start(this);
+                element.Start();
             })
         }
     }
