@@ -18,6 +18,10 @@ export class CanvasManager {
         CanvasManager.canvas = canvas;
         CanvasManager.ctx = ctx;
         CanvasManager.scenes = new HashSet<CanvasScene>();
+        
+        let scene = new CanvasScene();
+        CanvasManager.AddScene(scene);
+        CanvasManager.SwitchScene(scene);
     }
 
     public static AddScene(scene: CanvasScene): void {
