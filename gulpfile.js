@@ -13,7 +13,7 @@ function build() {
 
     var tsResult = tsProject.src()
         .pipe(tsProject()).js
-        .pipe(gulp.dest('bin'));
+        .pipe(gulp.dest('bin/'));
 
     return tsResult;
 };
