@@ -1,5 +1,5 @@
-namespace Canvity.Assets {
-    export interface AssetMap {
-        [assetName: string]: Asset;
-    }
+import { Asset } from "./Asset";
+
+export interface AssetMap {
+    [assetName: string]: Asset;
 }

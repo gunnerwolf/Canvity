@@ -1,10 +1,10 @@
-namespace Canvity.Assets {
-    export class Text extends Asset {
-        private content: string;
-        public get Content(): string { return this.content; }
+import { Asset } from "./Asset";
 
-        public parseAsset(httpReq: XMLHttpRequest): void {
-            this.content = httpReq.response;
-        }
+export class Text extends Asset {
+    private content: string;
+    public get Content(): string { return this.content; }
+
+    public parseAsset(httpReq: XMLHttpRequest): void {
+        this.content = httpReq.response;
     }
 }
