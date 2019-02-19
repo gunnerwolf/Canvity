@@ -21,7 +21,7 @@ function build() {
 function pack() {
     return gulp.src('bin/js/**/*.js')
         .pipe(webpack(webpackConf))
-        .pipe(gulp.dest('bin/pack'));
+        .pipe(gulp.dest('bin/'));
 };
 
 function clean(done) {
