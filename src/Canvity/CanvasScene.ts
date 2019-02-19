@@ -5,6 +5,7 @@ import { ISystem } from './System/ISystem';
 import { Color } from './Util/Color';
 import { Time } from './Util/Time';
 import { HashSet } from './Util/HashSet';
+import { IRenderingContext } from './Render/IRenderingContext';
 
 export class CanvasScene {
     private started: boolean;
@@ -26,6 +27,13 @@ export class CanvasScene {
         let TManagers = this.componentManagers.filter(x => x.Type == c).ToArray();
         if (TManagers.length == 0) return null;
         return <ComponentManager<T>>TManagers[0];
+    }
+
+    public Draw(time: Time, ctx: IRenderingContext): void {
+        if (!this.started) return;
+        this.systems.forEach(element => {
+            element.Draw(time, ctx, this);
+        });
     }
 
     public Update(time: Time): void {
