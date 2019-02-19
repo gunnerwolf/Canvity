@@ -1,8 +1,10 @@
+import { IComponentManager } from './IComponentManager';
 import { Component } from './Component';
 import { HashSet } from '../Util/HashSet';
 
-export class ComponentManager<T extends Component> {
+export class ComponentManager<T extends Component> implements IComponentManager {
     protected componentType: {new(id: number): T};
+    public get Type(): {new(id: number): T} { return this.componentType; }
 
     protected components: HashSet<T>;
 
