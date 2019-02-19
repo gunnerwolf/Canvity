@@ -41,47 +41,51 @@ function init(done) {
 
     fs.mkdirSync("src/" + appName);
 
-    let appCode = `namespace ${appName} {
-    export class ${appName} extends Canvity.App {
+    let appCode = `import { App } from "../Canvity/App";
+
+    export class ${appName} extends App {
         public constructor(canvas: HTMLCanvasElement) {
             super(canvas);
         }
     
         public PreInit(opts: any): void {
             super.PreInit(opts);
-
+            console.log("PreInit");
             // TODO: Add PreInit logic
         }
     
         public Init(drawDeltaTime: number, updateDeltaTime: number): void {
             super.Init(drawDeltaTime, updateDeltaTime);
-
+            console.log("Init");
             // TODO: Add Init logic
         }
     
         public PostInit(): void {
             super.PostInit();
-
+            console.log("PostInit");
             // TODO: Add PostInit logic
         }
-    }
-}`;
+    }`;
     fs.writeFileSync(`src/${appName}/${appName}.ts`, appCode);
 
-    let runCode = `window.addEventListener('load', function(ev: Event) {
-    let canvas: HTMLElement | null = document.getElementById('canvity-canvas');
-    if (canvas === null) {
-        console.error("Could not find canvas element with id 'canvity-canvas'!");
-        return;
-    }
-    if (!(canvas instanceof HTMLCanvasElement)) {
-        console.error("Element with id 'canvity-canvas' is not a HTML Canvas!");
-        return;
-    }
+    let runCode = `import { App } from "../Canvity/App";
+    import { ${appName} } from "./${appName}";
+    import { StartApp } from "../Canvity/Main";
     
-    let app: Canvity.App = new ${appName}.${appName}(canvas);
-    Canvity.StartApp(app);
-});`;
+    window.addEventListener('load', function(ev: Event) {
+        let canvas: HTMLElement | null = document.getElementById('canvity-canvas');
+        if (canvas === null) {
+            console.error("Could not find canvas element with id 'canvity-canvas'!");
+            return;
+        }
+        if (!(canvas instanceof HTMLCanvasElement)) {
+            console.error("Element with id 'canvity-canvas' is not a HTML Canvas!");
+            return;
+        }
+        
+        let app: App = new ${appname}(canvas);
+        StartApp(app);
+    });`;
     fs.writeFileSync(`src/${appName}/Run${appName}.ts`, runCode);
 
     done();
