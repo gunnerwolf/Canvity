@@ -8,7 +8,7 @@ import { HashSet } from './Util/HashSet';
 import { IRenderingContext } from './Render/IRenderingContext';
 import { Aspect } from './Aspect';
 
-export class CanvasScene {
+export class Scene {
     private started: boolean;
 
     private systems: HashSet<ISystem>;
