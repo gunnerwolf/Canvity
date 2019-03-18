@@ -30,6 +30,7 @@ export abstract class App {
     private canvas: HTMLCanvasElement;
     private ctx: IRenderingContext;
 
+    private inputManager: InputManager;
     private sceneManager: SceneManager;
 
     private paused: boolean;
@@ -48,7 +49,7 @@ export abstract class App {
         return null;
     }
 
-    public constructor(canvas: HTMLCanvasElement, sceneManager: SceneManager) {
+    public constructor(canvas: HTMLCanvasElement, inputManager: InputManager, sceneManager: SceneManager) {
         this.pausedTimeScale = 0;
         this.timeScale = 1;
         this.paused = false;
@@ -59,6 +60,7 @@ export abstract class App {
         this.canvas = canvas;
         App.instance = this;
 
+        this.inputManager = inputManager;
         this.sceneManager = sceneManager;
     }
 
@@ -77,7 +79,7 @@ export abstract class App {
     }
     public Init(drawDeltaTime: number, updateDeltaTime: number): void
     {
-        InputManager.Init();
+        this.inputManager.Init();
         this.sceneManager.Init(this.canvas, this.ctx);
     }
     public PostInit(): void { }

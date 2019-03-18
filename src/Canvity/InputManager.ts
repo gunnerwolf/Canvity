@@ -1,50 +1,57 @@
 import { Vector2 } from "./Util/Vector2";
 
 export class InputManager {
-    private static mousePos: Vector2;
-    public static get MousePos(): Vector2 { return InputManager.mousePos; }
+    private static _instance: InputManager;
+    public static get Instance(): InputManager {
+        return (this._instance == null)
+            ? (this._instance = new InputManager())
+            : this._instance;
+    }
 
-    private static mouseDelta: Vector2;
-    public static get MouseDelta(): Vector2 { return InputManager.mouseDelta; }
+    private mousePos: Vector2;
+    public get MousePos(): Vector2 { return this.mousePos; }
 
-    private static downButtons: number;
-    public static get IsLeftButtonDown(): boolean { return (InputManager.downButtons & 1) !== 0; }
-    public static get IsRightButtonDown(): boolean { return (InputManager.downButtons & 2) !== 0; }
-    public static get IsMiddleButtonDown(): boolean { return (InputManager.downButtons & 4) !== 0; }
+    private mouseDelta: Vector2;
+    public get MouseDelta(): Vector2 { return this.mouseDelta; }
 
-    public static Init(): void {
-        InputManager.downButtons = 0;
+    private downButtons: number;
+    public get IsLeftButtonDown(): boolean { return (this.downButtons & 1) !== 0; }
+    public get IsRightButtonDown(): boolean { return (this.downButtons & 2) !== 0; }
+    public get IsMiddleButtonDown(): boolean { return (this.downButtons & 4) !== 0; }
+
+    public Init(): void {
+        this.downButtons = 0;
 
         this.mousePos = new Vector2();
         this.mouseDelta = new Vector2();
 
         this.downButtons = 0;
 
-        document.addEventListener('mousemove', InputManager.HandleMouseMove);
-        document.addEventListener('mousedown', InputManager.HandleMouseDown);
-        document.addEventListener('mouseup', InputManager.HandleMouseUp);
+        document.addEventListener('mousemove', this.HandleMouseMove);
+        document.addEventListener('mousedown', this.HandleMouseDown);
+        document.addEventListener('mouseup', this.HandleMouseUp);
     }
 
-    public static HandleMouseMove(mouse: MouseEvent): void {
+    public HandleMouseMove(mouse: MouseEvent): void {
         mouse.preventDefault();
 
-        InputManager.mousePos = new Vector2(mouse.pageX, mouse.pageY);
-        InputManager.mouseDelta = new Vector2(mouse.movementX, mouse.movementY);
+        this.mousePos = new Vector2(mouse.pageX, mouse.pageY);
+        this.mouseDelta = new Vector2(mouse.movementX, mouse.movementY);
     }
 
-    public static HandleMouseDown(mouse: MouseEvent): void {
+    public HandleMouseDown(mouse: MouseEvent): void {
         mouse.preventDefault();
 
-        let pressed: number = mouse.buttons & ~InputManager.downButtons;
+        let pressed: number = mouse.buttons & ~this.downButtons;
 
-        InputManager.downButtons = mouse.buttons;
+        this.downButtons = mouse.buttons;
     }
 
-    public static HandleMouseUp(mouse: MouseEvent): void {
+    public HandleMouseUp(mouse: MouseEvent): void {
         mouse.preventDefault();
         
-        let released: number = InputManager.downButtons & ~mouse.buttons;
+        let released: number = this.downButtons & ~mouse.buttons;
 
-        InputManager.downButtons = mouse.buttons;
+        this.downButtons = mouse.buttons;
     }
 }
