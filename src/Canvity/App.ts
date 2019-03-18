@@ -3,7 +3,7 @@ import { IRenderingContext } from "./Render/IRenderingContext";
 import { RenderingContext2D } from "./Render/RenderingContext2D";
 import { RenderingContextWebGL } from "./Render/RenderingContextWebGL";
 import { InputManager } from "./InputManager";
-import { CanvasManager } from "./CanvasManager";
+import { SceneManager } from "./SceneManager";
 
 export abstract class App {
     public static CurrentUpdateTime: Time;
@@ -30,6 +30,8 @@ export abstract class App {
     private canvas: HTMLCanvasElement;
     private ctx: IRenderingContext;
 
+    private sceneManager: SceneManager;
+
     private paused: boolean;
     public get Paused(): boolean { return this.paused; }
 
@@ -46,7 +48,7 @@ export abstract class App {
         return null;
     }
 
-    public constructor(canvas: HTMLCanvasElement) {
+    public constructor(canvas: HTMLCanvasElement, sceneManager: SceneManager) {
         this.pausedTimeScale = 0;
         this.timeScale = 1;
         this.paused = false;
@@ -56,6 +58,8 @@ export abstract class App {
 
         this.canvas = canvas;
         App.instance = this;
+
+        this.sceneManager = sceneManager;
     }
 
     public PreInit(opts: any): void {
@@ -74,7 +78,7 @@ export abstract class App {
     public Init(drawDeltaTime: number, updateDeltaTime: number): void
     {
         InputManager.Init();
-        CanvasManager.Init(this.canvas, this.ctx);
+        this.sceneManager.Init(this.canvas, this.ctx);
     }
     public PostInit(): void { }
 
@@ -85,7 +89,7 @@ export abstract class App {
         App.CurrentDrawTime = time;
 
         this.lastDraw = timestamp;
-        CanvasManager.Draw(time);
+        this.sceneManager.Draw(time);
     }
     public Update(): void {
         let timestamp = new Date().getTime() / 1000;
@@ -95,7 +99,7 @@ export abstract class App {
         App.CurrentUpdateTime = time;
 
         this.lastUpdate = timestamp;
-        CanvasManager.Update(time);
+        this.sceneManager.Update(time);
     }
 
     public Pause(): void {
