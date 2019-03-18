@@ -1,13 +1,21 @@
-import { ISystem } from "../ISystem";
+import { System } from "../System";
 import { Time } from "../../Util/Time";
 import { IRenderingContext } from "../../Render/IRenderingContext";
-import { CanvasScene } from "../../CanvasScene";
 import { Transform } from "../../Component/Components/Transform";
 import { Sprite } from "../../Component/Components/Sprite";
+import { Component } from "../../Component/Component";
+import { Aspect } from "../../Aspect";
 
-export class SpriteSystem implements ISystem {
-    public Draw(time: Time, ctx: IRenderingContext, scene: CanvasScene): void {
-        let aspects = scene.GetAspects(Transform, Sprite);
+export class SpriteSystem extends System {
+    private aspectType: Array<{new (id: number): Component}> = [
+        Transform, Sprite
+    ];
+
+    public get AspectType(): Array<{new (id: number): Component}> {
+        return this.aspectType;
+    }
+
+    public Draw(time: Time, ctx: IRenderingContext, aspects: Array<Aspect>): void {
         aspects.forEach(aspect => {
             let transform = aspect.Get(Transform);
             let sprite = aspect.Get(Sprite);
@@ -15,6 +23,4 @@ export class SpriteSystem implements ISystem {
             ctx.drawSprite(sprite.sprite, transform.position.X, transform.position.Y);
         });
     }
-    
-    public Update(time: Time, scene: CanvasScene): void { }
 }
