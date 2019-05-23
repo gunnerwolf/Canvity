@@ -1,7 +1,7 @@
 import { IComponentManager } from './Component/IComponentManager';
 import { ComponentManager } from './Component/ComponentManager';
 import { Component } from './Component/Component';
-import { ISystem } from './System/ISystem';
+import { System } from './System/System';
 import { Color } from './Util/Color';
 import { Time } from './Util/Time';
 import { HashSet } from './Util/HashSet';
@@ -11,7 +11,7 @@ import { Aspect } from './Aspect';
 export class Scene {
     private started: boolean;
 
-    private systems: HashSet<ISystem>;
+    private systems: HashSet<System>;
     private componentManagers: HashSet<IComponentManager>;
     private background: Color;
 
