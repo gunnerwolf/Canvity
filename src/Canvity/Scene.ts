@@ -26,21 +26,21 @@ export class Scene {
 
     public GetComponentManager<T extends Component>(c: {new(id: number): T}): ComponentManager<T> | null {
         let TManagers = this.componentManagers.filter(x => x.Type == c).ToArray();
-        if (TManagers.length == 0) return null;
+        if (TManagers.length === 0) return null;
         return <ComponentManager<T>>TManagers[0];
     }
 
     public Draw(time: Time, ctx: IRenderingContext): void {
         if (!this.started) return;
         this.systems.forEach(element => {
-            element.Draw(time, ctx, this);
+            element.Draw(time, ctx, this.GetAspects(...element.AspectType));
         });
     }
 
     public Update(time: Time): void {
         if (!this.started) return;
         this.systems.forEach(element => {
-            element.Update(time, this);
+            element.Update(time, this.GetAspects(...element.AspectType));
         });
     }
 
@@ -48,7 +48,7 @@ export class Scene {
         let managers = new Array<IComponentManager>();
         components.forEach(comp => {
             let man = this.GetComponentManager(comp);
-            if (man == null) {
+            if (man === null) {
                 // TODO: do something
                 return;
             }
@@ -59,7 +59,7 @@ export class Scene {
     }
 
     public GetAspectsByManagers(... components: IComponentManager[]): Array<Aspect> {
-        if (components.length == 0) throw new Error("No Component Managers passed!");
+        if (components.length === 0) throw new Error("No Component Managers passed!");
         let aspects = new Array<Aspect>();
         let control = components.sort((a, b) => a.Count - b.Count)[0];
         components = components.filter(x => x != control);
@@ -69,7 +69,7 @@ export class Scene {
             let found = true;
             for(let i = 0; i < components.length; i++) {
                 let comp = components[i].getComponent(id);
-                if (comp == null) {
+                if (comp === null) {
                     found = false;
                     break;
                 }

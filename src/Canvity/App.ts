@@ -1,13 +1,29 @@
-import { Time } from "./Util/Time";
+import { InputManager } from "./InputManager";
 import { IRenderingContext } from "./Render/IRenderingContext";
 import { RenderingContext2D } from "./Render/RenderingContext2D";
 import { RenderingContextWebGL } from "./Render/RenderingContextWebGL";
-import { InputManager } from "./InputManager";
 import { SceneManager } from "./SceneManager";
+import { Time } from "./Util/Time";
 
 export abstract class App {
     public static CurrentUpdateTime: Time;
     public static CurrentDrawTime: Time;
+
+    private static instance: App;
+
+    public static get renderContext(): IRenderingContext { return App.instance.ctx; }
+    public static get renderContext2d(): RenderingContext2D | null {
+        if (App.renderContext instanceof RenderingContext2D) {
+            return App.renderContext as RenderingContext2D;
+        }
+        return null;
+    }
+    public static get renderContextWebGL(): RenderingContextWebGL | null {
+        if (App.renderContext instanceof RenderingContextWebGL) {
+            return App.renderContext as RenderingContextWebGL;
+        }
+        return null;
+    }
 
     protected timeScale: number;
 
@@ -21,7 +37,7 @@ export abstract class App {
 
     private runtime: number;
     public get Runtime(): number { return (new Date().getTime() / 1000) - this.startTime; }
-    
+
     private lastDraw: number;
     private lastUpdate: number;
 
@@ -35,19 +51,6 @@ export abstract class App {
 
     private paused: boolean;
     public get Paused(): boolean { return this.paused; }
-
-    private static instance: App;
-    public static get renderContext(): IRenderingContext { return App.instance.ctx; }
-    public static get renderContext2d(): RenderingContext2D | null {
-        if (App.renderContext instanceof RenderingContext2D)
-            return <RenderingContext2D> App.renderContext;
-        return null;
-    }
-    public static get renderContextWebGL(): RenderingContextWebGL | null {
-        if (App.renderContext instanceof RenderingContextWebGL)
-            return <RenderingContextWebGL> App.renderContext;
-        return null;
-    }
 
     public constructor(canvas: HTMLCanvasElement, inputManager: InputManager, sceneManager: SceneManager) {
         this.pausedTimeScale = 0;
@@ -65,23 +68,24 @@ export abstract class App {
     }
 
     public PreInit(opts: any): void {
-        if (!opts.renderTarget) opts.renderTarget = '2d';
-        switch(opts.renderTarget.toLowerCase()) {
-            case '2d':
+        if (!opts.renderTarget) opts.renderTarget = "2d";
+        switch (opts.renderTarget.toLowerCase()) {
+            case "2d":
                 this.ctx = new RenderingContext2D(this.canvas);
                 break;
-            case 'gl':
-            case 'webgl':
-            case 'opengl':
+            case "gl":
+            case "webgl":
+            case "opengl":
                 this.ctx = new RenderingContextWebGL(this.canvas);
                 break;
         }
     }
-    public Init(drawDeltaTime: number, updateDeltaTime: number): void
-    {
+
+    public Init(drawDeltaTime: number, updateDeltaTime: number): void {
         this.inputManager.Init();
         this.sceneManager.Init(this.canvas, this.ctx);
     }
+
     public PostInit(): void { }
 
     public Draw(): void {
@@ -93,6 +97,7 @@ export abstract class App {
         this.lastDraw = timestamp;
         this.sceneManager.Draw(time);
     }
+
     public Update(): void {
         let timestamp = new Date().getTime() / 1000;
         let deltaTime = timestamp - this.lastUpdate;
@@ -110,6 +115,7 @@ export abstract class App {
         this.timeScale = 0;
         this.paused = true;
     }
+
     public Unpause(): void {
         if (!this.paused) return;
         this.timeScale = this.pausedTimeScale;

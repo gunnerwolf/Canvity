@@ -1,19 +1,13 @@
-import { System } from "../System";
-import { Time } from "../../Util/Time";
-import { IRenderingContext } from "../../Render/IRenderingContext";
-import { Transform } from "../../Component/Components/Transform";
-import { Sprite } from "../../Component/Components/Sprite";
-import { Component } from "../../Component/Component";
 import { Aspect } from "../../Aspect";
+import { Component } from "../../Component/Component";
+import { Sprite } from "../../Component/Components/Sprite";
+import { Transform } from "../../Component/Components/Transform";
+import { IRenderingContext } from "../../Render/IRenderingContext";
+import { Time } from "../../Util/Time";
+import { System } from "../System";
 
 export class SpriteSystem extends System {
-    private aspectType: Array<{new (id: number): Component}> = [
-        Transform, Sprite
-    ];
-
-    public get AspectType(): Array<{new (id: number): Component}> {
-        return this.aspectType;
-    }
+    public get AspectType(): Array<new (id: number) => Component> { return [Transform, Sprite]; }
 
     public Draw(time: Time, ctx: IRenderingContext, aspects: Array<Aspect>): void {
         aspects.forEach(aspect => {
