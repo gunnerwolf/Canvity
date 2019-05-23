@@ -3,7 +3,7 @@ import { Time } from "../Util/Time";
 import { Rect } from "../Util/Rect";
 import { Color } from "../Util/Color";
 import { Vector2 } from "../Util/Vector2";
-import { SpriteAsset } from "../Assets/SpriteAsset";
+import { SpriteAsset } from "../Asset/SpriteAsset";
 
 export class RenderingContext2D implements IRenderingContext {
     private canvas: HTMLCanvasElement;
