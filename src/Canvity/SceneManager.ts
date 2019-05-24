@@ -4,11 +4,11 @@ import { HashSet } from "./Util/HashSet";
 import { Time } from "./Util/Time";
 
 export class SceneManager {
-    private static _instance: SceneManager;
+    private static instance: SceneManager;
     public static get Instance(): SceneManager {
-        return (this._instance == null)
-            ? (this._instance = new SceneManager())
-            : this._instance;
+        return (this.instance == null)
+            ? (this.instance = new SceneManager())
+            : this.instance;
     }
 
     private canvas: HTMLCanvasElement;
@@ -20,10 +20,6 @@ export class SceneManager {
     private scenes: HashSet<Scene>;
     private currentScene: Scene;
     public get CurrentScene(): Scene { return this.currentScene; }
-
-    public constructor() {
-
-    }
 
     public Init(canvas: HTMLCanvasElement, ctx: IRenderingContext): void {
         this.canvas = canvas;

@@ -1,8 +1,8 @@
-import { AssetMap } from "./AssetMap";
+import { IAssetMap } from "./AssetMap";
 
 export abstract class Asset {
-    private static assets: AssetMap = { };
-    public static get Assets(): AssetMap { return Asset.assets; }
+    private static assets: IAssetMap = { };
+    public static get Assets(): IAssetMap { return Asset.assets; }
 
     protected assetName: string;
     public get AssetName(): string { return this.assetName; }
@@ -27,6 +27,7 @@ export abstract class Asset {
     public static getAssets(): Array<Asset> {
         let arr = new Array<Asset>();
         for (let name in Asset.Assets) {
+            if (!Asset.Assets.hasOwnProperty(name)) continue;
             arr.push(Asset.Assets[name]);
         }
         return arr;
@@ -41,7 +42,9 @@ export abstract class Asset {
         return arr;
     }
 
-    public static loadAssetFromURI<T extends Asset>(c: new(name: string, path: string) => T, uri: string, assetName: string): void {
+    public static loadAssetFromURI<T extends Asset>(
+        c: new(name: string, path: string) => T, uri: string, assetName: string
+    ): void {
         let httpReq = new XMLHttpRequest();
 
         httpReq.onreadystatechange = () => {
@@ -56,7 +59,9 @@ export abstract class Asset {
         Asset.assets[asset.AssetName] = asset;
     }
 
-    private static parseLoadedAsset<T extends Asset>(c: new(name: string, path: string) => T, httpReq: XMLHttpRequest, assetName: string): void {
+    private static parseLoadedAsset<T extends Asset>(
+        c: new(name: string, path: string) => T, httpReq: XMLHttpRequest, assetName: string
+    ): void {
         let asset = new c(assetName, httpReq.responseURL);
         asset.parseAsset(httpReq);
 

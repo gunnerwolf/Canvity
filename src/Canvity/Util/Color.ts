@@ -1,23 +1,22 @@
 export class Color {
-
     public get R(): number { return this.r; }
-    public get Red(): number { return this.r; }
     public set R(val: number) { this.r = val % 256; }
+    public get Red(): number { return this.r; }
     public set Red(val: number) { this.r = val % 256; }
 
     public get G(): number { return this.g; }
-    public get Green(): number { return this.g; }
     public set G(val: number) { this.g = val % 256; }
+    public get Green(): number { return this.g; }
     public set Green(val: number) { this.g = val % 256; }
 
     public get B(): number { return this.b; }
-    public get Blue(): number { return this.b; }
     public set B(val: number) { this.b = val % 256; }
+    public get Blue(): number { return this.b; }
     public set Blue(val: number) { this.b = val % 256; }
 
     public get A(): number { return this.a; }
-    public get Alpha(): number { return this.a; }
     public set A(val: number) { this.a = val % 256; }
+    public get Alpha(): number { return this.a; }
     public set Alpha(val: number) { this.a = val % 256; }
 
     public get HexString(): string {
@@ -28,6 +27,7 @@ export class Color {
         ret += this.a.toString(16);
         return ret;
     }
+
     public get CssString(): string {
         let ret = "rgba(";
         ret += this.r + ", ";
@@ -46,6 +46,7 @@ export class Color {
     public static White: Color = new Color(255, 255, 255);
     public static Black: Color = new Color(0, 0, 0);
     public static Transparent: Color = new Color(0, 0, 0, 0);
+
     private r: number;
     private g: number;
     private b: number;
@@ -59,8 +60,11 @@ export class Color {
     }
 
     public static FromHex(hex: string): Color {
-        if (hex.substr(0, 1) == "#") hex = hex.substr(1);
-        let r: number = 0, g: number = 0, b: number = 0, a: number = 0;
+        if (hex.substr(0, 1) === "#") hex = hex.substr(1);
+        let r: number = 0;
+        let g: number = 0;
+        let b: number = 0;
+        let a: number = 0;
         switch (hex.length) {
             case 1:
                 r = parseInt(hex + hex);

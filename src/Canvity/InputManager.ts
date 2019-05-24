@@ -1,11 +1,11 @@
 import { Vector2 } from "./Util/Vector2";
 
 export class InputManager {
-    private static _instance: InputManager;
+    private static instance: InputManager;
     public static get Instance(): InputManager {
-        return (this._instance == null)
-            ? (this._instance = new InputManager())
-            : this._instance;
+        return (this.instance == null)
+            ? (this.instance = new InputManager())
+            : this.instance;
     }
 
     private mousePos: Vector2;

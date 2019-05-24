@@ -15,11 +15,11 @@ export class ComponentManager<T extends Component> implements IComponentManager 
     }
 
     public hasComponent(entity: number): boolean {
-        return this.components.filter(x => x.EntityID == entity).Count > 0;
+        return this.components.filter(x => x.EntityID === entity).Count > 0;
     }
     public getComponent(entity: number): T | null {
-        let results = this.components.filter(x => x.EntityID == entity).ToArray();
-        if (results.length == 0) return null;
+        let results = this.components.filter(x => x.EntityID === entity).ToArray();
+        if (results.length === 0) return null;
         return results[0];
     }
 
@@ -31,7 +31,7 @@ export class ComponentManager<T extends Component> implements IComponentManager 
 
     public removeComponent(entity: number): void {
         let component = this.getComponent(entity);
-        if (component == null) return;
+        if (component === null) return;
         this.components.Remove(component);
     }
 

@@ -1,5 +1,5 @@
 import { Asset } from "./Asset";
 
-export interface AssetMap {
+export interface IAssetMap {
     [assetName: string]: Asset;
 }

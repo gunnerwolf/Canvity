@@ -25,7 +25,7 @@ export class Scene {
     }
 
     public GetComponentManager<T extends Component>(c: new(id: number) => T): ComponentManager<T> | null {
-        let TManagers = this.componentManagers.filter(x => x.Type == c).ToArray();
+        let TManagers = this.componentManagers.filter(x => x.Type === c).ToArray();
         if (TManagers.length === 0) return null;
         return TManagers[0] as ComponentManager<T>;
     }
@@ -62,13 +62,13 @@ export class Scene {
         if (components.length === 0) throw new Error("No Component Managers passed!");
         let aspects = new Array<Aspect>();
         let control = components.sort((a, b) => a.Count - b.Count)[0];
-        components = components.filter(x => x != control);
+        components = components.filter(x => x !== control);
         control.forEach(component => {
             let comps = new Aspect();
             let id = component.EntityID;
             let found = true;
-            for (let i = 0; i < components.length; i++) {
-                let comp = components[i].getComponent(id);
+            for (let c of components) {
+                let comp = c.getComponent(id);
                 if (comp === null) {
                     found = false;
                     break;

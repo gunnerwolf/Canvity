@@ -121,7 +121,7 @@ export class RenderingContext2D implements IRenderingContext {
     private startCanvasWorkspace(opts: any): void {
         let oldOpts: any = {};
         for (let key in opts) {
-            if ((this.ctx as any)[key] != undefined) {
+            if ((this.ctx as any)[key] !== undefined) {
                 oldOpts[key] = (this.ctx as any)[key];
             }
         }
@@ -135,7 +135,7 @@ export class RenderingContext2D implements IRenderingContext {
 
     private applyCanvasOpts(opts: any): void {
         for (let key in opts) {
-            if ((this.ctx as any)[key] != undefined) {
+            if ((this.ctx as any)[key] !== undefined) {
                 (this.ctx as any)[key] = opts[key];
             }
         }
