@@ -1,6 +1,6 @@
 import { IRenderingContext } from "./Render/IRenderingContext";
-import { HashSet } from "./Util/HashSet";
 import { Scene } from "./Scene";
+import { HashSet } from "./Util/HashSet";
 import { Time } from "./Util/Time";
 
 export class SceneManager {
@@ -13,7 +13,7 @@ export class SceneManager {
 
     private canvas: HTMLCanvasElement;
     public get Canvas(): HTMLCanvasElement { return this.canvas; }
-    
+
     private ctx: IRenderingContext;
     public get Context(): IRenderingContext { return this.ctx; }
 
@@ -29,20 +29,20 @@ export class SceneManager {
         this.canvas = canvas;
         this.ctx = ctx;
         this.scenes = new HashSet<Scene>();
-        
+
         let scene = new Scene();
         this.AddScene(scene);
         this.SwitchScene(scene);
     }
 
     public AddScene(scene: Scene): void {
-        if (!this.scenes.Add(scene)) throw Error('Attempted to add Scene that was already added!');
+        if (!this.scenes.Add(scene)) throw Error("Attempted to add Scene that was already added!");
     }
     public RemoveScene(scene: Scene): void {
         this.scenes.Remove(scene);
     }
     public SwitchScene(scene: Scene): void {
-        if (!this.scenes.Contains(scene)) throw Error('Attempted to switch to Scene that does not exist!');
+        if (!this.scenes.Contains(scene)) throw Error("Attempted to switch to Scene that does not exist!");
         this.currentScene = scene;
     }
 

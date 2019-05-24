@@ -9,7 +9,7 @@ export class Time {
     public get ActualTime(): number { return this.actualTime; }
 
     private timeScale: number;
-    public get TimeScale(): number{ return this.timeScale; }
+    public get TimeScale(): number { return this.timeScale; }
 
     public constructor(time: number, realTime: number, deltaTime: number, timeScale: number) {
         this.time = time;

@@ -46,14 +46,14 @@ export class HashSet<T> {
         return this.container.indexOf(item) >= 0;
     }
 
-    public forEach(f: (value: T, index: number, array: T[]) => void, thisArg?: any): void { 
+    public forEach(f: (value: T, index: number, array: Array<T>) => void, thisArg?: any): void {
         this.container.forEach(f, thisArg);
     }
-    public filter(f: (value: T, index: number, array: T[]) => any, thisArg?: any): HashSet<T> {
+    public filter(f: (value: T, index: number, array: Array<T>) => any, thisArg?: any): HashSet<T> {
         return HashSet.FromArray(this.container.filter(f, thisArg));
     }
-    public map<U>(f: (value: T, index: number, array: T[]) => U, thisArg?: any): HashSet<U> {
-        return HashSet.FromArray(this.container.map(f, thisArg));;
+    public map<U>(f: (value: T, index: number, array: Array<T>) => U, thisArg?: any): HashSet<U> {
+        return HashSet.FromArray(this.container.map(f, thisArg));
     }
 
     /**

@@ -6,10 +6,6 @@ import { SceneManager } from "./SceneManager";
 import { Time } from "./Util/Time";
 
 export abstract class App {
-    public static CurrentUpdateTime: Time;
-    public static CurrentDrawTime: Time;
-
-    private static instance: App;
 
     public static get renderContext(): IRenderingContext { return App.instance.ctx; }
     public static get renderContext2d(): RenderingContext2D | null {
@@ -24,19 +20,17 @@ export abstract class App {
         }
         return null;
     }
-
-    protected timeScale: number;
-
-    protected drawInterval: number;
-    protected updateInterval: number;
     public set DrawInterval(val: number) { this.drawInterval = val; }
     public set UpdateInterval(val: number) { this.updateInterval = val; }
-
-    protected startTime: number;
     public get ActualRuntime(): number { return (new Date().getTime() / 1000) - this.startTime; }
+    public get Runtime(): number { return (new Date().getTime() / 1000) - this.startTime; }
+    public get Paused(): boolean { return this.paused; }
+    public static CurrentUpdateTime: Time;
+    public static CurrentDrawTime: Time;
+
+    private static instance: App;
 
     private runtime: number;
-    public get Runtime(): number { return (new Date().getTime() / 1000) - this.startTime; }
 
     private lastDraw: number;
     private lastUpdate: number;
@@ -50,7 +44,13 @@ export abstract class App {
     private sceneManager: SceneManager;
 
     private paused: boolean;
-    public get Paused(): boolean { return this.paused; }
+
+    protected timeScale: number;
+
+    protected drawInterval: number;
+    protected updateInterval: number;
+
+    protected startTime: number;
 
     public constructor(canvas: HTMLCanvasElement, inputManager: InputManager, sceneManager: SceneManager) {
         this.pausedTimeScale = 0;

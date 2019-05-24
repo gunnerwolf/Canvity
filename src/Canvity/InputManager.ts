@@ -27,9 +27,9 @@ export class InputManager {
 
         this.downButtons = 0;
 
-        document.addEventListener('mousemove', this.HandleMouseMove);
-        document.addEventListener('mousedown', this.HandleMouseDown);
-        document.addEventListener('mouseup', this.HandleMouseUp);
+        document.addEventListener("mousemove", this.HandleMouseMove);
+        document.addEventListener("mousedown", this.HandleMouseDown);
+        document.addEventListener("mouseup", this.HandleMouseUp);
     }
 
     public HandleMouseMove(mouse: MouseEvent): void {
@@ -49,7 +49,7 @@ export class InputManager {
 
     public HandleMouseUp(mouse: MouseEvent): void {
         mouse.preventDefault();
-        
+
         let released: number = this.downButtons & ~mouse.buttons;
 
         this.downButtons = mouse.buttons;

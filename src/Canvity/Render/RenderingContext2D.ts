@@ -1,9 +1,9 @@
-import { IRenderingContext } from "./IRenderingContext";
-import { Time } from "../Util/Time";
-import { Rect } from "../Util/Rect";
-import { Color } from "../Util/Color";
-import { Vector2 } from "../Util/Vector2";
 import { SpriteAsset } from "../Asset/SpriteAsset";
+import { Color } from "../Util/Color";
+import { Rect } from "../Util/Rect";
+import { Time } from "../Util/Time";
+import { Vector2 } from "../Util/Vector2";
+import { IRenderingContext } from "./IRenderingContext";
 
 export class RenderingContext2D implements IRenderingContext {
     private canvas: HTMLCanvasElement;
@@ -19,7 +19,7 @@ export class RenderingContext2D implements IRenderingContext {
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
-        var ctx = canvas.getContext('2d');
+        let ctx = canvas.getContext("2d");
         if (ctx !== null) this.ctx = ctx;
         else throw new Error("Could not get 2d rendering context");
     }
@@ -42,7 +42,7 @@ export class RenderingContext2D implements IRenderingContext {
 
         this.moveTo(vertices[0]);
 
-        for(var i = 1; i < vertices.length; i++) {
+        for (let i = 1; i < vertices.length; i++) {
             this.lineTo(vertices[i]);
         }
 
@@ -55,7 +55,7 @@ export class RenderingContext2D implements IRenderingContext {
         this.strokeRectFromCoords(rect.X, rect.Y, rect.W, rect.H, color, lineWidth);
     }
     public strokeRectFromCoords(x: number, y: number, w: number, h: number, color: Color, lineWidth: number): void {
-        this.startCanvasWorkspace({ strokeStyle: color.CssString, lineWidth: lineWidth });
+        this.startCanvasWorkspace({ strokeStyle: color.CssString, lineWidth });
         this.ctx.strokeRect(x, y, w, h);
         this.endCanvasWorkspace();
     }
@@ -64,7 +64,7 @@ export class RenderingContext2D implements IRenderingContext {
         this.ctx.drawImage(sprite.Image, x, y);
     }
     public drawTintedSprite(sprite: SpriteAsset, x: number, y: number, color: Color): void {
-        var buffer = this.createBufferCanvas(sprite.Image.width, sprite.Image.height);
+        let buffer = this.createBufferCanvas(sprite.Image.width, sprite.Image.height);
         buffer.ctx.fillStyle = color.CssString;
         buffer.ctx.fillRect(0, 0, buffer.canvas.width, buffer.canvas.height);
 
@@ -81,7 +81,7 @@ export class RenderingContext2D implements IRenderingContext {
         this.drawTextWithFont(text, x, y, "14px sans-serif", color);
     }
     public drawTextWithFont(text: string, x: number, y: number, font: string, color: Color): void {
-        this.startCanvasWorkspace({ font: font, fillStyle: color.CssString });
+        this.startCanvasWorkspace({ font, fillStyle: color.CssString });
         this.ctx.fillText(text, x, y);
         this.endCanvasWorkspace();
     }
@@ -90,7 +90,7 @@ export class RenderingContext2D implements IRenderingContext {
         this.drawLineFromCoords(start.X, start.Y, end.X, end.Y, color, lineWidth);
     }
     public drawLineFromCoords(startX: number, startY: number, endX: number, endY: number, color: Color, lineWidth: number): void {
-        this.startCanvasWorkspace({ strokeStyle: color.CssString, lineWidth: lineWidth});
+        this.startCanvasWorkspace({ strokeStyle: color.CssString, lineWidth});
 
         this.ctx.beginPath();
 
@@ -104,10 +104,10 @@ export class RenderingContext2D implements IRenderingContext {
 
     private createBufferCanvas(width: number, height: number): any {
         if (this.buffer == null) {
-            var buffer = document.createElement('canvas');
+            let buffer = document.createElement("canvas");
             buffer.width = width;
             buffer.height = height;
-            var bx = buffer.getContext('2d');
+            let bx = buffer.getContext("2d");
 
             this.buffer = { canvas: buffer, ctx: bx };
         } else {
@@ -119,10 +119,11 @@ export class RenderingContext2D implements IRenderingContext {
     }
 
     private startCanvasWorkspace(opts: any): void {
-        var oldOpts: any = {};
-        for(var key in opts) {
-            if ((<any>this.ctx)[key] != undefined)
-                oldOpts[key] = (<any>this.ctx)[key];
+        let oldOpts: any = {};
+        for (let key in opts) {
+            if ((this.ctx as any)[key] != undefined) {
+                oldOpts[key] = (this.ctx as any)[key];
+            }
         }
 
         this.applyCanvasOpts(opts);
@@ -133,9 +134,10 @@ export class RenderingContext2D implements IRenderingContext {
     }
 
     private applyCanvasOpts(opts: any): void {
-        for(var key in opts) {
-            if ((<any>this.ctx)[key] != undefined)
-                (<any>this.ctx)[key] = opts[key];
+        for (let key in opts) {
+            if ((this.ctx as any)[key] != undefined) {
+                (this.ctx as any)[key] = opts[key];
+            }
         }
     }
 

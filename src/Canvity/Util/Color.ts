@@ -1,8 +1,4 @@
 export class Color {
-    private r: number;
-    private g: number;
-    private b: number;
-    private a: number;
 
     public get R(): number { return this.r; }
     public get Red(): number { return this.r; }
@@ -25,7 +21,7 @@ export class Color {
     public set Alpha(val: number) { this.a = val % 256; }
 
     public get HexString(): string {
-        let ret = '#';
+        let ret = "#";
         ret += this.r.toString(16);
         ret += this.g.toString(16);
         ret += this.b.toString(16);
@@ -33,19 +29,12 @@ export class Color {
         return ret;
     }
     public get CssString(): string {
-        let ret = 'rgba(';
-        ret += this.r + ', ';
-        ret += this.g + ', ';
-        ret += this.b + ', ';
-        ret += (Math.round(this.a / 255 * 100) / 100) + ')';
-        return ret;            
-    }
-
-    public constructor(r: number, g: number, b: number, a: number = 255) {
-        this.R = r;
-        this.G = g;
-        this.B = b;
-        this.A = a;
+        let ret = "rgba(";
+        ret += this.r + ", ";
+        ret += this.g + ", ";
+        ret += this.b + ", ";
+        ret += (Math.round(this.a / 255 * 100) / 100) + ")";
+        return ret;
     }
 
     public static Red: Color = new Color(255, 0, 0);
@@ -57,11 +46,22 @@ export class Color {
     public static White: Color = new Color(255, 255, 255);
     public static Black: Color = new Color(0, 0, 0);
     public static Transparent: Color = new Color(0, 0, 0, 0);
+    private r: number;
+    private g: number;
+    private b: number;
+    private a: number;
+
+    public constructor(r: number, g: number, b: number, a: number = 255) {
+        this.R = r;
+        this.G = g;
+        this.B = b;
+        this.A = a;
+    }
 
     public static FromHex(hex: string): Color {
-        if (hex.substr(0, 1) == '#') hex = hex.substr(1);
+        if (hex.substr(0, 1) == "#") hex = hex.substr(1);
         let r: number = 0, g: number = 0, b: number = 0, a: number = 0;
-        switch(hex.length) {
+        switch (hex.length) {
             case 1:
                 r = parseInt(hex + hex);
                 g = parseInt(hex + hex);

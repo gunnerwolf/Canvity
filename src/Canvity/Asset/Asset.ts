@@ -21,33 +21,34 @@ export abstract class Asset {
         return Asset.Assets[name];
     }
     public static getAssetOfType<T extends Asset>(name: string): T {
-        return <T>Asset.Assets[name];
+        return Asset.Assets[name] as T;
     }
 
     public static getAssets(): Array<Asset> {
         let arr = new Array<Asset>();
-        for(var name in Asset.Assets) {
+        for (let name in Asset.Assets) {
             arr.push(Asset.Assets[name]);
         }
         return arr;
     }
-    public static getAssetsOfType<T extends Asset>(c: {new(name: string, path: string): T; }): Array<T> {
+    public static getAssetsOfType<T extends Asset>(c: new(name: string, path: string) => T): Array<T> {
         let arr = new Array<T>();
-        for(var name in Asset.Assets) {
-            if (Asset.Assets[name] instanceof c)
-                arr.push(<T>Asset.Assets[name]);
+        for (let name in Asset.Assets) {
+            if (Asset.Assets[name] instanceof c) {
+                arr.push(Asset.Assets[name] as T);
+            }
         }
         return arr;
     }
 
-    public static loadAssetFromURI<T extends Asset>(c: {new(name: string, path: string): T; }, uri: string, assetName: string): void {
+    public static loadAssetFromURI<T extends Asset>(c: new(name: string, path: string) => T, uri: string, assetName: string): void {
         let httpReq = new XMLHttpRequest();
 
         httpReq.onreadystatechange = () => {
             Asset.parseLoadedAsset(c, httpReq, assetName);
         };
 
-        httpReq.open('GET', uri, true);
+        httpReq.open("GET", uri, true);
         httpReq.send();
     }
 
@@ -55,7 +56,7 @@ export abstract class Asset {
         Asset.assets[asset.AssetName] = asset;
     }
 
-    private static parseLoadedAsset<T extends Asset>(c: {new(name: string, path: string): T; }, httpReq: XMLHttpRequest, assetName: string): void {
+    private static parseLoadedAsset<T extends Asset>(c: new(name: string, path: string) => T, httpReq: XMLHttpRequest, assetName: string): void {
         let asset = new c(assetName, httpReq.responseURL);
         asset.parseAsset(httpReq);
 

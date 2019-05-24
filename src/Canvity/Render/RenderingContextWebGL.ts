@@ -1,9 +1,9 @@
-import { IRenderingContext } from "./IRenderingContext";
-import { Time } from "../Util/Time";
-import { Rect } from "../Util/Rect";
-import { Color } from "../Util/Color";
-import { Vector2 } from "../Util/Vector2";
 import { SpriteAsset } from "../Asset/SpriteAsset";
+import { Color } from "../Util/Color";
+import { Rect } from "../Util/Rect";
+import { Time } from "../Util/Time";
+import { Vector2 } from "../Util/Vector2";
+import { IRenderingContext } from "./IRenderingContext";
 
 export class RenderingContextWebGL implements IRenderingContext {
     private canvas: HTMLCanvasElement;
@@ -16,7 +16,7 @@ export class RenderingContextWebGL implements IRenderingContext {
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
-        var gl = canvas.getContext('webgl2');
+        let gl = canvas.getContext("webgl2");
         if (gl instanceof WebGLRenderingContext) this.gl = gl;
         else throw new Error("Could not get WebGL2 context");
     }

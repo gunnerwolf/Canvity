@@ -1,5 +1,5 @@
-import { Asset } from "./Asset";
 import { App } from "../App";
+import { Asset } from "./Asset";
 
 export abstract class Shader extends Asset {
     protected shaderSource: string;
@@ -10,7 +10,7 @@ export abstract class Shader extends Asset {
         let source = httpReq.response;
         let ctx = App.renderContextWebGL;
         if (ctx == null) throw new Error("Attempted to create a shader but app is not using WebGL!");
-        this.shader = this.createShader(<WebGLRenderingContext>ctx.context)
+        this.shader = this.createShader(ctx.context as WebGLRenderingContext);
         this.shaderSource = source;
     }
 

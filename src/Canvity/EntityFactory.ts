@@ -1,7 +1,9 @@
-import { IComponentManager } from './Component/IComponentManager';
+import { IComponentManager } from "./Component/IComponentManager";
 
 export class EntityFactory {
-    public static createEntity(... components: IComponentManager[]): number {
+
+    private static readonly ID_LENGTH = 16;
+    public static createEntity(... components: Array<IComponentManager>): number {
         let entityID = EntityFactory.generateID();
 
         components.forEach(component => {
@@ -11,11 +13,9 @@ export class EntityFactory {
         return entityID;
     }
 
-    private static readonly ID_LENGTH = 16;
-
     private static generateID(): number {
         let out = 0;
-        for(let i = 0; i < EntityFactory.ID_LENGTH - 1; i++) {
+        for (let i = 0; i < EntityFactory.ID_LENGTH - 1; i++) {
             out += Math.floor((Math.random() * 10)) * Math.pow(10, i);
         }
         out += Math.floor((Math.random() * 9) + 1) * Math.pow(10, EntityFactory.ID_LENGTH - 1);

@@ -1,16 +1,16 @@
-import { IComponentManager } from './IComponentManager';
-import { Component } from './Component';
-import { HashSet } from '../Util/HashSet';
+import { HashSet } from "../Util/HashSet";
+import { Component } from "./Component";
+import { IComponentManager } from "./IComponentManager";
 
 export class ComponentManager<T extends Component> implements IComponentManager {
-    protected componentType: {new(id: number): T};
-    public get Type(): {new(id: number): T} { return this.componentType; }
+    protected componentType: new(id: number) => T;
+    public get Type(): new(id: number) => T { return this.componentType; }
 
     public get Count(): number { return this.components.Count; }
 
     protected components: HashSet<T>;
 
-    constructor(c: {new(id: number): T}) {
+    constructor(c: new(id: number) => T) {
         this.componentType = c;
     }
 
@@ -35,7 +35,7 @@ export class ComponentManager<T extends Component> implements IComponentManager 
         this.components.Remove(component);
     }
 
-    public forEach(f: (value: T, index: number, array: T[]) => void, thisArg?: any): void {
+    public forEach(f: (value: T, index: number, array: Array<T>) => void, thisArg?: any): void {
         this.components.forEach(f);
     }
 }

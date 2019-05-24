@@ -1,12 +1,12 @@
-import { IComponentManager } from './Component/IComponentManager';
-import { ComponentManager } from './Component/ComponentManager';
-import { Component } from './Component/Component';
-import { System } from './System/System';
-import { Color } from './Util/Color';
-import { Time } from './Util/Time';
-import { HashSet } from './Util/HashSet';
-import { IRenderingContext } from './Render/IRenderingContext';
-import { Aspect } from './Aspect';
+import { Aspect } from "./Aspect";
+import { Component } from "./Component/Component";
+import { ComponentManager } from "./Component/ComponentManager";
+import { IComponentManager } from "./Component/IComponentManager";
+import { IRenderingContext } from "./Render/IRenderingContext";
+import { System } from "./System/System";
+import { Color } from "./Util/Color";
+import { HashSet } from "./Util/HashSet";
+import { Time } from "./Util/Time";
 
 export class Scene {
     private started: boolean;
@@ -24,10 +24,10 @@ export class Scene {
         this.started = false;
     }
 
-    public GetComponentManager<T extends Component>(c: {new(id: number): T}): ComponentManager<T> | null {
+    public GetComponentManager<T extends Component>(c: new(id: number) => T): ComponentManager<T> | null {
         let TManagers = this.componentManagers.filter(x => x.Type == c).ToArray();
         if (TManagers.length === 0) return null;
-        return <ComponentManager<T>>TManagers[0];
+        return TManagers[0] as ComponentManager<T>;
     }
 
     public Draw(time: Time, ctx: IRenderingContext): void {
@@ -44,7 +44,7 @@ export class Scene {
         });
     }
 
-    public GetAspects(... components: {new(id: number): Component}[]): Array<Aspect> {
+    public GetAspects(... components: Array<new(id: number) => Component>): Array<Aspect> {
         let managers = new Array<IComponentManager>();
         components.forEach(comp => {
             let man = this.GetComponentManager(comp);
@@ -58,7 +58,7 @@ export class Scene {
         return this.GetAspectsByManagers(...managers);
     }
 
-    public GetAspectsByManagers(... components: IComponentManager[]): Array<Aspect> {
+    public GetAspectsByManagers(... components: Array<IComponentManager>): Array<Aspect> {
         if (components.length === 0) throw new Error("No Component Managers passed!");
         let aspects = new Array<Aspect>();
         let control = components.sort((a, b) => a.Count - b.Count)[0];
@@ -67,7 +67,7 @@ export class Scene {
             let comps = new Aspect();
             let id = component.EntityID;
             let found = true;
-            for(let i = 0; i < components.length; i++) {
+            for (let i = 0; i < components.length; i++) {
                 let comp = components[i].getComponent(id);
                 if (comp === null) {
                     found = false;
