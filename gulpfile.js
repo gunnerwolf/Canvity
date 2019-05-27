@@ -84,7 +84,7 @@ function init(done) {
             return;
         }
         
-        let app: App = new ${appname}(canvas);
+        let app: App = new ${appName}(canvas);
         StartApp(app);
     });`;
     fs.writeFileSync(`src/${appName}/Run${appName}.ts`, runCode);
