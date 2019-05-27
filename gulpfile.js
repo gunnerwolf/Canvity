@@ -43,50 +43,56 @@ function init(done) {
     fs.mkdirSync("src/" + appName);
 
     let appCode = `import { App } from "../Canvity/App";
+import { InputManager } from "../Canvity/InputManager";
+import { SceneManager } from "../Canvity/SceneManager";
 
-    export class ${appName} extends App {
-        public constructor(canvas: HTMLCanvasElement) {
-            super(canvas);
-        }
-    
-        public PreInit(opts: any): void {
-            super.PreInit(opts);
-            console.log("PreInit");
-            // TODO: Add PreInit logic
-        }
-    
-        public Init(drawDeltaTime: number, updateDeltaTime: number): void {
-            super.Init(drawDeltaTime, updateDeltaTime);
-            console.log("Init");
-            // TODO: Add Init logic
-        }
-    
-        public PostInit(): void {
-            super.PostInit();
-            console.log("PostInit");
-            // TODO: Add PostInit logic
-        }
-    }`;
+export class ${appName} extends App {
+    public constructor(canvas: HTMLCanvasElement) {
+        super(
+            canvas,
+            new InputManager(),
+            new SceneManager()
+        );
+    }
+
+    public PreInit(opts: any): void {
+        super.PreInit(opts);
+        console.log("PreInit");
+        // TODO: Add PreInit logic
+    }
+
+    public Init(drawDeltaTime: number, updateDeltaTime: number): void {
+        super.Init(drawDeltaTime, updateDeltaTime);
+        console.log("Init");
+        // TODO: Add Init logic
+    }
+
+    public PostInit(): void {
+        super.PostInit();
+        console.log("PostInit");
+        // TODO: Add PostInit logic
+    }
+}`;
     fs.writeFileSync(`src/${appName}/${appName}.ts`, appCode);
 
     let runCode = `import { App } from "../Canvity/App";
-    import { ${appName} } from "./${appName}";
-    import { StartApp } from "../Canvity/Main";
+import { StartApp } from "../Canvity/Main";
+import { ${appName} } from "./${appName}";
+
+window.addEventListener('load', function(ev: Event) {
+    let canvas: HTMLElement | null = document.getElementById('canvity-canvas');
+    if (canvas === null) {
+        console.error("Could not find canvas element with id 'canvity-canvas'!");
+        return;
+    }
+    if (!(canvas instanceof HTMLCanvasElement)) {
+        console.error("Element with id 'canvity-canvas' is not a HTML Canvas!");
+        return;
+    }
     
-    window.addEventListener('load', function(ev: Event) {
-        let canvas: HTMLElement | null = document.getElementById('canvity-canvas');
-        if (canvas === null) {
-            console.error("Could not find canvas element with id 'canvity-canvas'!");
-            return;
-        }
-        if (!(canvas instanceof HTMLCanvasElement)) {
-            console.error("Element with id 'canvity-canvas' is not a HTML Canvas!");
-            return;
-        }
-        
-        let app: App = new ${appName}(canvas);
-        StartApp(app);
-    });`;
+    let app: App = new ${appName}(canvas);
+    StartApp(app);
+});`;
     fs.writeFileSync(`src/${appName}/Run${appName}.ts`, runCode);
 
     done();
