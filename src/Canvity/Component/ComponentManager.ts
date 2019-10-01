@@ -12,30 +12,31 @@ export class ComponentManager<T extends Component> implements IComponentManager 
 
     constructor(c: new(id: number) => T) {
         this.componentType = c;
+        this.components = new HashSet<T>();
     }
 
-    public hasComponent(entity: number): boolean {
+    public HasComponent(entity: number): boolean {
         return this.components.filter(x => x.EntityID === entity).Count > 0;
     }
-    public getComponent(entity: number): T | null {
+    public GetComponent(entity: number): T | null {
         let results = this.components.filter(x => x.EntityID === entity).ToArray();
         if (results.length === 0) return null;
         return results[0];
     }
 
-    public createComponent(entity: number): T {
-        let component = Component.createComponent<T>(this.componentType, entity);
+    public CreateComponent(entity: number): T {
+        let component = Component.CreateComponent<T>(this.componentType, entity);
         this.components.Add(component);
         return component;
     }
 
-    public removeComponent(entity: number): void {
-        let component = this.getComponent(entity);
+    public RemoveComponent(entity: number): void {
+        let component = this.GetComponent(entity);
         if (component === null) return;
         this.components.Remove(component);
     }
 
-    public forEach(f: (value: T, index: number, array: Array<T>) => void, thisArg?: any): void {
+    public ForEach(f: (value: T, index: number, array: Array<T>) => void, thisArg?: any): void {
         this.components.forEach(f);
     }
 }

@@ -7,6 +7,7 @@ import { System } from "./System/System";
 import { Color } from "./Util/Color";
 import { HashSet } from "./Util/HashSet";
 import { Time } from "./Util/Time";
+import { TypeGuard } from "./Util/TypeGuard";
 
 export class Scene {
     private started: boolean;
@@ -19,13 +20,14 @@ export class Scene {
     public set Background(val: Color) { this.background = val; }
 
     public constructor() {
+        this.systems = new HashSet<System>();
         this.componentManagers = new HashSet<IComponentManager>();
         this.Background = Color.Transparent;
         this.started = false;
     }
 
-    public GetComponentManager<T extends Component>(c: new(id: number) => T): ComponentManager<T> | null {
-        let TManagers = this.componentManagers.filter(x => x.Type === c).ToArray();
+    public GetComponentManager<T extends Component>(TCtor: new (...args: Array<any>) => T): ComponentManager<T> | null {
+        let TManagers = this.componentManagers.filter(x => TypeGuard(x, TCtor)).ToArray();
         if (TManagers.length === 0) return null;
         return TManagers[0] as ComponentManager<T>;
     }
@@ -42,6 +44,14 @@ export class Scene {
         this.systems.forEach(element => {
             element.Update(time, this.GetAspects(...element.AspectType));
         });
+    }
+
+    public RegisterSystem(system: System): void {
+        this.systems.Add(system);
+    }
+
+    public AddComponentManager(compManager: IComponentManager): void {
+        this.componentManagers.Add(compManager);
     }
 
     public GetAspects(... components: Array<new(id: number) => Component>): Array<Aspect> {
@@ -63,12 +73,12 @@ export class Scene {
         let aspects = new Array<Aspect>();
         let control = components.sort((a, b) => a.Count - b.Count)[0];
         components = components.filter(x => x !== control);
-        control.forEach(component => {
+        control.ForEach(component => {
             let comps = new Aspect();
             let id = component.EntityID;
             let found = true;
             for (let c of components) {
-                let comp = c.getComponent(id);
+                let comp = c.GetComponent(id);
                 if (comp === null) {
                     found = false;
                     break;

@@ -3,9 +3,9 @@ import { Component } from "./Component";
 export interface IComponentManager {
     Type: new(id: number) => any;
     Count: number;
-    hasComponent(entity: number): boolean;
-    getComponent(entity: number): any;
-    createComponent(entity: number): any;
-    removeComponent(entity: number): void;
-    forEach(f: (value: Component, index: number, array: Array<Component>) => void, thisArg?: any): void;
+    HasComponent(entity: number): boolean;
+    GetComponent(entity: number): any;
+    CreateComponent(entity: number): any;
+    RemoveComponent(entity: number): void;
+    ForEach(f: (value: Component, index: number, array: Array<Component>) => void, thisArg?: any): void;
 }

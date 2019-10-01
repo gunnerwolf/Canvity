@@ -3,11 +3,11 @@ import { IComponentManager } from "./Component/IComponentManager";
 export class EntityFactory {
 
     private static readonly ID_LENGTH = 16;
-    public static createEntity(... components: Array<IComponentManager>): number {
+    public static CreateEntity(... components: Array<IComponentManager>): number {
         let entityID = EntityFactory.generateID();
 
         components.forEach(component => {
-            component.createComponent(entityID);
+            component.CreateComponent(entityID);
         });
 
         return entityID;

@@ -1,5 +1,6 @@
 import { IRenderingContext } from "./Render/IRenderingContext";
 import { Scene } from "./Scene";
+import { System } from "./System/System";
 import { HashSet } from "./Util/HashSet";
 import { Time } from "./Util/Time";
 
@@ -40,6 +41,10 @@ export class SceneManager {
     public SwitchScene(scene: Scene): void {
         if (!this.scenes.Contains(scene)) throw Error("Attempted to switch to Scene that does not exist!");
         this.currentScene = scene;
+    }
+
+    public RegisterSystem(system: System): void {
+        this.currentScene.RegisterSystem(system);
     }
 
     public Draw(time: Time) {

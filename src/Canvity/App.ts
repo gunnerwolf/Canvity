@@ -1,8 +1,13 @@
+import { Component } from "./Component/Component";
+import { ComponentManager } from "./Component/ComponentManager";
+import { IComponentManager } from "./Component/IComponentManager";
+import { EntityFactory } from "./EntityFactory";
 import { InputManager } from "./InputManager";
 import { IRenderingContext } from "./Render/IRenderingContext";
 import { RenderingContext2D } from "./Render/RenderingContext2D";
 import { RenderingContextWebGL } from "./Render/RenderingContextWebGL";
 import { SceneManager } from "./SceneManager";
+import { System } from "./System/System";
 import { Time } from "./Util/Time";
 
 export abstract class App {
@@ -121,5 +126,30 @@ export abstract class App {
         this.timeScale = this.pausedTimeScale;
         this.pausedTimeScale = 0;
         this.paused = false;
+    }
+
+    public RegisterSystem(system: new() => System): void {
+        this.sceneManager.RegisterSystem(new system());
+    }
+
+    public CreateEntity(...components: Array<new(id: number) => Component>): number {
+        let compManagers: Array<IComponentManager> = components.map(c => this.getOrCreateComponentManager(c));
+        let entityId: number = EntityFactory.CreateEntity(...compManagers);
+        return entityId;
+    }
+
+    public GetComponent<T extends Component>(TCtor: new (...args: Array<any>) => T, entityId: number): T | null {
+        let compManager: ComponentManager<T> | null = this.sceneManager.CurrentScene.GetComponentManager(TCtor);
+        if (compManager === null) return null;
+        return compManager.GetComponent(entityId);
+    }
+
+    private getOrCreateComponentManager(component: new(id: number) => Component): IComponentManager {
+        let compManager: IComponentManager | null = this.sceneManager.CurrentScene.GetComponentManager(component);
+        if (compManager === null) {
+            compManager = new ComponentManager(component);
+            this.sceneManager.CurrentScene.AddComponentManager(compManager);
+        }
+        return compManager;
     }
 }

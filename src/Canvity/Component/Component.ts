@@ -6,7 +6,7 @@ export abstract class Component {
         this.entityID = id;
     }
 
-    public static createComponent<T extends Component>(c: new(id: number) => T, entityID: number): T {
+    public static CreateComponent<T extends Component>(c: new(id: number) => T, entityID: number): T {
         return new c(entityID);
     }
 }
