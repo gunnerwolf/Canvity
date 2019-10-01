@@ -5,7 +5,14 @@ export class SpriteAsset extends Asset {
     public get Image(): HTMLImageElement { return this.image; }
 
     public parseAsset(httpReq: XMLHttpRequest): void {
-        let uri = URL.createObjectURL(httpReq.response);
+        if (httpReq.getResponseHeader("Content-Type") !== "image/png") {
+            console.error("Could not load Sprite Asset from " + httpReq.responseURL
+                + ".\nType was " + httpReq.getResponseHeader("Content-Type") + " but expected 'image/png'"
+                + ".\nPreview of response: "
+                + "\n" + httpReq.response);
+            return;
+        }
+        let uri = URL.createObjectURL(new Blob([httpReq.response], {type: "image/png"}));
         let img = new Image();
         img.src = uri;
         this.image = img;

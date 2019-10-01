@@ -52,6 +52,7 @@ export abstract class Asset {
         };
 
         httpReq.open("GET", uri, true);
+        //httpReq.overrideMimeType("text/plain; charset=x-user-defined");
         httpReq.send();
     }
 
