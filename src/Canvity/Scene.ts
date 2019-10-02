@@ -24,7 +24,7 @@ export class Scene {
     }
 
     public GetComponentManager<T extends Component>(TCtor: new (...args: Array<any>) => T): ComponentManager<T> | null {
-        let TManagers = this.componentManagers.filter(x => TypeGuard(x, TCtor)).ToArray();
+        let TManagers = this.componentManagers.filter(x => x.IsOfType(TCtor)).ToArray();
         if (TManagers.length === 0) return null;
         return TManagers[0] as ComponentManager<T>;
     }

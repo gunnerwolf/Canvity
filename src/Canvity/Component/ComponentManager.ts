@@ -15,6 +15,10 @@ export class ComponentManager<T extends Component> implements IComponentManager 
         this.components = new HashSet<T>();
     }
 
+    public IsOfType(type: new(id: number) => any): boolean {
+        return type == this.Type;
+    }
+
     public HasComponent(entity: number): boolean {
         return this.components.filter(x => x.EntityID === entity).Count > 0;
     }
