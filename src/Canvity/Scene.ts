@@ -63,25 +63,38 @@ export class Scene {
         return this.GetAspectsByManagers(...managers);
     }
 
-    public GetAspectsByManagers(... components: Array<IComponentManager>): Array<Aspect> {
-        if (components.length === 0) throw new Error("No Component Managers passed!");
+    public GetAspectsByManagers(... componentManagers: Array<IComponentManager>): Array<Aspect> {
+        if (componentManagers.length === 0) throw new Error("No Component Managers passed!");
+        /*
+         * We need aspects for any entities that own a component from *every* supplied componentManager
+         * If a given entity does not have a component in any of the componentManagers, the entity is not valid
+         * for the aspect, and should be skipped.
+         */
         let aspects = new Array<Aspect>();
-        let control = components.sort((a, b) => a.Count - b.Count)[0];
-        components = components.filter(x => x !== control);
-        control.ForEach(component => {
-            let comps = new Aspect();
-            let id = component.EntityID;
+        // Determine which componentManager has the largest number of components.
+        let controlManager = componentManagers.sort((a, b) => a.Count - b.Count)[0];
+        componentManagers = componentManagers.filter(x => x !== controlManager);
+        // For each component in controlManager
+        controlManager.ForEach(component => {
+            let aspect = new Aspect();
+            // This component will, obviously, always be on the entity
+            aspect.Add(component);
+            let entityId = component.EntityID;
             let found = true;
-            for (let c of components) {
-                let comp = c.GetComponent(id);
+            // For each other componentManager
+            for (let c of componentManagers) {
+                let comp = c.GetComponent(entityId);
+                // If component is null, entityId does not have a component in c, and should be skipped
                 if (comp === null) {
                     found = false;
                     break;
                 }
-                comps.Add(comp);
+                // Otherwise, add the component to the aspect, and continue
+                aspect.Add(comp);
             }
+            // If found is still true, entityId has a component in every componentManager, and aspect is valid
             if (found) {
-                aspects.push(comps);
+                aspects.push(aspect);
             }
         });
 
