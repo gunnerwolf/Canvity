@@ -37,6 +37,13 @@ export class Color {
         return ret;
     }
 
+    public get Inverted(): Color {
+        let r = 255 - this.r;
+        let g = 255 - this.g;
+        let b = 255 - this.b;
+        return new Color(r, g, b, this.a);
+    }
+
     public static Red: Color = new Color(255, 0, 0);
     public static Green: Color = new Color(0, 255, 0);
     public static Blue: Color = new Color(0, 0, 255);
