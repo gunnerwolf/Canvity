@@ -81,9 +81,28 @@ export class RenderingContext2D implements IRenderingContext {
         this.drawTextWithFont(text, x, y, "14px sans-serif", color);
     }
     public drawTextWithFont(text: string, x: number, y: number, font: string, color: Color): void {
+        if (text.indexOf("\n") >= 0) {
+            this.drawLinesWithFont(text, x, y, font, color);
+            return;
+        }
         this.startCanvasWorkspace({ font, fillStyle: color.CssString });
         this.ctx.fillText(text, x, y);
         this.endCanvasWorkspace();
+    }
+    public drawLinesWithFont(text: string, x: number, y: number, font: string, color: Color): void {
+        let fontSizeRegexMatch: RegExpExecArray | null = /^(\d+)(px|pt|em) .*$/.exec(font);
+        if (fontSizeRegexMatch === null) {
+            console.warn("Could not determine font size in " + font);
+            return;
+        }
+        let fontSize: number = parseInt(fontSizeRegexMatch[1]);
+
+        let lines = text.split("\n");
+        let totalY = 0;
+        for (let line of lines) {
+            this.drawTextWithFont(line, x, y + totalY, font, color);
+            totalY += fontSize;
+        }
     }
 
     public drawLine(start: Vector2, end: Vector2, color: Color, lineWidth: number): void {
