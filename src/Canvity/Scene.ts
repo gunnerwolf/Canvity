@@ -6,9 +6,8 @@ import { IRenderingContext } from "./Render/IRenderingContext";
 import { System } from "./System/System";
 import { Color } from "./Util/Color";
 import { HashSet } from "./Util/HashSet";
-import { Time } from "./Util/Time";
-import { TypeGuard } from "./Util/TypeGuard";
 import { Rect } from "./Util/Rect";
+import { Time } from "./Util/Time";
 
 export class Scene {
     private systems: HashSet<System>;
@@ -17,6 +16,9 @@ export class Scene {
 
     public get Background(): Color { return this.background; }
     public set Background(val: Color) { this.background = val; }
+
+    public get SystemCount(): number { return this.systems.Count; }
+    public get ComponentCount(): number { return this.componentManagers.map(cm => cm.Count).ToArray().reduce((a, b) => a + b); }
 
     public constructor() {
         this.systems = new HashSet<System>();
