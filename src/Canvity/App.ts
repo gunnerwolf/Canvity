@@ -56,6 +56,7 @@ export abstract class App {
     protected updateInterval: number;
 
     protected startTime: number;
+    protected engineDebug: boolean;
 
     protected get CurrentScene(): Scene { return this.sceneManager.CurrentScene; }
 
@@ -66,6 +67,7 @@ export abstract class App {
         this.startTime = new Date().getTime() / 1000;
         this.lastDraw = this.startTime;
         this.lastUpdate = this.startTime;
+        this.engineDebug = false;
 
         this.canvas = canvas;
         App.instance = this;
@@ -103,6 +105,11 @@ export abstract class App {
 
         this.lastDraw = timestamp;
         this.sceneManager.Draw(time);
+
+        if (this.engineDebug) {
+            let debugString: string = this.GetDebugText(deltaTime);
+            this.ctx.drawText(debugString, 5, 15, this.CurrentScene.Background.Inverted);
+        }
     }
 
     public Update(): void {
@@ -149,6 +156,15 @@ export abstract class App {
     protected SetCanvasSize(width: number, height: number): void {
         this.canvas.width = width;
         this.canvas.height = height;
+    }
+
+    protected GetDebugText(deltaTime: number): string {
+        return `deltaTime: ${Math.floor(deltaTime * 100000) / 100}\n`
+        + `fps: ${Math.floor(1 / deltaTime * 100) / 100}\n`
+        + `components: ${this.CurrentScene.ComponentCount}\n`
+        + `systems: ${this.CurrentScene.SystemCount}\n`
+        + `mousePos: ${this.inputManager.MousePos.ToString()}\n`
+        + `mouseDelta: ${this.inputManager.MouseDelta.ToString()}`;
     }
 
     private getOrCreateComponentManager(component: new(id: number) => Component): IComponentManager {
