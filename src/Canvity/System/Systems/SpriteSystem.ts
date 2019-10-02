@@ -18,7 +18,11 @@ export class SpriteSystem extends System {
 
             if (transform.position === undefined || sprite.sprite === undefined) return;
 
-            ctx.drawSprite(sprite.sprite, transform.position.X, transform.position.Y);
+            ctx.drawSprite(
+                sprite.sprite,
+                transform.position.X - sprite.sprite.Image.width / 2,
+                transform.position.Y - sprite.sprite.Image.height / 2
+            );
         });
     }
 }
