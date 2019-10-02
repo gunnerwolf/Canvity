@@ -14,6 +14,10 @@ export class SpriteSystem extends System {
             let transform = aspect.Get(Transform);
             let sprite = aspect.Get(Sprite);
 
+            if (transform === null || sprite === null) throw new Error("Invalid aspect passed!");
+
+            if (transform.position === undefined || sprite.sprite === undefined) return;
+
             ctx.drawSprite(sprite.sprite, transform.position.X, transform.position.Y);
         });
     }
