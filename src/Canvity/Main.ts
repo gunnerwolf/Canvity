@@ -15,12 +15,26 @@ export function StartApp(
 
     if (!opts.fpsLocked) {
         app.UpdateInterval = setInterval(() => {
-            app.Update();
+            try {
+                app.Update();
+            } catch (e) {
+                console.warn("Caught error, terminating threads: " + JSON.stringify([app.UpdateInterval, app.DrawInterval]));
+                clearInterval(app.UpdateInterval);
+                clearInterval(app.DrawInterval);
+                throw e;
+            }
         }, updateDeltaTime);
     }
     app.DrawInterval = setInterval(() => {
-        if (opts.fpsLocked) app.Update();
-        app.Draw();
+        try {
+            if (opts.fpsLocked) app.Update();
+            app.Draw();
+        } catch (e) {
+            console.warn("Caught error, terminating threads: " + JSON.stringify([app.UpdateInterval, app.DrawInterval]));
+            clearInterval(app.UpdateInterval);
+            clearInterval(app.DrawInterval);
+            throw e;
+        }
     }, drawDeltaTime);
 
     app.PostInit();
