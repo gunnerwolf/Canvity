@@ -6,12 +6,12 @@ import { InputManager } from "./InputManager";
 import { IRenderingContext } from "./Render/IRenderingContext";
 import { RenderingContext2D } from "./Render/RenderingContext2D";
 import { RenderingContextWebGL } from "./Render/RenderingContextWebGL";
+import { Scene } from "./Scene";
 import { SceneManager } from "./SceneManager";
 import { System } from "./System/System";
 import { Time } from "./Util/Time";
 
 export abstract class App {
-
     public static get renderContext(): IRenderingContext { return App.instance.ctx; }
     public static get renderContext2d(): RenderingContext2D | null {
         if (App.renderContext instanceof RenderingContext2D) {
@@ -56,6 +56,8 @@ export abstract class App {
     protected updateInterval: number;
 
     protected startTime: number;
+
+    protected get CurrentScene(): Scene { return this.sceneManager.CurrentScene; }
 
     public constructor(canvas: HTMLCanvasElement, inputManager: InputManager, sceneManager: SceneManager) {
         this.pausedTimeScale = 0;
@@ -142,6 +144,11 @@ export abstract class App {
         let compManager: ComponentManager<T> | null = this.sceneManager.CurrentScene.GetComponentManager(TCtor);
         if (compManager === null) return null;
         return compManager.GetComponent(entityId);
+    }
+
+    protected SetCanvasSize(width: number, height: number): void {
+        this.canvas.width = width;
+        this.canvas.height = height;
     }
 
     private getOrCreateComponentManager(component: new(id: number) => Component): IComponentManager {
