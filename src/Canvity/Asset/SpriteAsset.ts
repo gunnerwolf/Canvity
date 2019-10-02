@@ -13,9 +13,10 @@ export class SpriteAsset extends Asset {
                 + "\n" + httpReq.response);
             return;
         }
-        let uri = URL.createObjectURL(new Blob([httpReq.response], {type: "image/png"}));
+        let blob = new Blob([httpReq.response], {type: responseType});
+        let uri = URL.createObjectURL(blob);
         let img = new Image();
-        img.src = uri;
+        img.src = httpReq.responseURL;
         this.image = img;
     }
 }

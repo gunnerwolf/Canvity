@@ -1,8 +1,14 @@
 import { IAssetMap } from "./AssetMap";
 
 export abstract class Asset {
+    public static OnFinishLoading: () => void;
+
+    private static loadingAssets: Array<string> = [];
+
     private static assets: IAssetMap = { };
     public static get Assets(): IAssetMap { return Asset.assets; }
+
+    public static get IsLoading(): boolean { return Asset.loadingAssets.length > 0; }
 
     protected assetName: string;
     public get AssetName(): string { return this.assetName; }
@@ -48,11 +54,14 @@ export abstract class Asset {
         let httpReq = new XMLHttpRequest();
 
         httpReq.onreadystatechange = () => {
-            Asset.parseLoadedAsset(c, httpReq, assetName);
+            if (httpReq.readyState === XMLHttpRequest.DONE && httpReq.status === 200) {
+                Asset.parseLoadedAsset(c, httpReq, assetName);
+            }
         };
 
+        Asset.loadingAssets.push(uri);
+
         httpReq.open("GET", uri, true);
-        //httpReq.overrideMimeType("text/plain; charset=x-user-defined");
         httpReq.send();
     }
 
@@ -67,5 +76,8 @@ export abstract class Asset {
         asset.parseAsset(httpReq);
 
         Asset.addLoadedAsset(asset);
+
+        Asset.loadingAssets.splice(Asset.loadingAssets.indexOf(httpReq.responseURL), 1);
+        if (!Asset.IsLoading) Asset.OnFinishLoading();
     }
 }
