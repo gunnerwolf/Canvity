@@ -1,6 +1,8 @@
 const gulp = require('gulp');
+const path = require('path');
 const fs = require('fs');
 const ts = require('gulp-typescript');
+const sm = require('gulp-sourcemaps');
 const rimraf = require('rimraf');
 
 const webpack = require('webpack-stream');
@@ -12,8 +14,10 @@ function build() {
     var tsProject = ts.createProject('tsconfig.json');
 
     var tsResult = tsProject.src()
-        .pipe(tsProject()).js
-        .pipe(gulp.dest('bin/js/'));
+        .pipe(sm.init())
+            .pipe(tsProject()).js
+            .pipe(sm.write('.'))
+            .pipe(gulp.dest('bin/js/'));
 
     return tsResult;
 };
@@ -25,6 +29,7 @@ function pack() {
 };
 
 function clean(done) {
+    rimraf.sync('./bin/js');
     rimraf.sync('./bin/Canvity');
     rimraf.sync('./bin/pack');
     done();
