@@ -25,9 +25,13 @@ export class Vector2 {
     }
 
     public Normalize(): Vector2 {
-        let factor = Math.max(this.X, this.Y);
+        let factor = Math.max(Math.abs(this.X), Math.abs(this.Y));
         this.X /= factor;
         this.Y /= factor;
         return this;
+    }
+
+    public ToString(): string {
+        return `{x: ${this.X}, y: ${this.Y}}`;
     }
 }
