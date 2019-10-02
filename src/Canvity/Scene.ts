@@ -10,8 +10,6 @@ import { Time } from "./Util/Time";
 import { TypeGuard } from "./Util/TypeGuard";
 
 export class Scene {
-    private started: boolean;
-
     private systems: HashSet<System>;
     private componentManagers: HashSet<IComponentManager>;
     private background: Color;
@@ -23,7 +21,6 @@ export class Scene {
         this.systems = new HashSet<System>();
         this.componentManagers = new HashSet<IComponentManager>();
         this.Background = Color.Transparent;
-        this.started = false;
     }
 
     public GetComponentManager<T extends Component>(TCtor: new (...args: Array<any>) => T): ComponentManager<T> | null {
@@ -33,14 +30,12 @@ export class Scene {
     }
 
     public Draw(time: Time, ctx: IRenderingContext): void {
-        if (!this.started) return;
         this.systems.forEach(element => {
             element.Draw(time, ctx, this.GetAspects(...element.AspectType));
         });
     }
 
     public Update(time: Time): void {
-        if (!this.started) return;
         this.systems.forEach(element => {
             element.Update(time, this.GetAspects(...element.AspectType));
         });
