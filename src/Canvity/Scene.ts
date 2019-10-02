@@ -8,6 +8,7 @@ import { Color } from "./Util/Color";
 import { HashSet } from "./Util/HashSet";
 import { Time } from "./Util/Time";
 import { TypeGuard } from "./Util/TypeGuard";
+import { Rect } from "./Util/Rect";
 
 export class Scene {
     private systems: HashSet<System>;
@@ -30,6 +31,7 @@ export class Scene {
     }
 
     public Draw(time: Time, ctx: IRenderingContext): void {
+        ctx.drawRect(new Rect(0, 0, ctx.contextWidth, ctx.contextHeight), this.Background);
         this.systems.forEach(element => {
             element.Draw(time, ctx, this.GetAspects(...element.AspectType));
         });
