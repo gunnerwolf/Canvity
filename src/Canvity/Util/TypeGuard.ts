@@ -12,7 +12,7 @@ type GuardedType<T extends PrimitiveOrConstructor> = T extends new (...args: Arr
         : never;
 
 export function TypeGuard<T extends PrimitiveOrConstructor>(o: any, className: T): o is GuardedType<T> {
-    const localPrimitiveOrConstructor: PrimitiveOrConstructor = className;
+    let localPrimitiveOrConstructor: PrimitiveOrConstructor = className;
     if (typeof localPrimitiveOrConstructor === "string") {
         return typeof o === localPrimitiveOrConstructor;
     }
